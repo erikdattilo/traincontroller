@@ -1,0 +1,3 @@
+C:\TrainDir.NET\traincontroller2\obj\Debug\ResolveAssemblyReference.cache
+C:\TrainDir.NET\traincontroller2\obj\Debug\Traindir2.Net.Properties.Resources.resources
+C:\TrainDir.NET\traincontroller2\obj\Debug\traincontroller2.csproj.GenerateResource.Cache

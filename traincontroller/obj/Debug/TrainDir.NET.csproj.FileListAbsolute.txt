@@ -1,0 +1,12 @@
+C:\Documents and Settings\Erik_\Desktop\tdir38win\TrainDir.NET\TrainDir.NET\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Erik_\Desktop\tdir38win\TrainDir.NET\TrainDir.NET\bin\Debug\TrainDir.NET.exe
+C:\Documents and Settings\Erik_\Desktop\tdir38win\TrainDir.NET\TrainDir.NET\bin\Debug\TrainDir.NET.pdb
+C:\Documents and Settings\Erik_\Desktop\tdir38win\TrainDir.NET\TrainDir.NET\bin\Debug\wx.NET.dll
+C:\Documents and Settings\Erik_\Desktop\tdir38win\TrainDir.NET\TrainDir.NET\obj\Debug\TrainDir.NET.exe
+C:\Documents and Settings\Erik_\Desktop\tdir38win\TrainDir.NET\TrainDir.NET\obj\Debug\TrainDir.NET.pdb
+C:\TrainDir.NET\TrainDir.NET\obj\Debug\ResolveAssemblyReference.cache
+C:\TrainDir.NET\TrainDir.NET\bin\Debug\wx.NET.dll
+C:\TrainDir.NET\TrainDir.NET\bin\Debug\TrainDirNET.exe
+C:\TrainDir.NET\TrainDir.NET\bin\Debug\TrainDirNET.pdb
+C:\TrainDir.NET\TrainDir.NET\obj\Debug\TrainDirNET.exe
+C:\TrainDir.NET\TrainDir.NET\obj\Debug\TrainDirNET.pdb

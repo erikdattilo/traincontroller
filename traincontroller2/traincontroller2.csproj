@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3AD0D3FB-CA2F-420D-AB28-77AA1EB6220E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Traindir2.Net</RootNamespace>
+    <AssemblyName>Traindir2.Net</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WIN32</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;WIN32</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="wx.NET, Version=0.9.0.2, Culture=neutral, PublicKeyToken=5b58115884f900e3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\wx.NET.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\0 - Compatibility.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\AlertList.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\Alerts.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\AssignDialog.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\Canvas.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\Client.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\ConfigDialog.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\CSV.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\DaysDialog.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\espanol.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\FontManager.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\GraphView.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\GTFS.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\HostLock.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\html.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\HtmlView.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\http.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\italiano.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\Itinerary.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\ItineraryDialog.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\ItineraryView.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\LateGraphView.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\000 - To Rewrite\loadsave.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\000 - To Rewrite\Localize.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\Main.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\MainFrm.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\000 - To Rewrite\mongoose.c.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\MotivePower.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\NotebookMgr.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\Options.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\OptionsDialog.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\PlatformGraph.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\Puzzles.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\ReportBase.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\run.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\ScenarioInfoDialog.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\000 - To Rewrite\Server.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\SignalDialog.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\SkinColorsDialog.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\StationInfoDialog.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\StringBuilder.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\000 - To Rewrite\SwitchBoard.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\SwitchboardNameDialog.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\SwitchboardView.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TConfig.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TDConfig.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TDFile.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\000 - To Rewrite\tdscript.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TimeTable.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TimeTblView.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\ToolsView.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\000 - To Rewrite\track.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TrackDialog.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TrackScriptDialog.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\01 - To fix\Train.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TrainInfoDialog.cpp.cs" />
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TrainInfoList.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\TriggerDialog.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\000 - To Rewrite\trsim.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\01 - To fix\TSignal.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\01 - To fix\TVector.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_CPP\0 - Third Pass\WebServices.cpp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AAA_Files_H\1st Process\canvas.h.cs" />
+    <Compile Include="AAA_Files_H\00 - Second pass\Array.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\color.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\defs.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\iactions.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\imovers.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\isignals.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\iswitch.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\itools.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\itracks.h.cs" />
+    <Compile Include="AAA_Files_H\00 - Second pass\LinkedList.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\trsim.h.cs">
+    </Compile>
+    <Compile Include="AAA_Files_H\mongoose.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\resource.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\traindir.hu.cs" />
+    <Compile Include="AAA_Files_H\1st Process\traindir3.h.cs" />
+    <Compile Include="AAA_Files_H\1st Process\ui.h.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
