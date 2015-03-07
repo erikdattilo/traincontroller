@@ -21,7 +21,7 @@
 using System;
 using wx;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Configuration {
     public static int MAX_OLD_SIMULATIONS = 16;
     public static int MAX_SOUNDS = 16;

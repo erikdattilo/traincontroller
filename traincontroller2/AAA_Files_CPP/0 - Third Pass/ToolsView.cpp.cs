@@ -21,7 +21,7 @@ Boston, MA 02111-1307, USA.
 */
 using wx;
 using System.Drawing;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public static partial class Globals {
 

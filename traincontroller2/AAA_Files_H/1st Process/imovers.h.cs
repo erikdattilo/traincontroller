@@ -1,4 +1,4 @@
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public static partial class Globals {
     /* XPM */
     public static string[] move_start_xpm = new string[] {

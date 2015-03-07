@@ -22,7 +22,7 @@
 using System;
 using wx;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class ItineraryDialog : Dialog {
     public
      TextCtrl m_name,

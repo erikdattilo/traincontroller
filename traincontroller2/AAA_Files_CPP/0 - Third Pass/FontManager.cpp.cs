@@ -1,7 +1,7 @@
 
 using wx;
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   // typedef std::vector<FontEntry *>    FontPool;
 

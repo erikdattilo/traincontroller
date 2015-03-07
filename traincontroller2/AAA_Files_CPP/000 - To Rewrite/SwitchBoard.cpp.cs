@@ -21,7 +21,7 @@ Boston, MA 02111-1307, USA.
 
 
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public partial class Configuration {
     public static int MAX_SWBD_X = 40;

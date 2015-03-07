@@ -22,7 +22,7 @@
 using wx;
 using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class DaysDialog : Dialog {
     public RadioBox m_radio_box;
 

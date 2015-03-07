@@ -23,7 +23,7 @@ using System;
 using wx;
 using wx.Html;
 using System.Drawing;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public class HtmlView : HtmlWindow {
     private String m_content;

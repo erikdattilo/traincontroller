@@ -21,7 +21,7 @@ Boston, MA 02111-1307, USA.
 using System;
 using wx;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class AlertList : ReportBase {
     private AlertListListener _listener;
     private String m_name;

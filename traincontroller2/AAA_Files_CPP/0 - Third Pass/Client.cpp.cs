@@ -1,5 +1,5 @@
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Globals {
     public static ClientThread clientThread;
     public static wxSocketClient client;

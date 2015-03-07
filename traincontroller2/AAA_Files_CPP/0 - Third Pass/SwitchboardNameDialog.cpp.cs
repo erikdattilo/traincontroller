@@ -22,7 +22,7 @@
 using wx;
 using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public class SwitchboardNameDialog : Dialog {
     public TextCtrl m_name;

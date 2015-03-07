@@ -8,8 +8,8 @@
     <ProjectGuid>{3AD0D3FB-CA2F-420D-AB28-77AA1EB6220E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Traindir2.Net</RootNamespace>
-    <AssemblyName>Traindir2.Net</AssemblyName>
+    <RootNamespace>TrainController</RootNamespace>
+    <AssemblyName>TrainController</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,6 +40,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
     <Reference Include="wx.NET, Version=0.9.0.2, Culture=neutral, PublicKeyToken=5b58115884f900e3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\wx.NET.dll</HintPath>
@@ -229,6 +230,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -239,6 +241,68 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SimCommands\SimCommands.cs" />
+    <Compile Include="ToMoveSomewhere\PixMap.cs" />
+    <Compile Include="ToMoveSomewhere\SignalAspect.cs" />
+    <Compile Include="ToMoveSomewhere\Station.cs" />
+    <Compile Include="ToMoveSomewhere\Train.cs" />
+    <Compile Include="ToMoveSomewhere\TrainStop.cs" />
+    <Compile Include="ToMoveSomewhere\TrackSubTypes.cs" />
+    <Compile Include="ToMoveSomewhere\z - ExtensionMethods.cs" />
+    <Compile Include="TrainController\AlertList.cs" />
+    <Compile Include="TrainController\AlertListListener.cs" />
+    <Compile Include="TrainController\Canvas.cs" />
+    <Compile Include="TrainController\CanvasManager.cs" />
+    <Compile Include="TrainController\Color.cs" />
+    <Compile Include="TrainController\Coord.cs" />
+    <Compile Include="TrainController\GraphView.cs" />
+    <Compile Include="TrainController\grid.cs" />
+    <Compile Include="TrainController\I18N.cs" />
+    <Compile Include="TrainController\InterpreterData.cs" />
+    <Compile Include="TrainController\Itinerary.cs" />
+    <Compile Include="TrainController\ItineraryView.cs" />
+    <Compile Include="TrainController\LateGraphView.cs" />
+    <Compile Include="TrainController\LoadSave.cs" />
+    <Compile Include="TrainController\LogFilter.cs" />
+    <Compile Include="TrainController\MainFrame.cs" />
+    <Compile Include="TrainController\MainApp.cs" />
+    <Compile Include="TrainController\MySplitterWindow.cs" />
+    <Compile Include="TrainController\NotebookManager.cs" />
+    <Compile Include="TrainController\Option.cs" />
+    <Compile Include="TrainController\PlatformGraphView.cs" />
+    <Compile Include="TrainController\ReportBase.cs" />
+    <Compile Include="TrainController\Script.cs" />
+    <Compile Include="TrainController\Signal.cs" />
+    <Compile Include="TrainController\SwitchBoard.cs" />
+    <Compile Include="TrainController\switin.cs" />
+    <Compile Include="TrainController\TConfig.cs" />
+    <Compile Include="TrainController\TDFile.cs" />
+    <Compile Include="TrainController\TDLayout.cs" />
+    <Compile Include="TrainController\tdscript.cs" />
+    <Compile Include="TrainController\TDSkin.cs" />
+    <Compile Include="TrainController\TextList.cs" />
+    <Compile Include="TrainController\TFLG.cs" />
+    <Compile Include="TrainController\TimeFrame.cs" />
+    <Compile Include="TrainController\TimeTableView.cs" />
+    <Compile Include="TrainController\TimeTableViewManager.cs" />
+    <Compile Include="TrainController\ToolsView.cs" />
+    <Compile Include="TrainController\Track.cs" />
+    <Compile Include="TrainController\Traindir.cs" />
+    <Compile Include="TrainController\TrainInfoList.cs" />
+    <Compile Include="TrainController\trainstat.cs" />
+    <Compile Include="TrainController\trkdir.cs" />
+    <Compile Include="TrainController\trkstat.cs" />
+    <Compile Include="TrainController\trktype.cs" />
+    <Compile Include="TrainController\trsim.cs" />
+    <Compile Include="TrainController\tr_rect.cs" />
+    <Compile Include="TrainController\VLines.cs" />
+    <Compile Include="TrainController\wxFileName.cs" />
+    <Compile Include="TrainController\AAA - Temporary.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wx-c-0-9-0-2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

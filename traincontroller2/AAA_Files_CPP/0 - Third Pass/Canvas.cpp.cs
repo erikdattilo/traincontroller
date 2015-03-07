@@ -22,7 +22,7 @@ Boston, MA 02111-1307, USA.
 using wx;
 using System;
 using System.Drawing;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public partial class Globals {
     public static Coord itin_start;
@@ -155,6 +155,7 @@ wxSimpleHelpProvider	canvasHelp;
       grid g;
 
       g = field_grid;
+
       wx.ClientDC clientDC = new wx.ClientDC(g.m_parent);
       ScrolledWindow w = (ScrolledWindow)g.m_parent;
       w.PrepareDC(clientDC);
@@ -788,7 +789,7 @@ wxSimpleHelpProvider	canvasHelp;
       : base(parent, wxID_ANY, new Point(0, 0),
     new Size(Configuration.XMAX * 2, Configuration.YMAX * 2),
       WindowStyles.HSCROLL | WindowStyles.VSCROLL | WindowStyles.NO_FULL_REPAINT_ON_RESIZE) {
-//      EVT_PAINT(new wx.EventListener(OnPaint));
+      EVT_PAINT(new wx.EventListener(OnPaint));
 //      //    EVT_MOUSE_EVENTS(new wx.EventListener(OnMouse));
 //      EVT_MOTION(new wx.EventListener(OnMouseMove));
 //      EVT_LEFT_DOWN(new wx.EventListener(OnMouseLeft));
@@ -803,12 +804,12 @@ wxSimpleHelpProvider	canvasHelp;
 
 //      EVT_CHAR(new wx.EventListener(OnChar));
 
-//      SetScrollbars(1, 1, Configuration.XMAX, Configuration.YMAX);
-//      m_layout = null;
-//      Globals.create_colors();
-//      Globals.create_draw(this);
-//      Globals.init_pmaps();
-//      m_tooltip = null;
+      SetScrollbars(1, 1, Configuration.XMAX, Configuration.YMAX);
+      m_layout = null;
+      Globals.create_colors();
+      Globals.create_draw(this);
+      Globals.init_pmaps();
+      m_tooltip = null;
 //      ToolTip.SetDelay(1000);
 //      ToolTip.Enable(Globals.show_tooltip);
 //#if WIN32

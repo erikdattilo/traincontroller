@@ -1,5 +1,5 @@
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public class StringItem {
     private static int STRITEMBUFFSIZE = 16;

@@ -21,7 +21,7 @@
 
  using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public static partial class Globals {
     public static String version = wxPorting.T("3.8v");
@@ -977,27 +977,7 @@ namespace Traincontroller2 {
 
     public static Track findStationNamed(String name) {
       throw new NotImplementedException();
-      //Track t;
-      //String p;
-      //int l;
-
-      //l = Globals.wxStrlen(name);
-      //if((p = wxStrchr(name, PLATFORM_SEP)) != null)
-      //  l = p - name;
-      //for(t = layout; t != null; t = t.next) {
-      //  if(String.IsNullOrEmpty(t.station))
-      //    continue;
-      //  if(t.type == trktype.TRACK && t.isstation && !Globals.wxStrncmp(name, t.station, l)) {
-      //    if(!t.station[l] || t.station[l] == PLATFORM_SEP)
-      //      return t;
-      //  }
-      //  if(t.type == trktype.TEXT && !wxStrcmp(name, t.station) &&
-      //    ((t.wlinkx && t.wlinky) || (t.elinkx && t.elinky)))
-      //    return t;
-      //  if(t.type == trktype.SWITCH && !wxStrcmp(name, t.station))
-      //    return t;
-      //}
-      //return 0;
+      // return TrainController.Station.FindStationNamed(name);
     }
 
     public static Track findStation(String name) {

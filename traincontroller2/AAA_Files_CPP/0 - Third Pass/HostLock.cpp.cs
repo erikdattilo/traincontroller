@@ -1,4 +1,4 @@
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   // Using wxWidgets for locks
   using LOCK_TYPE = wxCriticalSection;

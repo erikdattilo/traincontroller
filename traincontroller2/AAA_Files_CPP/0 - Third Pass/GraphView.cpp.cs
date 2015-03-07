@@ -25,7 +25,7 @@ using System;
 using wx;
 using System.Drawing;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public partial class Configuration {
     public static int STATION_WIDTH1 = 100;

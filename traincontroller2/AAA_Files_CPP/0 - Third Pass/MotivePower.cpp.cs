@@ -33,7 +33,7 @@ Boston, MA 02111-1307, USA.
   */
 
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Globals {
     public static Array<string> gMotivePowerCache;
     public static string gEditorMotivePower;

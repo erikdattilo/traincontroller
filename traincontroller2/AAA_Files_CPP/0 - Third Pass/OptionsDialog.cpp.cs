@@ -22,7 +22,7 @@
 using wx;
 using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Configuration {
     public static int NUM_OPTIONS = 20;
   }

@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public class LocalizeInfo {
     public string English;

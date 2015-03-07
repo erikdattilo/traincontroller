@@ -1,5 +1,5 @@
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public static partial class Globals {
     public static IntOption http_server_port = new IntOption(wxPorting.T("httpPort"),
                                    wxPorting.T("Listen on this HTTP port"),

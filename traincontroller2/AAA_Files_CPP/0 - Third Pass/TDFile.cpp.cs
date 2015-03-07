@@ -20,7 +20,7 @@ Boston, MA 02111-1307, USA.
 */
 
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public partial class Globals {
     public static FileOption searchPath = new FileOption(wxPorting.T("SearchPath"), wxPorting.T("Directories with signal scripts"),

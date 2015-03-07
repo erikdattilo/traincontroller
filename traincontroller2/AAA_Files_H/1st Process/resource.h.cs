@@ -2,7 +2,7 @@
  // Microsoft Developer Studio generated include file.
  // Used by resource.rc
  //
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Globals {
     public static int IDI_ICON1 = 101;
     public static int IDI_ICON2 = 102;

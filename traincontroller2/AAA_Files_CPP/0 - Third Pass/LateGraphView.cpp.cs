@@ -22,7 +22,7 @@ using wx;
 using System;
 using System.Drawing;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class LateGraphView : ScrolledWindow {
     // #define	STATION_WIDTH 10
     // #define	KM_WIDTH 5

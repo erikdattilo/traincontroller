@@ -39,7 +39,7 @@
  */
 using System;
 using System.Collections;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   /*
    * Array

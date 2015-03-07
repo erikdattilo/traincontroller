@@ -1,3 +1,9 @@
 C:\TrainDir.NET\traincontroller2\obj\Debug\ResolveAssemblyReference.cache
-C:\TrainDir.NET\traincontroller2\obj\Debug\Traindir2.Net.Properties.Resources.resources
 C:\TrainDir.NET\traincontroller2\obj\Debug\traincontroller2.csproj.GenerateResource.Cache
+C:\TrainDir.NET\traincontroller2\obj\Debug\TrainController.Properties.Resources.resources
+C:\TrainDir.NET\traincontroller2\bin\Debug\TrainController.exe
+C:\TrainDir.NET\traincontroller2\bin\Debug\TrainController.pdb
+C:\TrainDir.NET\traincontroller2\bin\Debug\wx.NET.dll
+C:\TrainDir.NET\traincontroller2\obj\Debug\TrainController.exe
+C:\TrainDir.NET\traincontroller2\obj\Debug\TrainController.pdb
+C:\TrainDir.NET\traincontroller2\bin\Debug\wx-c-0-9-0-2.dll

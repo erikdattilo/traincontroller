@@ -22,7 +22,7 @@ using wx;
 using System;
 using System.Drawing;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class TrainInfoDialog : Dialog {
     public TextCtrl m_name,
         m_type,

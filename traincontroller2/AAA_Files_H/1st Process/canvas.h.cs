@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using wx;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   // class TDLayout;
   // 
   // class Canvas : public wxScrolledWindow

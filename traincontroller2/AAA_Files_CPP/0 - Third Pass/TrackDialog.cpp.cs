@@ -21,7 +21,7 @@
 using wx;
 using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public class TrackDialog : Dialog {
     public TextCtrl m_length,

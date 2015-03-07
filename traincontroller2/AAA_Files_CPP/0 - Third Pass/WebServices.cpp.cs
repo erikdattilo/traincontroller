@@ -22,7 +22,7 @@
 using System;
 using wx;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class WS_Trains : Servlet {
     public WS_Trains()
       : base("/war/trains.json") {

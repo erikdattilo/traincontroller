@@ -22,7 +22,7 @@ using wx;
 using System;
 using System.Drawing;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Globals {
     public static TextCtrl AddTextLine(Dialog dialog, BoxSizer column, string txt) {
       throw new NotImplementedException();

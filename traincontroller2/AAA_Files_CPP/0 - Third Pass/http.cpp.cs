@@ -1,5 +1,5 @@
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Globals {
     public static StringOption user_name = new StringOption(wxPorting.T("userName"),
                               wxPorting.T("Name of the player"),

@@ -23,7 +23,7 @@ using wx;
 using System;
 using System.Drawing;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class SignalDialog : Dialog {
     public StaticText m_coord;
     public TextCtrl m_length,

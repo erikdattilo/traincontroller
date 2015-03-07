@@ -22,7 +22,7 @@
 using wx;
 using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class TriggerDialog : Dialog {
     // public:
     public StaticText m_coord;

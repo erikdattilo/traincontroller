@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Configuration {
     public static int MAXPUZZLESIGNALS = 20;
     public static int MAXPUZZLESWITCHES = 20;

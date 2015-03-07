@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   [Flags]
   public enum RunDays {
     None = 0x0,

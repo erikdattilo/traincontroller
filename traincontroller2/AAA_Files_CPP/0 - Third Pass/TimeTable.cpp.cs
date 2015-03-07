@@ -19,7 +19,7 @@
 // Boston, MA 02111-1307, USA.
 // */
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class TrainEntry : LinkItem<TrainEntry> {
   }
 

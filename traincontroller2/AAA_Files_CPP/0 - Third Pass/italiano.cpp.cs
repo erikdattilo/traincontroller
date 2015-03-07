@@ -1,4 +1,4 @@
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public static partial class Globals {
     public static LocalizeInfo[] italiano = new LocalizeInfo[] {

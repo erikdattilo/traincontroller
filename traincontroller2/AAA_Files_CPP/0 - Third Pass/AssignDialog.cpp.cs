@@ -22,7 +22,7 @@
 using System;
 using wx;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public partial class Globals {
     public static Track path_find_station(Vector path, Track headpos) {
       int i;

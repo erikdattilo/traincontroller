@@ -21,7 +21,7 @@
 using wx;
 using System;
 
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public class SkinElementColor {
     public TextCtrl m_r, m_g, m_b;
     public Button m_rgbSelector;

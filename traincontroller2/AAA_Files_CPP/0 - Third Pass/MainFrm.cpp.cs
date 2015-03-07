@@ -23,7 +23,7 @@ using System;
 using wx;
 using wx.Html;
 using System.Drawing;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
 
   public partial class Configuration { public const int NSTATUSBOXES = 5; }
@@ -503,7 +503,7 @@ namespace Traincontroller2 {
 //      EVT_SPIN_DOWN((int)MenuIDs.ID_SPIN, new wx.EventListener(OnSpinDown));
 
 //      EVT_CLOSE(new wx.EventListener(OnClose));
-//      EVT_TIMER((int)MenuIDs.TIMER_ID, new wx.EventListener(OnTimer));
+      EVT_TIMER(new wx.EventListener(OnTimer)); // EVT_TIMER((int)MenuIDs.TIMER_ID, new wx.EventListener(OnTimer));
 //      EVT_CHAR(new wx.EventListener(OnChar));
 
 //      //

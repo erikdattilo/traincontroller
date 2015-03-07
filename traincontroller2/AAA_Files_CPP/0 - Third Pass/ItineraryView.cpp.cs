@@ -23,7 +23,7 @@ Boston, MA 02111-1307, USA.
 using System;
 using wx;
 using System.Drawing;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
   public static partial class Globals {
 
     public static void FillItineraryTable() {
@@ -96,10 +96,11 @@ namespace Traincontroller2 {
     }
 
     public void OnProperties(object sender, Event evt) {
-      Itinerary it = (Itinerary)GetSelectedData();
-      if(it == null)			// impossible
-        return;
-      Globals.ShowItineraryDialog(it);
+      throw new NotImplementedException();
+      //Itinerary it = (Itinerary)GetSelectedData();
+      //if(it == null)			// impossible
+      //  return;
+      //Globals.ShowItineraryDialog(it);
     }
 
     public void OnDelete(object sender, Event evt) {
@@ -111,6 +112,7 @@ namespace Traincontroller2 {
     }
 
     public void OnSave(object sender, Event evt) {
+      throw new NotImplementedException();
       //wxFFile fp;
       //Itinerary it;
       //string buff;

@@ -1,5 +1,5 @@
 using System;
-namespace Traincontroller2 {
+namespace TrainDirPorting {
 
   public class TDConfig {
     private const int MAX_CONFIG_SECT = 40;
