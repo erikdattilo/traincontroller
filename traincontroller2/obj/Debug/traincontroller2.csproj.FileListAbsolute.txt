@@ -7,3 +7,4 @@ C:\TrainDir.NET\traincontroller2\bin\Debug\wx.NET.dll
 C:\TrainDir.NET\traincontroller2\obj\Debug\TrainController.exe
 C:\TrainDir.NET\traincontroller2\obj\Debug\TrainController.pdb
 C:\TrainDir.NET\traincontroller2\bin\Debug\wx-c-0-9-0-2.dll
+C:\TrainDir.NET\traincontroller2\obj\Debug\TrainController.MainFrame.resources

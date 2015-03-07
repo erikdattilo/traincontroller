@@ -1,0 +1,15 @@
+/* XPM */
+static char * toolnote_xpm[] = {
+/* width height ncolors chars_per_pixel */
+"9 7 3 1"
+/* colors */
+"       c #FFFFFFFFFFFF",
+".      c #000000000000",
+"",
+"         ",
+"         ",
+" ...    .",
+".GGG.   .",
+".GGG.....",
+".GGG.   .",
+" ...    .";

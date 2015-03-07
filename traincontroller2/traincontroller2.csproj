@@ -221,10 +221,20 @@
     <Compile Include="AAA_Files_H\1st Process\traindir.hu.cs" />
     <Compile Include="AAA_Files_H\1st Process\traindir3.h.cs" />
     <Compile Include="AAA_Files_H\1st Process\ui.h.cs" />
+    <Compile Include="TrainController\MainFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainController\MainFrame.Designer.cs">
+      <DependentUpon>MainFrame.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainController\MainFrame.resx">
+      <DependentUpon>MainFrame.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -264,10 +274,11 @@
     <Compile Include="TrainController\LateGraphView.cs" />
     <Compile Include="TrainController\LoadSave.cs" />
     <Compile Include="TrainController\LogFilter.cs" />
-    <Compile Include="TrainController\MainFrame.cs" />
+    <Compile Include="TrainController\MainFrame2.cs" />
     <Compile Include="TrainController\MainApp.cs" />
     <Compile Include="TrainController\MySplitterWindow.cs" />
-    <Compile Include="TrainController\NotebookManager.cs" />
+    <Compile Include="TrainController\NotebookManager.cs">
+    </Compile>
     <Compile Include="TrainController\Option.cs" />
     <Compile Include="TrainController\PlatformGraphView.cs" />
     <Compile Include="TrainController\ReportBase.cs" />
