@@ -481,11 +481,11 @@ namespace TrainController {
       //    load_scripts(layout);	// run OnInit scripts
       //    enable_training = 1;
       //} else {
-          if((layout = load_field(cmd)) == null) {
-      //  status_line = String.Format( wxPorting.T("%s '%s.trk'"), wxPorting.L("cannot load"), cmd);
-      //  Globals.traindir.Error(status_line);
-      //  return;
-          }
+      if((layout = load_field(cmd)) == null) {
+        //  status_line = String.Format( wxPorting.T("%s '%s.trk'"), wxPorting.L("cannot load"), cmd);
+        //  Globals.traindir.Error(status_line);
+        //  return;
+      }
       //    if(!(schedule = load_trains(cmd)))
       //  Globals.traindir.Error(wxPorting.L("No schedule for this territory!"));
       //    if(fl && !all_trains_everyday(schedule) && select_day_dialog)

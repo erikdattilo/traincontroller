@@ -23,7 +23,12 @@ using System;
 using wx;
 using wx.Html;
 using System.Drawing;
+
+
 namespace TrainDirPorting {
+
+  using TabControl = System.Windows.Forms.TabControl;
+  using SplitContainer = System.Windows.Forms.SplitContainer;
 
 
   public partial class Configuration { public const int NSTATUSBOXES = 5; }
@@ -356,7 +361,7 @@ namespace TrainDirPorting {
     public NotebookManager m_top;		// top (pages are Canvases or TimeTable or Html)
     public NotebookManager m_left;	// bottom-left
     public NotebookManager m_right;	// bottom-right
-    public SplitterWindow m_splitter;
+    public SplitContainer m_splitter;
     public SplitterWindow m_bottomSplitter;
     public int m_topSashValue;
     public ToolBar m_toolbar;
@@ -655,15 +660,16 @@ namespace TrainDirPorting {
 //      m_statusBar.SetFieldsCount(WXSIZEOF(widths), widths);
 //      this.StatusBar = m_statusBar;
 
-//      //
-//      //	Client area
-//      //
-//      //	m_splitter controls the top and bottom views
-//      //
+#if ADDED_IN_DESIGNER
+      //
+      //	Client area
+      //
+      //	m_splitter controls the top and bottom views
+      //
 
-//      m_splitter = new MySplitterWindow(this);
-//      m_splitter.SashGravity = (1.0);
-
+      m_splitter = new TabControl(this);
+      m_splitter.SashGravity = (1.0);
+#endif
 //      //
 //      //	the top view is the layout Canvas
 //      //	inside a managing notebook
@@ -704,15 +710,11 @@ namespace TrainDirPorting {
 //      m_trainInfo = new TrainInfoList(m_right, wxPorting.L("Train Info"));
 
 //      m_timeFrame = null;
-
-//      // you can also do this to start with a single window
-//#if false
-//  m_top.Show(false);
-//  m_splitter.Initialize(m_left);
-//#else
-//      // you can also try -100
-//      m_splitter.SplitHorizontally(m_top, m_bottomSplitter, 300);
-
+#if ADDED_IN_DESIGNER
+      // you can also do this to start with a single window
+      // you can also try -100
+      m_splitter.SplitHorizontally(m_top, m_bottomSplitter, 300);
+#endif
 //      wxSize sz = this.Size;
 //      m_bottomSplitter.SplitVertically(m_left, m_right, -300);
 
@@ -720,7 +722,7 @@ namespace TrainDirPorting {
 //      m_left.Show(true);
 //      m_right.Show(true);
 //      m_timer.Start(100);
-//#endif
+
 //      gLogger.SetParent(this);
 
 //      m_printer = new HtmlEasyPrinting(wxPorting.L(""), this);
@@ -740,16 +742,16 @@ namespace TrainDirPorting {
 //      Globals.about_dialog = Globals.ShowWelcomePage;
     }
 
-    ~MainFrame() {
-      if(m_splitter != null) {
-        Globals.delete(m_splitter);
-        m_splitter = null;
-      }
-      if(m_printer != null) {
-        Globals.delete(m_printer);
-        m_printer = null;
-      }
-    }
+    //~MainFrame() {
+    //  if(m_splitter != null) {
+    //    Globals.delete(m_splitter);
+    //    m_splitter = null;
+    //  }
+    //  if(m_printer != null) {
+    //    Globals.delete(m_printer);
+    //    m_printer = null;
+    //  }
+    //}
 
     //	The travels of the time table view...
     //
@@ -762,50 +764,55 @@ namespace TrainDirPorting {
     //	between these 3 states
 
     public void MoveTimeTableToTab() {
-      if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_SPLIT) {
-        m_topSashValue = m_splitter.SashPosition;
-        m_left.RemovePage(m_timeTable);
-      } else if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_FRAME) {
-        m_timeFrame.Show(false);
-      }
-      m_timeTable.Reparent(m_top);
-      m_top.AddPage(m_timeTable, wxPorting.L("Schedule"));
-      m_splitter.Unsplit();
-      m_timeTableLocation = TimeTableLocations.TIME_TABLE_TAB;
-      //	AddTimeTable(m_top);
+      throw new NotImplementedException();
+
+      //if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_SPLIT) {
+      //  m_topSashValue = m_splitter.SashPosition;
+      //  m_left.RemovePage(m_timeTable);
+      //} else if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_FRAME) {
+      //  m_timeFrame.Show(false);
+      //}
+      //m_timeTable.Reparent(m_top);
+      //m_top.AddPage(m_timeTable, wxPorting.L("Schedule"));
+      //m_splitter.Unsplit();
+      //m_timeTableLocation = TimeTableLocations.TIME_TABLE_TAB;
     }
 
     public void MoveTimeTableToSplit() {
-      if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_TAB) {
-        m_top.RemovePage(m_timeTable);
-      } else if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_FRAME) {
-        m_timeFrame.Show(false);
-      }
-      m_splitter.SplitHorizontally(m_top, m_bottomSplitter, m_topSashValue);
-      m_timeTableLocation = TimeTableLocations.TIME_TABLE_SPLIT;
-      m_timeTable.Reparent(m_left);
-      m_left.AddPage(m_timeTable, wxPorting.L("Schedule"));
+      throw new NotImplementedException();
+
+      //if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_TAB) {
+      //  m_top.RemovePage(m_timeTable);
+      //} else if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_FRAME) {
+      //  m_timeFrame.Show(false);
+      //}
+      //m_splitter.SplitHorizontally(m_top, m_bottomSplitter, m_topSashValue);
+      //m_timeTableLocation = TimeTableLocations.TIME_TABLE_SPLIT;
+      //m_timeTable.Reparent(m_left);
+      //m_left.AddPage(m_timeTable, wxPorting.L("Schedule"));
     }
 
     public void MoveTimeTableToFrame() {
-      if(m_timeFrame == null)
-        m_timeFrame = new TimeFrame(this, wxPorting.L("Schedule"));
+      throw new NotImplementedException();
 
-      if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_TAB) {
-        m_top.RemovePage(m_timeTable);
-      } else if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_SPLIT) {
-        m_topSashValue = m_splitter.SashPosition;
-        m_left.RemovePage(m_timeTable);
-        m_splitter.Unsplit();
-      }
+      //if(m_timeFrame == null)
+      //  m_timeFrame = new TimeFrame(this, wxPorting.L("Schedule"));
 
-      m_timeTable.Reparent(m_timeFrame);
-      Size size = m_timeFrame.ClientSize;
-      m_timeTable.SetSize(0, 0, size.Width, size.Height);
-      m_timeFrame.Show(true);
-      m_timeTable.Show(true);
-      m_timeTable.Refresh();
-      m_timeTableLocation = TimeTableLocations.TIME_TABLE_FRAME;
+      //if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_TAB) {
+      //  m_top.RemovePage(m_timeTable);
+      //} else if(m_timeTableLocation == TimeTableLocations.TIME_TABLE_SPLIT) {
+      //  m_topSashValue = m_splitter.SashPosition;
+      //  m_left.RemovePage(m_timeTable);
+      //  m_splitter.Unsplit();
+      //}
+
+      //m_timeTable.Reparent(m_timeFrame);
+      //Size size = m_timeFrame.ClientSize;
+      //m_timeTable.SetSize(0, 0, size.Width, size.Height);
+      //m_timeFrame.Show(true);
+      //m_timeTable.Show(true);
+      //m_timeTable.Refresh();
+      //m_timeTableLocation = TimeTableLocations.TIME_TABLE_FRAME;
     }
 
     //

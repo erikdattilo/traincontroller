@@ -175,27 +175,21 @@ namespace TrainController {
       return PixMap.FromXpmData(pxpm);
     }
 
-    public static void draw_pixmap(int x0, int y0, wx.Image map) {
-      wx.Image img = map; // (wx.Image*)map;
+    public static void draw_pixmap(int x0, int y0, System.Drawing.Image map) {
       // Rectangle update_rect = new Rectangle();
       grid g = current_grid;
       int x = x0 * g.m_hmult + g.m_xBase;
       int y = y0 * g.m_vmult + g.m_yBase;
 
-      if(!img.Ok)
-        return;
       if(g.m_pixmap == null)
         return;
       if(g.m_dc == null)
-        g.m_dc = new MemoryDC();
+        throw new NotImplementedException(); // g.m_dc = System.Drawing.Graphics.FromImage(g.m_pixmap);
       if(g == tools_grid && y0 != 0 && x0 < 8) {
         x += tools_grid.m_hmult / 2;
         y += tools_grid.m_vmult / 2;
       }
-      wx.Bitmap bitmap = new wx.Bitmap(img, -1);
-      g.m_dc.SelectObject(g.m_pixmap);
-      g.m_dc.DrawBitmap(bitmap, x, y, true);
-      g.m_dc.SelectObject(wx.Bitmap.NullBitmap);
+      g.m_dc.DrawImage(map, x, y);
       if(updating_all)
         return;
       //update_rect.X = x;
@@ -210,12 +204,15 @@ namespace TrainController {
       int i;
       grid g = field_grid;
 
-      wx.Font font = new wx.Font(6, wx.FontFamily.wxSWISS, wx.FontStyle.wxNORMAL, FontWeight.wxNORMAL);
-      g.m_dc.SelectObject(g.m_pixmap);
+      // TODO
+      System.Drawing.Font font = new System.Drawing.Font(
+        "wx.FontFamily.wxSWISS", 6
+        // , wx.FontStyle.wxNORMAL, FontWeight.wxNORMAL
+      );
 
       // draw background of coord bars
-      g.m_dc.SetPen(wx.GDIPens.wxLIGHT_GREY_PEN);
-      g.m_dc.SetBrush(wx.GDIBrushes.wxLIGHT_GREY_BRUSH);
+      g.m_dc.SetPen(System.Drawing.Pens.LightGray);
+      g.m_dc.SetBrush(System.Drawing.Brushes.LightGray);
       g.m_dc.DrawRectangle(0, 0, Configuration.XMAX, Configuration.VCOORDBAR);
       g.m_dc.DrawRectangle(0, 0, Configuration.HCOORDBAR, Configuration.YMAX);
 
@@ -251,7 +248,6 @@ namespace TrainController {
         if(pCoord != null && i == pCoord.y)
           g.m_dc.SetTextForeground(Colour.wxBLACK);
       }
-      g.m_dc.SelectObject(wx.Bitmap.NullBitmap);
     }
 
     public static void grid_paint() {
@@ -481,10 +477,15 @@ namespace TrainController {
       grid g;
       
       g = field_grid;
+#if DEBUG
+      System.Drawing.Graphics gr = ((System.Windows.Forms.Control)g.m_parent).CreateGraphics();
+      gr.DrawImage(g.m_pixmap, 0, 0);
+#else
       ClientDC clientDC = new ClientDC(g.m_parent);
       ScrolledWindow window = (ScrolledWindow)g.m_parent;
       window.PrepareDC(clientDC);
       BufferedDC wdc = new BufferedDC(clientDC, g.m_pixmap);
+#endif
     }
 
     public static void reset_clip_rect()	/* next time, don't paint anything */
@@ -840,9 +841,9 @@ namespace TrainController {
       return arr;
     }
 
-    public static void setBackgroundColor(wx.Colour col) {
+    public static void setBackgroundColor(out System.Drawing.Color col) {
       int rgb = curSkin.background;
-      col.Set((byte)(rgb >> 16), (byte)((rgb >> 8) & 0xFF), (byte)(rgb & 0xFF));
+      col = System.Drawing.Color.FromArgb((byte)(rgb >> 16), (byte)((rgb >> 8) & 0xFF), (byte)(rgb & 0xFF));
     }
 
 
@@ -907,7 +908,7 @@ namespace TrainController {
       b = colortable[col][2];
     }
 
-    public static void create_draw(ScrolledWindow parent) {
+    public static void create_draw(object/*ScrolledWindow*/ parent) {
       grid g;
 
       g = new grid(parent, Configuration.XMAX * 2, Configuration.YMAX * 2);

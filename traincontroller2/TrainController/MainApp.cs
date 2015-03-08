@@ -40,7 +40,7 @@ namespace TrainController {
     private int mTimeSliceCount;
 
 
-    public TrainController() {
+    private TrainController() {
       if(mInstance != null)
         throw new Exception("TrainController constructor can be called only once");
 
@@ -53,6 +53,9 @@ namespace TrainController {
     }
 
     public static TrainController GetInstance() {
+      if(mInstance == null)
+        mInstance = new TrainController();
+
       return mInstance;
     }
 
@@ -180,13 +183,13 @@ namespace TrainController {
           return;
       }
 
-      int pg = m_frame.m_top.FindPage(wxPorting.L("Layout"));
-      if(pg >= 0)
-        m_frame.m_top.Selection = (pg);
-      if(m_frame.m_trainInfo != null)
-        m_frame.m_trainInfo.Update(null);
+      //int pg = m_frame.m_top.FindPage(wxPorting.L("Layout"));
+      //if(pg >= 0)
+      //  m_frame.m_top.Selection = (pg);
+      //if(m_frame.m_trainInfo != null)
+      //  m_frame.m_trainInfo.Update(null);
 
-      Globals.gLogger.UninstallLog();
+      //Globals.gLogger.UninstallLog();
 
       //  Add newly opened file to list of old files
 

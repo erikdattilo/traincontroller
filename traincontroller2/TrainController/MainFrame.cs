@@ -13,6 +13,10 @@ namespace TrainController {
       InitializeComponent();
 
       MainFrame_OldConstructor("AAA");
+
+      TrainController.GetInstance();
+
+      TrainController.GetInstance().OpenFile(@"C:\Documents and Settings\Erik_\Desktop\tdir38win\Scenari\Padova2014.zip");
     }
 
     public void MainFrame_OldConstructor(String title)
@@ -30,32 +34,35 @@ namespace TrainController {
       //      PrepareToolBar();
       //      PrepareStatusBar();
 
-      //      //
-      //      //	Client area
-      //      //
-      //      //	m_splitter controls the top and bottom views
-      //      //
+#if DEFINED_IN_DESIGNER
+      //
+      //	Client area
+      //
+      //	m_splitter controls the top and bottom views
+      //
 
-      //      m_splitter = new MySplitterWindow(this);
-      //      m_splitter.SashGravity = (1.0);
-
+      m_splitter = new MySplitterWindow(this);
+      m_splitter.SashGravity = (1.0);
+#endif
       //      //
       //      //	the top view is the layout Canvas
       //      //	inside a managing notebook
       //      //
 
-      //      m_top = new NotebookManager(m_splitter, wxPorting.T("top"), (int)MenuIDs.ID_NOTEBOOK_TOP);
+#if DEFINED_IN_DESIGNER
+      m_top = new NotebookManager(m_splitter, wxPorting.T("top"), (int)MenuIDs.ID_NOTEBOOK_TOP);
 
-      //      Canvas pCanvas = new Canvas(m_top);
-      //      pCanvas.Name = (wxPorting.T("canvas"));
-      //      m_top.AddPage(pCanvas, wxPorting.L("Layout"), true, -1);
+      Canvas pCanvas = new Canvas(m_top);
+      pCanvas.Name = (wxPorting.T("canvas"));
+      m_top.AddPage(pCanvas, wxPorting.L("Layout"), true, -1);
 
-      //      //
-      //      //	the bottom view is another splitter
-      //      //
+      //
+      //	the bottom view is another splitter
+      //
 
-      //      m_bottomSplitter = new MySplitterWindow(m_splitter);
-      //      m_bottomSplitter.SashGravity = (0.5);
+      m_bottomSplitter = new MySplitterWindow(m_splitter);
+      m_bottomSplitter.SashGravity = (0.5);
+#endif
 
       //      //
       //      //	the bottom left view has a managed
@@ -80,13 +87,11 @@ namespace TrainController {
 
       //      m_timeFrame = null;
 
-      //      // you can also do this to start with a single window
-      //#if false
-      //        m_top.Show(false);
-      //        m_splitter.Initialize(m_left);
-      //#else
-      //      // you can also try -100
-      //      m_splitter.SplitHorizontally(m_top, m_bottomSplitter, 300);
+#if DEFINED_IN_DESIGNER
+      // you can also do this to start with a single window
+      // you can also try -100
+      m_splitter.SplitHorizontally(m_top, m_bottomSplitter, 300);
+#endif
 
       //      //      wxSize sz = this.Size;
       //      //      m_bottomSplitter.SplitVertically(m_left, m_right, -300);
@@ -97,7 +102,6 @@ namespace TrainController {
 
       //      // TODO Re-enable this line once learn how to handle cross-thread calling...
       //      // m_timer.Start(100);
-      //#endif
       //      Globals.gLogger.SetParent(this);
 
       //      m_printer = new HtmlEasyPrinting(wxPorting.L(""), this);
@@ -143,10 +147,12 @@ namespace TrainController {
     //
 
     //public Traindir m_app;
-    //public NotebookManager m_top;		// top (pages are Canvases or TimeTable or Html)
+#if DEFINED_IN_DESIGNER
+    public NotebookManager m_top;		// top (pages are Canvases or TimeTable or Html)
     //public NotebookManager m_left;	// bottom-left
     //public NotebookManager m_right;	// bottom-right
     //public SplitterWindow m_splitter;
+#endif
     //public SplitterWindow m_bottomSplitter;
     //public int m_topSashValue;
     //public ToolBar m_toolbar;

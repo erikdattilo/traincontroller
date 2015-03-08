@@ -221,6 +221,17 @@
     <Compile Include="AAA_Files_H\1st Process\traindir.hu.cs" />
     <Compile Include="AAA_Files_H\1st Process\traindir3.h.cs" />
     <Compile Include="AAA_Files_H\1st Process\ui.h.cs" />
+    <Compile Include="ToMoveSomewhere\MyCanvas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToMoveSomewhere\PixMap.cs" />
+    <Compile Include="ToMoveSomewhere\ScrolledWindow.cs" />
+    <Compile Include="ToMoveSomewhere\SignalAspect.cs" />
+    <Compile Include="ToMoveSomewhere\Station.cs" />
+    <Compile Include="ToMoveSomewhere\TrackSubTypes.cs" />
+    <Compile Include="ToMoveSomewhere\Train.cs" />
+    <Compile Include="ToMoveSomewhere\TrainStop.cs" />
+    <Compile Include="ToMoveSomewhere\z - ExtensionMethods.cs" />
     <Compile Include="TrainController\MainFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -252,13 +263,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SimCommands\SimCommands.cs" />
-    <Compile Include="ToMoveSomewhere\PixMap.cs" />
-    <Compile Include="ToMoveSomewhere\SignalAspect.cs" />
-    <Compile Include="ToMoveSomewhere\Station.cs" />
-    <Compile Include="ToMoveSomewhere\Train.cs" />
-    <Compile Include="ToMoveSomewhere\TrainStop.cs" />
-    <Compile Include="ToMoveSomewhere\TrackSubTypes.cs" />
-    <Compile Include="ToMoveSomewhere\z - ExtensionMethods.cs" />
     <Compile Include="TrainController\AlertList.cs" />
     <Compile Include="TrainController\AlertListListener.cs" />
     <Compile Include="TrainController\Canvas.cs" />
