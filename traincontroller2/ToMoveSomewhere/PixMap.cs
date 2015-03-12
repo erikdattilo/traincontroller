@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace TrainController {
   public static class PixMap {
@@ -16,7 +18,7 @@ namespace TrainController {
       if(data == null || data.Length < 1)
         throw new NotImplementedException();
 
-      match = Regex.Match(data[lineCounter++], "^[ \t]*([0-9]+)[ \t]*([0-9]+)[ \t]*([0-9]+)[ \t]*([0-9]+)[ \t]*$");
+      match = Regex.Match(data[lineCounter++], "^[ \t]*([0-9]+)[ \t]*([0-9]+)[ \t]*([0-9]+)[ \t]*([0-9]+)[ \t]*.*$");
       if(!match.Success)
         throw new NotImplementedException();
 
@@ -34,12 +36,14 @@ namespace TrainController {
         throw new NotImplementedException();
 
       Dictionary<string, Color> definedColors = new Dictionary<string, Color>() {
-        {"lightgray", Color.LightGray},
-        {"gray", Color.Gray},
-        {"red", Color.Red},
-        {"orange", Color.Orange},
-        {"white", Color.White},
-        {"black", Color.Black}
+        //{"lightgray", Color.LightGray},
+        //{"gray", Color.Gray},
+        //{"red", Color.Red},
+        //{"orange", Color.Orange},
+        //{"white", Color.White},
+        //{"black", Color.Black},
+        // TODO Check this color...
+        {"none", Color.Black}
       };
 
       Dictionary<char, Color> colorList = new Dictionary<char, Color>();
@@ -55,22 +59,41 @@ namespace TrainController {
           throw new NotImplementedException();
         }
 
-        String strColor = match.Groups[2].Value;
+        String strColor = match.Groups[2].Value.ToLower();
 
         Color color;
         if(strColor[0] == '#') {
-          if(strColor.Length != 1 + 12)
-            throw new NotImplementedException();
+          switch(strColor.Length) {
+            case 1 + 12:
+              if(strColor != "#000000000000")
+                color = Color.Black;
+              else if(strColor != "#0000d8000000")
+                color = Color.Red;
+              else
+                throw new NotImplementedException();
+              break;
 
-          if(strColor != "#000000000000")
-            color = Color.Black;
-          else if(strColor != "#0000d8000000")
-            color = Color.Red;
-          else
-            throw new NotImplementedException();
+            case 1 + 6:
+              int rr, gg, bb;
+              if(
+                !int.TryParse(strColor.Substring(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out rr) ||
+                !int.TryParse(strColor.Substring(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out gg) ||
+                !int.TryParse(strColor.Substring(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out bb)
+              )
+                throw new NotImplementedException();
+
+              color = Color.FromArgb(rr, gg, bb);
+              break;
+
+            default:
+              throw new NotImplementedException();
+          }
 
         } else {
-          if(definedColors.ContainsKey(strColor.ToLower()))
+          PropertyInfo propInfo = typeof(Color).GetProperty(strColor, BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase);
+          if(propInfo != null && propInfo.PropertyType == typeof(Color)) {
+            color = (Color)propInfo.GetValue(null, null);
+          } else if(definedColors.ContainsKey(strColor.ToLower()))
             color = definedColors[strColor];
           else
             throw new NotImplementedException();

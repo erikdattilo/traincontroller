@@ -48,7 +48,7 @@ namespace TrainController {
 
       trkFile.SetExt(wxPorting.T(".trk"));
       if(!trkFile.Load()) {
-        buff = String.Format(wxPorting.T("File '%s' not found."), trkFile.name.GetFullPath());
+        buff = String.Format(wxPorting.T("File '%s' not found."), trkFile.mName.GetFullPath());
         Globals.traindir.Error(buff);
         return null;
       }

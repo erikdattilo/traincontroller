@@ -11,6 +11,10 @@ namespace TrainController {
   public partial class MainFrame : Form {
     public MainFrame() {
       InitializeComponent();
+
+      this.WindowState = FormWindowState.Maximized;
+
+
       pictureBox1.Init();
 
       MainFrame_OldConstructor("AAA");

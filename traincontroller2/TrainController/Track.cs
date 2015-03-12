@@ -441,7 +441,7 @@ namespace TrainController {
     public int x, y;
     public int xsize, ysize;
     // public trktype type = trktype.NOTRACK;
-    public trkdir direction = trkdir.W_E;
+    public trkdir direction = trkdir.NODIR;
     public trkstat status = trkstat.ST_FREE;
     public int wlinkx, wlinky;
     public int elinkx, elinky;

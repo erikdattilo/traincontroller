@@ -348,130 +348,69 @@ namespace TrainController {
     public static byte[] update_map = new byte[Configuration.XNCELLS * Configuration.YNCELLS];
     public static byte UPDATE_MAP(int x, int y) { return update_map[(y) * Configuration.XNCELLS + (x)]; }
     public static void UPDATE_MAP(int x, int y, byte value) { update_map[(y) * Configuration.XNCELLS + (x)] = value; }
-    public static pxmap[] pixmaps;
-    public static int npixmaps, maxpixmaps;
+    public static List<pxmap> pixmaps = new List<pxmap>();
 
     public static void draw_link(int x0, int y0, int x1, int y1, int color) {
       field_grid.DrawLineCenterCell(x0, y0, x1, y1, color);
     }
 
-    public static object get_pixmap_file(String fname) {
-      throw new NotImplementedException();
-      //      TDFile xpmFile = new TDFile(fname);
+    public static System.Drawing.Image get_pixmap_file(String fname) {
+      System.Drawing.Image img;
 
-      //      if(!xpmFile.Load())
-      //        return 0;
+      TDFile xpmFile = new TDFile(fname);
 
-      //      gLogger.SetExtraInfo(fname);
+      if(!xpmFile.Load())
+        return null;
 
-      //      int nLines = xpmFile.LineCount();
-      //      String[] pattern = (String[])Globals.calloc(nLines + 10);
-      //      int i, j, k;
-      //      string buff;
+      gLogger.SetExtraInfo(fname);
 
-      //      // collect all strings (delimited by double-quotes)
-      //      // from the file and store them in pattern[],
-      //      // one string per entry.
+      List<String> pattern = new List<string>();
+      int i, j, k;
+      string buff;
 
-      //      for(i = 0; i < nLines; ) {
-      //        if(!xpmFile.ReadLine(buff, buff.Length))
-      //          break;
-      //        for(j = 0; j <= buff.Length && buff[j] != '"'; ++j) ;
-      //        if(j++ == buff.Length) // Erik: Original code ==> if(buff[j++] == 0)
-      //          continue;
-      //        for(k = 0; j <= buff.Length && buff[j] != '"'; buff.ReplaceAt(k, buff[j]), k++, j++) ;
+      // collect all strings (delimited by double-quotes)
+      // from the file and store them in pattern[],
+      // one string per entry.
 
-      //        if(j == buff.Length)
-      //          continue;
-      //        buff = buff.Substring(0, k - 1);
-      //        // we allocate a bit more to allow extending
-      //        // shorter lines during the checking phase
-      //        pattern[i] = ""; //  (String)Globals.calloc(k + 10, 1);
-      //#if wxUSE_UNICODE
-      //      wxConvISO8859_1.FromWChar(pattern[i], k + 10, buff, wxNO_LEN);
-      //#else
-      //        Globals.strcpy(pattern[i], buff);
-      //#endif
-      //        ++i;
-      //      }
+      while(xpmFile.ReadLine(out buff)) {
+        j = buff.IndexOf('"');
+        k = buff.IndexOf('"', j + 1);
+        if(j < 0 || j < 0)
+          continue;
+        j++;
+        k--;
 
-      //      wx.Image img = null;
+        pattern.Add(buff.Substring(j, k));
+      }
 
-      //      // now analyze the lines to check if the image is correct
+      // now analyze the lines to check if the image is correct
+      img = PixMap.FromXpmData(pattern.ToArray());
 
-      //      int nRows, nColumns, nColors, depth, x, y, c;
-      //      if(Globals.sscanf(pattern[0], "%d %d %d %d", nColumns, nRows, nColors, depth) != 4) {
-      //        buff = String.Format( wxPorting.T("Error loading '%s' - not a valid XPM file."), fname);
-      //        Globals.traindir.layout_error(buff);
-      //        goto done;
-      //      }
-      //      if(nRows > i - 1 - nColors) {
-      //        string cbuff;
-      //        buff = String.Format( wxPorting.T("%s: Warning: too many lines in XPM header. Truncated."), fname);
-      //        Globals.traindir.layout_error(buff);
-      //        cbuff = String.Format("%d %d %d %d", nColumns, i - 1 - nColors, nColors, depth);
-      //        Globals.free(pattern[0]);
-      //        pattern[0] = Globals.strdup(cbuff);
-      //      }
-      //      for(y = nColors + 1; y < i; ++y) {  // check each pixel row
-      //        for(x = 0; x < nColumns; ++x) {
-      //          bool valid = false;
-      //          if(pattern[y][x] == 0)
-      //            break;
-      //          for(c = 0; c < nColors; ++c) {
-      //            if(pattern[c + 1][0] == pattern[y][x]) {
-      //              valid = true;
-      //              break;
-      //            }
-      //          }
-      //          if(!valid) {
-      //            pattern[y].ReplaceAt(x, pattern[1][0]);  // force first color (hopefully "None")
-      //            buff = String.Format( wxPorting.T("%s: Warning: bad color key (y=%d,x=%d). Replaced."), fname, y, x);
-      //            Globals.traindir.layout_error(buff);
-      //          }
-      //        }
-      //      }
-      //      try {
-      //        img = new wx.Image(pattern);
-      //        if(!img.Ok) {
-      //          buff = String.Format( wxPorting.T("Error loading '%s'"), fname);
-      //          Globals.traindir.layout_error(buff);
-      //          Globals.delete(img);
-      //          img = null;
-      //        }
-      //      } catch(Exception) {
-      //        buff = String.Format( wxPorting.T("Error loading '%s' - not a valid XPM file."), fname);
-      //        Globals.traindir.layout_error(buff);
-      //      }
-      //    done:
-      //      for(i = 0; pattern[i] != null; ++i)
-      //        Globals.free(pattern[i]);
-      //      Globals.free(pattern);
-      //      return (object)img;
+      // TODO Enable errors
+      //if(img == null) {
+      //  buff = String.Format(wxPorting.T("Error loading '%s' - not a valid XPM file."), fname);
+      //  Globals.traindir.layout_error(buff);
+      //}
+
+      return img;
     }
 
     public static int get_pixmap_index(String mapname) {
-      throw new NotImplementedException();
+      int i;
 
-      //int i;
+      if(String1.IsNullOrWhiteSpaces(mapname))
+        return -1;
 
-      //if(String1.IsNullOrWhiteSpaces(mapname))
-      //  return -1;
-
-      //for(i = 0; i < npixmaps; ++i)
-      //  if(mapname.Equals(pixmaps[i].name))
-      //    return i;
-      //if(npixmaps >= maxpixmaps) {
-      //  maxpixmaps += 10;
-      //  if(pixmaps == null)
-      //    pixmaps = new pxmap[maxpixmaps];
-      //  else
-      //    pixmaps = (pxmap*)realloc(pixmaps, sizeof(pxmap) * maxpixmaps);
-      //}
-      //if(!(pixmaps[npixmaps].pixels = (string)get_pixmap_file(mapname)))
-      //  return -1;          /* failed! file does not exist */
-      //pixmaps[npixmaps].name = String.Copy(mapname);
-      //return npixmaps++;
+      for(i = 0; i < pixmaps.Count(); ++i) {
+        if(mapname.Equals(pixmaps[i].name))
+          return i;
+      }
+      pxmap pmap = new pxmap();
+      if((pmap.pixels = get_pixmap_file(mapname)) == null)
+        return -1;          /* failed! file does not exist */
+      pmap.name = String.Copy(mapname);
+      pixmaps.Add(pmap);
+      return pixmaps.Count() - 1;
     }
 
     public static System.Drawing.Image get_pixmap(String[] pxpm) {
@@ -951,6 +890,7 @@ namespace TrainController {
           t.direction = tmp;
           return;
       }
+
       draw_layout(t.x, t.y, lns, fg);
       if(show_blocks && t.direction == trkdir.W_E && t.length >= 100)
         draw_layout(t.x, t.y, block_layout, curSkin.outline); //fieldcolors[TRACK]);

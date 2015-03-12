@@ -7,34 +7,29 @@ using System.IO;
 
 namespace TrainController {
   public class TDFile {
-    public wxFileName name;
-    public string content;
-    private int nextChar;
+    StringReader mReader = null;
+
+    public wxFileName mName;
+    public string mContent;
 
     public int size {
       get {
-        return (content == null) ? 0 : content.Length;
+        return (mContent == null) ? 0 : mContent.Length;
       }
     }
 
     public TDFile(string fname) {
-      name = new wxFileName(fname);
+      mName = new wxFileName(fname);
       //content = 0;
       //nextChar = 0;
     }
 
     public bool Load() {
-      if(!Globals.LoadFile(name.GetFullPath(), out content))
+      if(!Globals.LoadFile(mName.GetFullPath(), out mContent))
         return false;
 
-      if(content == null)
-        content = "";
+      mReader = new StringReader(mContent);
 
-      content = content
-        .Replace("\r\n", "\n")
-        .Replace("\r", "\n");
-
-      nextChar = 0;
       return true;
     }
 
@@ -50,19 +45,12 @@ namespace TrainController {
     }
 
     public bool ReadLine(out string dest) {
-      dest = "";
-      int i = content.IndexOf('\n', nextChar);
-      if(i < 0)
-        return false;
-
-      dest = content.Substring(nextChar, i - nextChar);
-      nextChar = i + 1;
-
-      return true;
+      dest = mReader.ReadLine();
+      return (dest != null);
     }
 
     public void Rewind() {
-      nextChar = 0;
+      mReader = new StringReader(mContent);
     }
 
     public int GetPos() {
@@ -77,9 +65,9 @@ namespace TrainController {
 
     public void SetExt(string ext) {
       if(ext != null && ext.Length > 1)
-        name.SetExt(ext.Substring(1));
+        mName.SetExt(ext.Substring(1));
       else
-        name.SetEmptyExt();
+        mName.SetEmptyExt();
     }
 
     public void GetDirName(string dest, int size) {
