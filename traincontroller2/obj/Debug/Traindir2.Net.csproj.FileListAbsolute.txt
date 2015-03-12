@@ -1,3 +1,0 @@
-C:\TrainDir.NET\Traindir2.Net\obj\Debug\ResolveAssemblyReference.cache
-C:\TrainDir.NET\Traindir2.Net\obj\Debug\Traindir2.Net.Properties.Resources.resources
-C:\TrainDir.NET\Traindir2.Net\obj\Debug\Traindir2.Net.csproj.GenerateResource.Cache

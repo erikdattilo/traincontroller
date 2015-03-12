@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace TrainController {
 
-  public class MyCanvas : Control {
+  public class MyCanvas : PictureBox {
 
 
     public TDLayout m_layout;
@@ -21,6 +22,9 @@ namespace TrainController {
       // new Size(Configuration.XMAX * 2, Configuration.YMAX * 2),
       // WindowStyles.HSCROLL | WindowStyles.VSCROLL | WindowStyles.NO_FULL_REPAINT_ON_RESIZE)
     {
+    }
+
+    public void Init() {
       //      EVT_PAINT(new wx.EventListener(OnPaint));
       //      //      //    EVT_MOUSE_EVENTS(new wx.EventListener(OnMouse));
       //      //      EVT_MOTION(new wx.EventListener(OnMouseMove));
@@ -37,6 +41,9 @@ namespace TrainController {
       //      //      EVT_CHAR(new wx.EventListener(OnChar));
 
       //      SetScrollbars(1, 1, Configuration.XMAX, Configuration.YMAX);
+      if(LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+        return;
+
       m_layout = null;
       Globals.create_colors();
       Globals.create_draw(this);
@@ -58,7 +65,7 @@ namespace TrainController {
     //    }
 
     protected override void OnPaint(PaintEventArgs e) {
-    // public void OnPaint(object sender, Event evt) {
+      // public void OnPaint(object sender, Event evt) {
       if(Globals.field_grid != null)
         Globals.field_grid.Paint(e.Graphics);
     }

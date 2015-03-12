@@ -6,6 +6,7 @@ using wx.Archive;
 using TrainController.SimCommands;
 using wx;
 using System.Timers;
+using System.Drawing;
 
 namespace TrainController {
   public class _conf {
@@ -21,10 +22,312 @@ namespace TrainController {
 
   public class pxmap {
     public string name;
-    public object pixels;
+    public System.Drawing.Image pixels;
   }
 
   partial class Globals {
+
+    // TODO Implement this function
+    public static void do_alert(String msg) {
+      //alert_msg = String.Copy(msg);
+      //repaint_labels();
+      //Globals.traindir.AddAlert(msg);
+      //if(beep_on_alert)
+      //  alert_beep();
+    }
+
+    public static VLines[] switch_rect = new VLines[] {
+	new VLines( 0, 0, Configuration.HGRID - 1, 0 ),
+	new VLines( Configuration.HGRID - 1, 0, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( 0, 0, 0, Configuration.VGRID - 1 ),
+	new VLines( 0, Configuration.VGRID - 1, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( -1 )
+};
+
+    public static System.Drawing.Image speed_pmap;
+    public static String[] speed_xpm = new String[] {
+"8 3 3 1",
+"       c #FFFFFFFFFFFF",
+".      c #000000000000",
+"X      c #000000000000",
+"  ....  ",
+" ..  .. ",
+"  ....  "};
+
+
+
+    public static VLines[] block_layout = new VLines[] {
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 1, Configuration.HGRID / 2, Configuration.VGRID / 2 + 2 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] block_layout_ns = new VLines[] {
+	new VLines( Configuration.HGRID / 2 - 1, Configuration.VGRID / 2, Configuration.HGRID / 2 + 2, Configuration.VGRID / 2 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] station_block_layout = new VLines[] {
+	new VLines( Configuration.HGRID / 2, 0, 0, Configuration.VGRID / 2 ),
+	new VLines( 0, Configuration.VGRID / 2, Configuration.HGRID / 2, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID - 1, Configuration.HGRID - 1, Configuration.VGRID / 2 ),
+	new VLines( Configuration.HGRID / 2, 0, Configuration.HGRID - 1, Configuration.VGRID / 2 ),
+	new VLines( -1 )
+};
+
+
+    public static VLines[] nw_se_layout = new VLines[] {
+	new VLines( 1, 0, Configuration.HGRID - 1, Configuration.VGRID - 2 ),
+	new VLines( 0, 0, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( 0, 1, Configuration.HGRID - 2, Configuration.VGRID - 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] sw_ne_layout = new VLines[] {
+	new VLines( 0, Configuration.VGRID - 2, Configuration.HGRID - 2, 0 ),
+	new VLines( 0, Configuration.VGRID - 1, Configuration.HGRID - 1, 0 ),
+	new VLines( 1, Configuration.VGRID - 1, Configuration.HGRID - 1, 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] n_s_layout = new VLines[]{
+	new VLines(Configuration.HGRID / 2 + 1, 0, Configuration.HGRID / 2 + 1, Configuration.VGRID - 1 ),
+	new VLines(Configuration.HGRID / 2 - 0, 0, Configuration.HGRID / 2 - 0, Configuration.VGRID - 1 ),
+	new VLines(-1)
+};
+
+    public static VLines[] sw_n_layout = new VLines[] {
+	new VLines( Configuration.HGRID / 2 + 1, 0, Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 ),
+	new VLines( Configuration.HGRID / 2 - 0, 0, Configuration.HGRID / 2 - 0, Configuration.VGRID / 2 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2, 1, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2 - 0, Configuration.VGRID / 2, 0, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2 - 0, Configuration.VGRID / 2 - 1, 0, Configuration.VGRID - 2 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] nw_s_layout = new VLines[] {
+	new VLines( 1, 0, Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 ),
+	new VLines( 0, 0, Configuration.HGRID / 2 - 0, Configuration.VGRID / 2 ),
+	new VLines( 0, 1, Configuration.HGRID / 2 - 1, Configuration.VGRID / 2 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 - 0, Configuration.HGRID / 2 + 1, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2 - 0, Configuration.VGRID / 2 - 0, Configuration.HGRID / 2 - 0, Configuration.VGRID - 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] se_n_layout = new VLines[] {
+	new VLines( Configuration.HGRID / 2 + 1, 0, Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 ),
+	new VLines( Configuration.HGRID / 2 - 0, 0, Configuration.HGRID / 2 - 0, Configuration.VGRID / 2 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2, Configuration.HGRID - 1, Configuration.VGRID - 2 ),
+	new VLines( Configuration.HGRID / 2 - 0, Configuration.VGRID / 2, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2 - 0, Configuration.VGRID / 2 + 1, Configuration.HGRID - 2, Configuration.VGRID - 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] ne_s_layout = new VLines[] {
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 1, Configuration.HGRID - 2, 0 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2, Configuration.HGRID - 1, 0 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2, Configuration.HGRID - 1, 1 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 - 0, Configuration.HGRID / 2 + 1, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2 - 0, Configuration.VGRID / 2 - 0, Configuration.HGRID / 2 - 0, Configuration.VGRID - 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] w_e_layout = new VLines[] {
+	/*new VLines( 0, Configuration.VGRID / 2 - 1, Configuration.HGRID - 1, Configuration.VGRID / 2 - 1 ),*/
+	new VLines( 0, Configuration.VGRID / 2 - 0, Configuration.HGRID - 1, Configuration.VGRID / 2 - 0 ),
+	new VLines( 0, Configuration.VGRID / 2 + 1, Configuration.HGRID - 1, Configuration.VGRID / 2 + 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] nw_e_layout = new VLines[] {
+	new VLines( 1, 0, Configuration.HGRID / 2, Configuration.VGRID / 2 - 1 ),
+	new VLines( 0, 0, Configuration.HGRID / 2, Configuration.VGRID / 2 - 0 ),
+	new VLines( 0, 1, Configuration.HGRID / 2, Configuration.VGRID / 2 + 1 ),
+	/*new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 1, Configuration.HGRID - 1, Configuration.VGRID / 2 - 1 ),*/
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 0, Configuration.HGRID - 1, Configuration.VGRID / 2 - 0 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 + 1, Configuration.HGRID - 1, Configuration.VGRID / 2 + 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] sw_e_layout = new VLines[] {
+	new VLines( 0, Configuration.VGRID - 2, Configuration.HGRID / 2 - 1, Configuration.VGRID / 2 /*- 1*/ ),
+	new VLines( 0, Configuration.VGRID - 1, Configuration.HGRID / 2, Configuration.VGRID / 2 - 0 ),
+	new VLines( 1, Configuration.VGRID - 1, Configuration.HGRID / 2, Configuration.VGRID / 2 + 1 ),
+	/*new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 1, Configuration.HGRID - 1, Configuration.VGRID / 2 - 1 ),*/
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 0, Configuration.HGRID - 1, Configuration.VGRID / 2 - 0 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 + 1, Configuration.HGRID - 1, Configuration.VGRID / 2 + 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] w_ne_layout = new VLines[] {
+	/*new VLines( 0, Configuration.VGRID / 2 - 1, Configuration.HGRID / 2, Configuration.VGRID / 2 - 1 ),*/
+	new VLines( 0, Configuration.VGRID / 2 - 0, Configuration.HGRID / 2, Configuration.VGRID / 2 - 0 ),
+	new VLines( 0, Configuration.VGRID / 2 + 1, Configuration.HGRID / 2, Configuration.VGRID / 2 + 1 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 1, Configuration.HGRID - 2, 0 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 0, Configuration.HGRID - 1, 0 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 + 1, Configuration.HGRID - 1, 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] w_se_layout = new VLines[] {
+	/*new VLines( 0, Configuration.VGRID / 2 - 1, Configuration.HGRID / 2 - 0, Configuration.VGRID / 2 - 1 ),*/
+	new VLines( 0, Configuration.VGRID / 2 - 0, Configuration.HGRID / 2, Configuration.VGRID / 2 - 0 ),
+	new VLines( 0, Configuration.VGRID / 2 + 1, Configuration.HGRID / 2, Configuration.VGRID / 2 + 1 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 /*- 1*/, Configuration.HGRID - 1, Configuration.VGRID - 2 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 - 0, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID / 2 + 1, Configuration.HGRID - 2, Configuration.VGRID - 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] sweng_sw_ne_straight = new VLines[] {
+	new VLines( 0, Configuration.VGRID - 2, Configuration.HGRID - 2, 0 ),
+	new VLines( 0, Configuration.VGRID - 1, Configuration.HGRID - 1, 0 ),
+	new VLines( 1, Configuration.VGRID - 1, Configuration.HGRID - 1, 1 ),
+
+	new VLines( 0, Configuration.VGRID / 2, Configuration.HGRID / 2 - 1, Configuration.VGRID / 2 ),
+	new VLines( 0, Configuration.VGRID / 2 + 1, Configuration.HGRID / 2 - 1, Configuration.VGRID / 2 + 1 ),
+
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 + 1, Configuration.HGRID - 1, Configuration.VGRID / 2 + 1 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 - 0, Configuration.HGRID - 1, Configuration.VGRID / 2 - 0 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] sweng_sw_ne_switched = new VLines[] {
+
+	new VLines( 0, Configuration.VGRID / 2, Configuration.HGRID - 2, 0 ),
+	new VLines( 0, Configuration.VGRID / 2 + 1, Configuration.HGRID - 1, 0 ),
+
+	new VLines( 0, Configuration.VGRID - 1, Configuration.HGRID - 1, Configuration.VGRID / 2 ),
+	new VLines( 1, Configuration.VGRID - 1, Configuration.HGRID - 1, Configuration.VGRID / 2 + 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] sweng_nw_se_straight = new VLines[] {
+	new VLines( 1, 0, Configuration.HGRID - 1, Configuration.VGRID - 2 ),
+	new VLines( 0, 0, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( 0, 1, Configuration.HGRID - 2, Configuration.VGRID - 1 ),
+
+	new VLines( 0, Configuration.VGRID / 2, Configuration.HGRID / 2 - 1, Configuration.VGRID / 2 ),
+	new VLines( 0, Configuration.VGRID / 2 + 1, Configuration.HGRID / 2 - 1, Configuration.VGRID / 2 + 1 ),
+
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 + 1, Configuration.HGRID - 1, Configuration.VGRID / 2 + 1 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID / 2 - 0, Configuration.HGRID - 1, Configuration.VGRID / 2 - 0 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] sweng_nw_se_switched = new VLines[] {
+
+	new VLines( 0, 0, Configuration.HGRID - 1, Configuration.VGRID / 2 ),
+	new VLines( 0, 1, Configuration.HGRID - 1, Configuration.VGRID / 2 + 1 ),
+
+	new VLines( 0, Configuration.VGRID / 2, Configuration.HGRID - 1, Configuration.VGRID - 2 ),
+	new VLines( 1, Configuration.VGRID / 2 + 1, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] swengv_sw_ne_straight = new VLines[] {
+	new VLines( Configuration.HGRID / 2 + 1, 0, Configuration.HGRID / 2 + 1, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2 - 0, 0, Configuration.HGRID / 2 - 0, Configuration.VGRID - 1 ),
+
+	new VLines( 0, Configuration.VGRID - 2, Configuration.HGRID - 2, 0 ),
+	new VLines( 0, Configuration.VGRID - 1, Configuration.HGRID - 1, 0 ),
+	new VLines( 1, Configuration.VGRID - 1, Configuration.HGRID - 1, 1 ),
+
+	new VLines( -1 )
+};
+
+    public static VLines[] swengv_sw_ne_switched = new VLines[] {
+
+	new VLines( 0, Configuration.VGRID - 2, Configuration.HGRID / 2 - 0, 0 ),
+	new VLines( 0, Configuration.VGRID - 1, Configuration.HGRID / 2 + 1, 0 ),
+
+	new VLines( Configuration.HGRID / 2 - 0, Configuration.VGRID - 1, Configuration.HGRID - 1, 0 ),
+	new VLines( Configuration.HGRID / 2 + 1, Configuration.VGRID - 1, Configuration.HGRID - 1, 1 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] swengv_nw_se_straight = new VLines[] {
+	new VLines( Configuration.HGRID / 2 + 1, 0, Configuration.HGRID / 2 + 1, Configuration.VGRID - 1 ),
+	new VLines( Configuration.HGRID / 2 - 0, 0, Configuration.HGRID / 2 - 0, Configuration.VGRID - 1 ),
+
+	new VLines( 1, 0, Configuration.HGRID - 1, Configuration.VGRID - 2 ),
+	new VLines( 0, 0, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( 0, 1, Configuration.HGRID - 2, Configuration.VGRID - 1 ),
+
+	new VLines( -1 )
+};
+
+    public static VLines[] swengv_nw_se_switched = new VLines[] {
+
+	new VLines( 0, 0, Configuration.HGRID / 2 - 1, Configuration.VGRID - 1 ),
+	new VLines( 0, 1, Configuration.HGRID / 2 - 0, Configuration.VGRID - 1 ),
+
+	new VLines( Configuration.HGRID / 2 - 0, 0, Configuration.HGRID - 1, Configuration.VGRID - 2 ),
+	new VLines( Configuration.HGRID / 2 + 1, 0, Configuration.HGRID - 1, Configuration.VGRID - 1 ),
+	new VLines( -1 )
+};
+    public static VLines[] etrigger_layout = new VLines[] {
+	new VLines( 1, 2, Configuration.HGRID - 2, 2 ),
+	new VLines( 1, 2, Configuration.HGRID / 2, Configuration.VGRID - 2 ),
+	new VLines( Configuration.HGRID / 2, Configuration.VGRID - 2, Configuration.HGRID - 2, 2 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] wtrigger_layout = new VLines[] {
+	new VLines( 1, Configuration.VGRID - 2, Configuration.HGRID - 2, Configuration.VGRID - 2 ),
+	new VLines( 1, Configuration.VGRID - 2, Configuration.HGRID / 2, 2 ),
+	new VLines( Configuration.HGRID / 2, 2, Configuration.HGRID - 2, Configuration.VGRID - 2 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] ntrigger_layout = new VLines[] {
+	new VLines( 2, 1, 2, Configuration.VGRID - 2 ),
+	new VLines( 2, 1, Configuration.HGRID - 2, Configuration.VGRID / 2 ),
+	new VLines( 2, Configuration.VGRID - 2, Configuration.HGRID - 2, Configuration.VGRID / 2 ),
+	new VLines( -1 )
+};
+
+    public static VLines[] strigger_layout = new VLines[] {
+	new VLines( Configuration.HGRID - 2, 1, Configuration.HGRID - 2, Configuration.VGRID - 2 ),
+	new VLines( 2, Configuration.VGRID / 2, Configuration.HGRID - 2, 1 ),
+	new VLines( 2, Configuration.VGRID / 2, Configuration.HGRID - 2, Configuration.VGRID - 2 ),
+	new VLines( -1 )
+};
+
+    public static System.Drawing.Image itin_pmap;
+    public static String[] itin_xpm = new String[] {
+"8 9 4 1",
+"       c lightgray",
+".      c #000000000000",
+"X      c gray",
+"#      c black",
+"        ",
+"  ....  ",
+" ...... ",
+"..XXXX..",
+".XXXXXX.",
+"..XXXX..",
+"#......#",
+" #....# ",
+"  ####  "
+};
+
+    public static System.Drawing.Image camera_pmap;
+    public static String[] camera_xpm = new String[] {
+"13 10 3 1",
+"       c #FFFFFFFFFFFF",
+".      c #000000000000",
+"X      c #0000FFFFFFFF",
+"             ",
+"   ..        ",
+" ........... ",
+" . ..      . ",
+" .   ...   . ",
+" .   . .   . ",
+" .   ...   . ",
+" .         . ",
+" ........... ",
+"             "};
+
     public static TrainController traindir {
       get {
         return TrainController.GetInstance();
@@ -33,6 +336,8 @@ namespace TrainController {
 
     // TODO Handle this vars
     public static _conf conf;
+    public static bool show_speeds = false;
+    public static bool show_blocks = false;
     public static bool show_links = true; 
     public static bool signal_traditional = false;
     public static bool updating_all = false;
@@ -169,7 +474,7 @@ namespace TrainController {
       //return npixmaps++;
     }
 
-    public static wx.Image get_pixmap(String[] pxpm) {
+    public static System.Drawing.Image get_pixmap(String[] pxpm) {
       //wx.Image img = new wx.Image(pxpm);
       //return img;
       return PixMap.FromXpmData(pxpm);
@@ -219,12 +524,12 @@ namespace TrainController {
       // draw digits
       g.m_dc.SetFont(font);
       g.m_dc.SetBackgroundMode((int)DCBackgroundMode.SOLID);
-      g.m_dc.SetTextForeground(Colour.wxBLACK);
-      g.m_dc.SetTextBackground(Colour.wxLIGHT_GREY);
+      g.m_dc.SetTextForeground(Color.Black);
+      g.m_dc.SetTextBackground(Color.LightGray);
       System.Drawing.Point pt = new System.Drawing.Point(0, 0);
       for(i = 0; i < Configuration.XNCELLS; ++i) {
         if(pCoord != null && i == pCoord.x)
-          g.m_dc.SetTextForeground(wx.Colour.wxWHITE);
+          g.m_dc.SetTextForeground(Color.White);
         buff = String.Format(wxPorting.T("%d"), i / 100);
         pt.X = i * Configuration.HGRID + Configuration.HCOORDBAR;
         pt.Y = 0;
@@ -236,17 +541,17 @@ namespace TrainController {
         pt.Y = 16;
         g.m_dc.DrawText(buff, pt);
         if(pCoord != null && i == pCoord.x)
-          g.m_dc.SetTextForeground(Colour.wxBLACK);
+          g.m_dc.SetTextForeground(Color.Black);
       }
       for(i = 0; i < Configuration.YNCELLS; ++i) {
         if(pCoord != null && i == pCoord.y)
-          g.m_dc.SetTextForeground(wx.Colour.wxWHITE);
+          g.m_dc.SetTextForeground(Color.White);
         buff = String.Format(wxPorting.T("%3d"), i);
         pt.X = 0;
         pt.Y = i * Configuration.VGRID + Configuration.VCOORDBAR;
         g.m_dc.DrawText(buff, pt);
         if(pCoord != null && i == pCoord.y)
-          g.m_dc.SetTextForeground(Colour.wxBLACK);
+          g.m_dc.SetTextForeground(Color.Black);
       }
     }
 
@@ -316,7 +621,7 @@ namespace TrainController {
       draw_all_pixmap();	// TEMP
     }
 
-    public static void draw_layout(int x0, int y0, VLines[] p, grcolor col) {
+    public static void draw_layout(int x0, int y0, VLines[] p, Color col) {
       current_grid.DrawLayoutRGB(x0, y0, p, col);
       update_rectangle_at(x0, y0);
     }
@@ -355,6 +660,29 @@ namespace TrainController {
 	new VLines( Configuration.HGRID / 2 + 2, 1, Configuration.HGRID / 2 + 2, Configuration.VGRID - 2 ),
 	new VLines( -1 )
 };
+    public static void draw_layout_text_font(int x, int y, String txt, int index) {
+      current_grid.DrawTextFont(x, y, txt, index);
+    }
+
+    public static void draw_layout_text1(int x, int y, String txt, bool size) {
+      current_grid.DrawText1(x, y, txt, size);
+    }
+
+    public static void text_draw(Track t) {
+      if(t.station == null)
+        return;
+      tr_fillrect(t.x, t.y);
+      if(t._fontIndex != 0)
+        draw_layout_text_font(t.x, t.y, t.station.FullName, t._fontIndex);
+      else
+        draw_layout_text1(t.x, t.y, t.station.FullName, t.direction != trkdir.NODIR);
+      if(!editing || !show_links)
+        return;
+      if(t.elinkx != 0 && t.elinky != 0)
+        draw_link(t.x, t.y, t.elinkx, t.elinky, conf.linkcolor);
+      else if(t.wlinkx != 0 && t.wlinky != 0)
+        draw_link(t.x, t.y, t.wlinkx, t.wlinky, conf.linkcolor);
+    }
 
     public static void platform_draw(Track t) {
       switch(t.direction) {
@@ -375,6 +703,569 @@ namespace TrainController {
       signal.Draw();
     }
 
+    public static void link_draw(Track t) {
+      tr_fillrect(t.x, t.y);
+      if(t.direction == trkdir.W_E)
+        draw_layout_text1(t.x, t.y, wxPorting.T("...to..."), true);
+      else
+        draw_layout_text1(t.x, t.y, wxPorting.T("Link..."), true);
+    }
+
+    public static void image_draw(Track t) {
+      string buff;
+      String p;
+      System.Drawing.Image pixels = null;
+      int ix;
+
+      if(camera_pmap == null)
+        camera_pmap = get_pixmap(camera_xpm);
+      if(t.direction != trkdir.NODIR || t.station == null || t.station.FullName.Length == 0) {/* filename! */
+        pixels = camera_pmap;
+      } else {
+        if(t._isFlashing && t._flashingIcons[t._nextFlashingIcon] != null)
+          ix = get_pixmap_index(t._flashingIcons[t._nextFlashingIcon]);
+        else
+          ix = get_pixmap_index(t.station.FullName);
+        if(ix < 0) {	    /* for UNIX, try lower case name */
+          buff = String.Copy(t.station.FullName);
+          // TODO Check how to convert this...
+          //for(p = buff; *p; p.incPointer())
+          //  if(p[0] >= 'A' && p[0] <= 'Z')
+          //    *p += ' ';
+          ix = get_pixmap_index(buff);
+        }
+        if(ix < 0) {
+          buff = String.Format(wxPorting.T("%s '%s'."), wxPorting.L("Error reading"), t.station);
+          Globals.do_alert(buff);
+          pixels = camera_pmap;
+          if(t._isFlashing)
+            t._flashingIcons[t._nextFlashingIcon] = null;
+          else
+            t.station = null;
+        } else
+          pixels = pixmaps[ix].pixels;
+      }
+      draw_pixmap(t.x, t.y, pixels);
+      if(editing && show_links && t.wlinkx != 0 && t.wlinky != 0)
+        draw_link(t.x, t.y, t.wlinkx, t.wlinky, conf.linkcolor);
+    }
+
+    public static void draw_itin_text(int x, int y, String txt, bool size) {
+      if(current_grid == tools_grid)
+        draw_layout_text1(x, y, txt, size);
+      else
+        draw_layout_text1(x + 1, y, txt, size);
+    }
+
+    public static void itin_draw(Track t) {
+      if(itin_pmap == null)
+        itin_pmap = get_pixmap(itin_xpm);
+
+      tr_fillrect(t.x, t.y);
+      draw_pixmap(t.x, t.y, itin_pmap);
+
+      if(t.station != null && t.station.FullName != null) {
+#if false // !Rask Ingemann Lambertsen
+            draw_itin_text(t.x, t.y, t.station, t.direction == 1);
+#else
+        String label = t.station.PlatformName.Length > 0 ? t.station.PlatformName : t.station.StationName;
+        draw_itin_text(t.x, t.y, label, t.direction == trkdir.W_E);
+#endif
+      }
+    }
+
+    public static void trigger_draw(Track t) {
+      VLines[] img;
+
+      switch(t.direction) {
+        case trkdir.S_N:
+          img = ntrigger_layout;
+          break;
+        case trkdir.N_S:
+          img = strigger_layout;
+          break;
+        case trkdir.W_E:
+          img = etrigger_layout;
+          break;
+        case trkdir.E_W:
+          img = wtrigger_layout;
+          break;
+        default:
+          return;
+      }
+
+      draw_layout(t.x, t.y, img, curSkin.working_track);
+      if(editing && show_links) {
+        if(t.wlinkx != 0 && t.wlinky != 0)
+          draw_link(t.x, t.y, t.wlinkx, t.wlinky, conf.linkcolor);
+      }
+    }
+
+    public static Color translate_track_color(Track t) {
+      Color fg = curSkin.free_track;
+
+      switch(t.status) {
+        case trkstat.ST_FREE:
+          break;
+        case trkstat.ST_BUSY:
+          //		fg = color_red;
+          return curSkin.occupied_track;
+        case trkstat.ST_READY:
+          //		fg = color_green;
+          return curSkin.reserved_track;
+        case trkstat.ST_WORK:
+          //		fg = color_blue;
+          return curSkin.working_track;
+      }
+      if(t.fgcolor == color_orange || t.fgcolor == color_red)
+        return curSkin.occupied_track;
+      if(t.fgcolor == color_green)
+        return curSkin.reserved_track;
+      if(t.fgcolor == color_white)
+        return curSkin.reserved_shunting;
+      if(t.fgcolor == color_blue)
+        return curSkin.working_track;
+      return fg;
+    }
+
+    public static void track_draw(Track t) {
+      Color fg;
+      trkdir tmp;
+      int tot;
+      VLines[] lns = n_s_layout;	// provide dummy initialization - always overwritten
+
+      fg = translate_track_color(t);
+      switch(t.direction) {
+
+        case trkdir.TRK_N_S:
+          if(t.power != null) {
+            draw_mid_point(t.x, t.y, -2, 0, fg);
+          }
+          lns = n_s_layout;
+          break;
+
+        case trkdir.SW_N:
+          lns = sw_n_layout;
+          break;
+
+        case trkdir.NW_S:
+          lns = nw_s_layout;
+          break;
+
+        case trkdir.W_E:
+          if(t.power != null) {
+            draw_mid_point(t.x, t.y, 0, -2, fg);
+          }
+          lns = w_e_layout;
+          break;
+
+        case trkdir.NW_E:
+          lns = nw_e_layout;
+          break;
+
+        case trkdir.SW_E:
+          lns = sw_e_layout;
+          break;
+
+        case trkdir.W_NE:
+          lns = w_ne_layout;
+          break;
+
+        case trkdir.W_SE:
+          lns = w_se_layout;
+          break;
+
+        case trkdir.NW_SE:
+          if(t.power != null) {
+            draw_mid_point(t.x, t.y, 2, -2, fg);
+          }
+          lns = nw_se_layout;
+          break;
+
+        case trkdir.SW_NE:
+          if(t.power != null) {
+            draw_mid_point(t.x, t.y, -2, -2, fg);
+          }
+          lns = sw_ne_layout;
+          break;
+
+        case trkdir.NE_S:
+          lns = ne_s_layout;
+          break;
+
+        case trkdir.SE_N:
+          lns = se_n_layout;
+          break;
+
+        case trkdir.XH_NW_SE:
+          tmp = t.direction;
+          t.direction = trkdir.NW_SE;
+          track_draw(t);
+          t.direction = trkdir.W_E;
+          track_draw(t);
+          t.direction = tmp;
+          return;
+
+        case trkdir.XH_SW_NE:
+          tmp = t.direction;
+          t.direction = trkdir.SW_NE;
+          track_draw(t);
+          t.direction = trkdir.W_E;
+          track_draw(t);
+          t.direction = tmp;
+          return;
+
+        case trkdir.X_X:
+          tmp = t.direction;
+          t.direction = trkdir.SW_NE;
+          track_draw(t);
+          t.direction = trkdir.NW_SE;
+          track_draw(t);
+          t.direction = tmp;
+          return;
+
+        case trkdir.X_PLUS:
+          tmp = t.direction;
+          t.direction = trkdir.TRK_N_S;
+          track_draw(t);
+          t.direction = trkdir.W_E;
+          track_draw(t);
+          t.direction = tmp;
+          return;
+
+        case trkdir.N_NE_S_SW:
+          tmp = t.direction;
+          t.direction = trkdir.TRK_N_S;
+          track_draw(t);
+          t.direction = trkdir.SW_NE;
+          track_draw(t);
+          t.direction = tmp;
+          return;
+
+        case trkdir.N_NW_S_SE:
+          tmp = t.direction;
+          t.direction = trkdir.TRK_N_S;
+          track_draw(t);
+          t.direction = trkdir.NW_SE;
+          track_draw(t);
+          t.direction = tmp;
+          return;
+      }
+      draw_layout(t.x, t.y, lns, fg);
+      if(show_blocks && t.direction == trkdir.W_E && t.length >= 100)
+        draw_layout(t.x, t.y, block_layout, curSkin.outline); //fieldcolors[TRACK]);
+      if(show_blocks && t.direction == trkdir.TRK_N_S && t.length >= 100)
+        draw_layout(t.x, t.y, block_layout_ns, curSkin.outline); //fieldcolors[TRACK]);
+      if(show_blocks && t.station != null && t.station.FullName.Length > 0)
+        draw_layout(t.x, t.y, station_block_layout, curSkin.outline); //fieldcolors[TRACK]);
+      if(editing && show_links) {
+        if(t.wlinkx != 0 && t.wlinky != 0)
+          draw_link(t.x, t.y, t.wlinkx, t.wlinky, conf.linkcolor2);
+        if(t.elinkx != 0 && t.elinky != 0)
+          draw_link(t.x, t.y, t.elinkx, t.elinky, conf.linkcolor2);
+      }
+      if(!show_speeds)
+        return;
+      tot = 0;
+      for(int tmp2 = 0; tmp2 < Config.NTTYPES; ++tmp2)
+        tot += t.speed[tmp2];
+      if(tot != 0)
+        draw_pixmap(t.x, t.y, speed_pmap);
+    }
+
+    private static void draw_mid_point(int p, int p_2, int p_3, int p_4, Color fg) {
+      throw new NotImplementedException();
+    }
+
+    public static void switch_draw(Track t) {
+      Color fg;
+      int tmp;
+
+      fg = translate_track_color(t);
+      tmp = (int)t.direction;
+      switch(tmp) {
+        case 0:
+          if(editing) {
+            t.direction = trkdir.W_NE;
+            track_draw(t);
+            t.direction = trkdir.W_E;
+            track_draw(t);
+          } else if(t.switched) {
+            t.direction = trkdir.W_NE;
+            track_draw(t);
+          } else
+            t.direction = trkdir.W_E;
+          track_draw(t);
+          break;
+
+        case 1:
+          if(editing) {
+            t.direction = trkdir.NW_E;
+            track_draw(t);
+            t.direction = trkdir.W_E;
+            track_draw(t);
+          } else if(t.switched) {
+            t.direction = trkdir.NW_E;
+            track_draw(t);
+          } else
+            t.direction = trkdir.W_E;
+          track_draw(t);
+          break;
+
+        case 2:
+          if(editing) {
+            t.direction = trkdir.W_SE;
+            track_draw(t);
+            t.direction = trkdir.W_E;
+            track_draw(t);
+          } else if(t.switched) {
+            t.direction = trkdir.W_SE;
+            track_draw(t);
+          } else
+            t.direction = trkdir.W_E;
+          track_draw(t);
+          break;
+
+        case 3:
+          if(editing) {
+            t.direction = trkdir.SW_E;
+            track_draw(t);
+            t.direction = trkdir.W_E;
+            track_draw(t);
+          } else if(t.switched) {
+            t.direction = trkdir.SW_E;
+            track_draw(t);
+          } else
+            t.direction = trkdir.W_E;
+          track_draw(t);
+          break;
+
+        case 4:
+          if(editing) {
+            t.direction = trkdir.SW_E;
+            track_draw(t);
+            t.direction = trkdir.SW_NE;
+          } else if(t.switched)
+            t.direction = trkdir.SW_E;
+          else
+            t.direction = trkdir.SW_NE;
+          track_draw(t);
+          break;
+
+        case 5:
+          if(editing) {
+            t.direction = trkdir.W_NE;
+            track_draw(t);
+            t.direction = trkdir.SW_NE;
+          } else if(t.switched)
+            t.direction = trkdir.W_NE;
+          else
+            t.direction = trkdir.SW_NE;
+          track_draw(t);
+          break;
+
+        case 6:
+          if(editing) {
+            t.direction = trkdir.NW_E;
+            track_draw(t);
+            t.direction = trkdir.NW_SE;
+          } else if(t.switched) {
+            t.direction = trkdir.NW_E;
+          } else
+            t.direction = trkdir.NW_SE;
+          track_draw(t);
+          break;
+
+        case 7:
+          if(editing) {
+            t.direction = trkdir.W_SE;
+            track_draw(t);
+            t.direction = trkdir.NW_SE;
+          } else if(t.switched)
+            t.direction = trkdir.W_SE;
+          else
+            t.direction = trkdir.NW_SE;
+          track_draw(t);
+          break;
+
+        case 8:				/* horizontal english switch */
+          if(t.switched && !editing)
+            draw_layout(t.x, t.y, sweng_sw_ne_switched, fg);
+          else
+            draw_layout(t.x, t.y, sweng_sw_ne_straight, fg);
+          break;
+
+        case 9:				/* horizontal english switch */
+          if(t.switched && !editing)
+            draw_layout(t.x, t.y, sweng_nw_se_switched, fg);
+          else
+            draw_layout(t.x, t.y, sweng_nw_se_straight, fg);
+          break;
+
+        case 10:
+          if(editing) {
+            t.direction = trkdir.W_SE;
+            track_draw(t);
+            t.direction = trkdir.W_NE;
+          } else if(t.switched)
+            t.direction = trkdir.W_SE;
+          else
+            t.direction = trkdir.W_NE;
+          track_draw(t);
+          break;
+
+        case 11:
+          if(editing) {
+            t.direction = trkdir.SW_E;
+            track_draw(t);
+            t.direction = trkdir.NW_E;
+          } else if(t.switched)
+            t.direction = trkdir.SW_E;
+          else
+            t.direction = trkdir.NW_E;
+          track_draw(t);
+          break;
+
+        case 12:
+          if(editing) {
+            t.direction = trkdir.TRK_N_S;
+            track_draw(t);
+            t.direction = trkdir.SW_N;
+          } else if(t.switched)
+            t.direction = trkdir.SW_N;
+          else
+            t.direction = trkdir.TRK_N_S;
+          track_draw(t);
+          break;
+
+        case 13:
+          if(editing) {
+            t.direction = trkdir.TRK_N_S;
+            track_draw(t);
+            t.direction = trkdir.SE_N;
+          } else if(t.switched)
+            t.direction = trkdir.SE_N;
+          else
+            t.direction = trkdir.TRK_N_S;
+          track_draw(t);
+          break;
+
+        case 14:
+          if(editing) {
+            t.direction = trkdir.TRK_N_S;
+            track_draw(t);
+            t.direction = trkdir.NW_S;
+          } else if(t.switched)
+            t.direction = trkdir.NW_S;
+          else
+            t.direction = trkdir.TRK_N_S;
+          track_draw(t);
+          break;
+
+        case 15:
+          if(editing) {
+            t.direction = trkdir.TRK_N_S;
+            track_draw(t);
+            t.direction = trkdir.NE_S;
+          } else if(t.switched)
+            t.direction = trkdir.NE_S;
+          else
+            t.direction = trkdir.TRK_N_S;
+          track_draw(t);
+          break;
+
+        case 16:			/* vertical english switch */
+          if(t.switched && !editing)
+            draw_layout(t.x, t.y, swengv_sw_ne_switched, fg);
+          else
+            draw_layout(t.x, t.y, swengv_sw_ne_straight, fg);
+          break;
+
+        case 17:			/* vertical english switch */
+          if(t.switched && !editing)
+            draw_layout(t.x, t.y, swengv_nw_se_switched, fg);
+          else
+            draw_layout(t.x, t.y, swengv_nw_se_straight, fg);
+          break;
+
+        case 18:
+          if(editing) {
+            t.direction = trkdir.SW_NE;
+            track_draw(t);
+            t.direction = trkdir.SW_N;
+          } else if(t.switched)
+            t.direction = trkdir.SW_N;
+          else
+            t.direction = trkdir.SW_NE;
+          track_draw(t);
+          break;
+
+        case 19:
+          if(editing) {
+            t.direction = trkdir.SW_NE;
+            track_draw(t);
+            t.direction = trkdir.NE_S;
+          } else if(t.switched)
+            t.direction = trkdir.NE_S;
+          else
+            t.direction = trkdir.SW_NE;
+          track_draw(t);
+          break;
+
+        case 20:
+          if(editing) {
+            t.direction = trkdir.NW_SE;
+            track_draw(t);
+            t.direction = trkdir.SE_N;
+          } else if(t.switched)
+            t.direction = trkdir.SE_N;
+          else
+            t.direction = trkdir.NW_SE;
+          track_draw(t);
+          break;
+
+        case 21:
+          if(editing) {
+            t.direction = trkdir.NW_SE;
+            track_draw(t);
+            t.direction = trkdir.NW_S;
+          } else if(t.switched)
+            t.direction = trkdir.NW_S;
+          else
+            t.direction = trkdir.NW_SE;
+          track_draw(t);
+          break;
+
+        case 22:
+          if(editing) {
+            t.direction = trkdir.NW_S;
+            track_draw(t);
+            t.direction = trkdir.NE_S;
+          } else if(t.switched)
+            t.direction = trkdir.NW_S;
+          else
+            t.direction = trkdir.NE_S;
+          track_draw(t);
+          break;
+
+        case 23:
+          if(editing) {
+            t.direction = trkdir.SW_N;
+            track_draw(t);
+            t.direction = trkdir.SE_N;
+          } else if(t.switched)
+            t.direction = trkdir.SW_N;
+          else
+            t.direction = trkdir.SE_N;
+          track_draw(t);
+          break;
+      }
+      if(!t.norect)
+        draw_layout(t.x, t.y, switch_rect, curSkin.outline); //fieldcolors[TRACK]);
+      t.direction = (trkdir)tmp;
+    }
+
+
     // TODO Uncomment this function
     public static void track_paint(Track t) {
       tr_fillrect(t.x, t.y);
@@ -382,13 +1273,13 @@ namespace TrainController {
         return;
 
       switch(t.TrackType) {
-        //case trktype.TRACK:
-        //  track_draw(t);
-        //  break;
+        case trktype.TRACK:
+          track_draw(t);
+          break;
 
-        //  case trktype.SWITCH:
-      //    switch_draw(t);
-      //    break;
+        case trktype.SWITCH:
+          switch_draw(t);
+          break;
 
         case trktype.PLATFORM:
           platform_draw(t);
@@ -398,36 +1289,39 @@ namespace TrainController {
           signal_draw(t);
           break;
 
-        //  case trktype.TRAIN:		/* trains are handled differently */
-      //    /*	train_draw(t); */
-      //    break;
+        case trktype.TRAIN:		/* trains are handled differently */
+          /*	train_draw(t); */
+          break;
 
-        //  case trktype.TEXT:
-      //    text_draw(t);
-      //    break;
+        case trktype.TEXT:
+          text_draw(t);
+          break;
 
-        //  case trktype.LINK:
-      //    link_draw(t);
-      //    break;
+        case trktype.LINK:
+          throw new NotImplementedException();
+          link_draw(t);
+          break;
 
-        //  case trktype.IMAGE:
-      //    image_draw(t);
-      //    break;
+        case trktype.IMAGE:
+          image_draw(t);
+          break;
 
-        //  case trktype.MACRO:
-      //    macro_draw(t);
-      //    break;
+        case trktype.MACRO:
+          throw new NotImplementedException();
+          // macro_draw(t);
+          break;
 
-        //  case trktype.ITIN:
-      //    itin_draw(t);
-      //    break;
+        case trktype.ITIN:
+          itin_draw(t);
+          break;
 
-        //  case trktype.TRIGGER:
-      //    trigger_draw(t);
-      //    break;
+        case trktype.TRIGGER:
+          trigger_draw(t);
+          break;
 
-      //  default:
-      //    return;
+        default:
+          throw new NotImplementedException();
+          return;
       }
       //if(editing && show_scripts && t.stateProgram) {
       //  draw_layout(t.x, t.y, switch_rect, curSkin.working_track);//fieldcolors[COL_TRAIN2]);
@@ -842,8 +1736,8 @@ namespace TrainController {
     }
 
     public static void setBackgroundColor(out System.Drawing.Color col) {
-      int rgb = curSkin.background;
-      col = System.Drawing.Color.FromArgb((byte)(rgb >> 16), (byte)((rgb >> 8) & 0xFF), (byte)(rgb & 0xFF));
+      col = curSkin.background;
+      // col = System.Drawing.Color.FromArgb((byte)(rgb >> 16), (byte)((rgb >> 8) & 0xFF), (byte)(rgb & 0xFF));
     }
 
 
@@ -892,11 +1786,12 @@ namespace TrainController {
       defaultSkin = curSkin;
     }
 
-    public static int getcolor_rgb(int col) {
-      int c = colortable[col][0] << 16;
-      c |= colortable[col][1] << 8;
-      c |= colortable[col][2];
-      return c;
+    public static Color getcolor_rgb(int col) {
+      return Color.FromArgb(
+        colortable[col][0],
+        colortable[col][1],
+        colortable[col][2]
+      );
     }
 
     public static void getcolor_rgb(int col, out byte r, out byte g, out byte b) {
@@ -911,9 +1806,15 @@ namespace TrainController {
     public static void create_draw(object/*ScrolledWindow*/ parent) {
       grid g;
 
-      g = new grid(parent, Configuration.XMAX * 2, Configuration.YMAX * 2);
+      Size size = new Size(Configuration.XMAX * 2, Configuration.YMAX * 2);
+
+      g = new grid(parent, size.Width, size.Height);
       g.m_hmult = Configuration.HGRID;
       g.m_vmult = Configuration.VGRID;
+
+      ((MyCanvas)parent).Size = size;
+      ((MyCanvas)parent).Refresh();
+
       field_grid = g;
       current_grid = g;
       set_show_coord(true);

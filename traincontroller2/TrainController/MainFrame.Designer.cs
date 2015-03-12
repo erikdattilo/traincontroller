@@ -27,6 +27,7 @@
       this.m_splitter = new System.Windows.Forms.SplitContainer();
       this.m_top = new System.Windows.Forms.TabControl();
       this.tabLayout = new System.Windows.Forms.TabPage();
+      this.pictureBox1 = new MyCanvas();
       this.tabWelcome = new System.Windows.Forms.TabPage();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
       this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -40,12 +41,12 @@
       this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.pictureBox1 = new MyCanvas();
       this.m_splitter.Panel1.SuspendLayout();
       this.m_splitter.Panel2.SuspendLayout();
       this.m_splitter.SuspendLayout();
       this.m_top.SuspendLayout();
       this.tabLayout.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.splitContainer2.Panel1.SuspendLayout();
       this.splitContainer2.Panel2.SuspendLayout();
       this.splitContainer2.SuspendLayout();
@@ -82,31 +83,44 @@
       // 
       // m_top
       // 
+      this.m_top.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.m_top.Controls.Add(this.tabLayout);
       this.m_top.Controls.Add(this.tabWelcome);
-      this.m_top.Location = new System.Drawing.Point(28, 4);
+      this.m_top.Location = new System.Drawing.Point(0, 0);
       this.m_top.Name = "m_top";
       this.m_top.SelectedIndex = 0;
-      this.m_top.Size = new System.Drawing.Size(200, 100);
+      this.m_top.Size = new System.Drawing.Size(292, 94);
       this.m_top.TabIndex = 0;
       // 
       // tabLayout
       // 
+      this.tabLayout.AutoScroll = true;
       this.tabLayout.Controls.Add(this.pictureBox1);
       this.tabLayout.Location = new System.Drawing.Point(4, 22);
       this.tabLayout.Name = "tabLayout";
       this.tabLayout.Padding = new System.Windows.Forms.Padding(3);
-      this.tabLayout.Size = new System.Drawing.Size(192, 74);
+      this.tabLayout.Size = new System.Drawing.Size(284, 68);
       this.tabLayout.TabIndex = 0;
       this.tabLayout.Text = "Layout";
       this.tabLayout.UseVisualStyleBackColor = true;
+      // 
+      // pictureBox1
+      // 
+      this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+      this.pictureBox1.Name = "pictureBox1";
+      this.pictureBox1.Size = new System.Drawing.Size(86, 40);
+      this.pictureBox1.TabIndex = 0;
+      this.pictureBox1.TabStop = false;
       // 
       // tabWelcome
       // 
       this.tabWelcome.Location = new System.Drawing.Point(4, 22);
       this.tabWelcome.Name = "tabWelcome";
       this.tabWelcome.Padding = new System.Windows.Forms.Padding(3);
-      this.tabWelcome.Size = new System.Drawing.Size(192, 74);
+      this.tabWelcome.Size = new System.Drawing.Size(284, 68);
       this.tabWelcome.TabIndex = 1;
       this.tabWelcome.Text = "Welcome";
       this.tabWelcome.UseVisualStyleBackColor = true;
@@ -130,11 +144,14 @@
       // 
       // tabControl1
       // 
+      this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.tabControl1.Controls.Add(this.tabSchedule);
-      this.tabControl1.Location = new System.Drawing.Point(47, 38);
+      this.tabControl1.Location = new System.Drawing.Point(0, 0);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(200, 100);
+      this.tabControl1.Size = new System.Drawing.Size(94, 116);
       this.tabControl1.TabIndex = 0;
       // 
       // tabSchedule
@@ -142,19 +159,22 @@
       this.tabSchedule.Location = new System.Drawing.Point(4, 22);
       this.tabSchedule.Name = "tabSchedule";
       this.tabSchedule.Padding = new System.Windows.Forms.Padding(3);
-      this.tabSchedule.Size = new System.Drawing.Size(192, 74);
+      this.tabSchedule.Size = new System.Drawing.Size(86, 90);
       this.tabSchedule.TabIndex = 0;
       this.tabSchedule.Text = "Schedule";
       this.tabSchedule.UseVisualStyleBackColor = true;
       // 
       // tabControl2
       // 
+      this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.tabControl2.Controls.Add(this.tabAlerts);
       this.tabControl2.Controls.Add(this.tabTrainInfo);
-      this.tabControl2.Location = new System.Drawing.Point(-21, 38);
+      this.tabControl2.Location = new System.Drawing.Point(-1, 0);
       this.tabControl2.Name = "tabControl2";
       this.tabControl2.SelectedIndex = 0;
-      this.tabControl2.Size = new System.Drawing.Size(200, 100);
+      this.tabControl2.Size = new System.Drawing.Size(189, 116);
       this.tabControl2.TabIndex = 0;
       // 
       // tabAlerts
@@ -162,7 +182,7 @@
       this.tabAlerts.Location = new System.Drawing.Point(4, 22);
       this.tabAlerts.Name = "tabAlerts";
       this.tabAlerts.Padding = new System.Windows.Forms.Padding(3);
-      this.tabAlerts.Size = new System.Drawing.Size(192, 74);
+      this.tabAlerts.Size = new System.Drawing.Size(181, 90);
       this.tabAlerts.TabIndex = 0;
       this.tabAlerts.Text = "Alerts";
       this.tabAlerts.UseVisualStyleBackColor = true;
@@ -172,7 +192,7 @@
       this.tabTrainInfo.Location = new System.Drawing.Point(4, 22);
       this.tabTrainInfo.Name = "tabTrainInfo";
       this.tabTrainInfo.Padding = new System.Windows.Forms.Padding(3);
-      this.tabTrainInfo.Size = new System.Drawing.Size(192, 74);
+      this.tabTrainInfo.Size = new System.Drawing.Size(181, 90);
       this.tabTrainInfo.TabIndex = 1;
       this.tabTrainInfo.Text = "Train Info";
       this.tabTrainInfo.UseVisualStyleBackColor = true;
@@ -221,14 +241,6 @@
       this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
       this.helpToolStripMenuItem.Text = "Help";
       // 
-      // pictureBox1
-      // 
-      this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-      this.pictureBox1.Name = "pictureBox1";
-      this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-      this.pictureBox1.TabIndex = 0;
-      this.pictureBox1.TabStop = false;
-      // 
       // MainFrame
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -245,6 +257,7 @@
       this.m_splitter.ResumeLayout(false);
       this.m_top.ResumeLayout(false);
       this.tabLayout.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.splitContainer2.Panel1.ResumeLayout(false);
       this.splitContainer2.Panel2.ResumeLayout(false);
       this.splitContainer2.ResumeLayout(false);

@@ -84,20 +84,20 @@ namespace TrainController {
       graphics.DrawImage(m_pixmap, 0, 0);
     }
 
+    // TODO
     public void DrawText1(int x, int y, String txt, bool size) {
-      throw new NotImplementedException();
-      //CellToCoord(ref x, ref y);
-      //if(this != Globals.tools_grid)
-      //  y -= (size ? 3 : 4);
-      //wx.Font font = new wx.Font(size ? Globals.gFontSizeSmall : Globals.gFontSizeBig, wx.FontFamily.wxSWISS, wx.FontStyle.wxNORMAL, wx.FontWeight.wxNORMAL);
-      //m_dc.SelectObject(m_pixmap);
-      //m_dc.SetFont(font);
-      //m_dc.SetBackgroundMode(DCBackgroundMode.TRANSPARENT);
-      //m_dc.SetTextForeground(Globals.curSkin.text);
-      //m_dc.SetTextBackground(wx.Colour.wxWHITE);
-      //Point pt = new Point(x, y);
-      //m_dc.DrawText(txt, pt);
-      //m_dc.SelectObject(wx.Bitmap.NullBitmap);
+      CellToCoord(ref x, ref y);
+      if(this != Globals.tools_grid)
+        y -= (size ? 3 : 4);
+      // TODO
+      System.Drawing.Font font = // new wx.Font(size ? Globals.gFontSizeSmall : Globals.gFontSizeBig, wx.FontFamily.wxSWISS, wx.FontStyle.wxNORMAL, wx.FontWeight.wxNORMAL);
+        new System.Drawing.Font("", size ? Globals.gFontSizeSmall : Globals.gFontSizeBig);
+      m_dc.SetFont(font);
+      m_dc.SetBackgroundMode(DCBackgroundMode.TRANSPARENT);
+      m_dc.SetTextForeground(Globals.curSkin.text);
+      m_dc.SetTextBackground(Color.White);
+      Point pt = new Point(x, y);
+      m_dc.DrawText(txt, pt);
     }
 
     public void DrawTextFont(int x, int y, String txt, int fontIndex) {
@@ -153,10 +153,10 @@ namespace TrainController {
       //outCoord.y = y;
     }
 
-    public void DrawLayoutRGB(int x0, int y0, VLines[] q, int rgb) {
+    public void DrawLayoutRGB(int x0, int y0, VLines[] q, Color rgb) {
       VLines p;
       wxRect update_rect;
-      Color fg = Color.FromArgb((byte)(rgb >> 16), (byte)((rgb >> 8) & 0xFF), (byte)(rgb & 0xFF));
+      Color fg = rgb; // Color.FromArgb((byte)(rgb >> 16), (byte)((rgb >> 8) & 0xFF), (byte)(rgb & 0xFF));
       int x = x0;
       int y = y0;
 
@@ -178,7 +178,8 @@ namespace TrainController {
 
 
     public void DrawLayout(int x0, int y0, VLines[] p, grcolor col) {
-      DrawLayoutRGB(x0, y0, p, (Globals.colortable[col][0] << 16) | (Globals.colortable[col][1] << 8) | Globals.colortable[col][2]);
+      byte[] row = Globals.colortable[col];
+      DrawLayoutRGB(x0, y0, p, Color.FromArgb(row[0], row[1], row[2]));
     }
 
     public void DrawLineRGB(int x0, int y0, int x1, int y1, int rgb) {

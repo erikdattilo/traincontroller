@@ -1,7 +1,0 @@
-C:\TrainDir.NET\TestApp2\bin\Debug\TestApp2.exe
-C:\TrainDir.NET\TestApp2\bin\Debug\TestApp2.pdb
-C:\TrainDir.NET\TestApp2\obj\Debug\ResolveAssemblyReference.cache
-C:\TrainDir.NET\TestApp2\obj\Debug\TestApp2.Properties.Resources.resources
-C:\TrainDir.NET\TestApp2\obj\Debug\TestApp2.csproj.GenerateResource.Cache
-C:\TrainDir.NET\TestApp2\obj\Debug\TestApp2.exe
-C:\TrainDir.NET\TestApp2\obj\Debug\TestApp2.pdb

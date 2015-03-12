@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace TrainController {
 
   public partial class TDSkin {
     public TDSkin next;
     public string name;
-    public int free_track;		// default: black
-    public int reserved_track;		// default: green
-    public int reserved_shunting;	// default: white
-    public int occupied_track;		// default: orange
-    public int working_track;		// default: blue
-    public int background;		// default: gray
-    public int outline;		// default: dark_gray
-    public int text;			// default: black
+    public Color free_track;		// default: black
+    public Color reserved_track;		// default: green
+    public Color reserved_shunting;	// default: white
+    public Color occupied_track;		// default: orange
+    public Color working_track;		// default: blue
+    public Color background;		// default: gray
+    public Color outline;		// default: dark_gray
+    public Color text;			// default: black
 
     public TDSkin() {
       if(Globals.defaultSkin == null)

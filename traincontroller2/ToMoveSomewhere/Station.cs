@@ -17,6 +17,15 @@ namespace TrainController {
       set { mPlatformName = (value ?? "").Trim(); }
     }
 
+    public String FullName {
+      get {
+        return
+          mStationName +
+          ((StationName.Length > 0 && PlatformName.Length > 0) ? "@" : "") +
+          mPlatformName;
+      }
+    }
+
     public Station()
       : this(null) {
     }

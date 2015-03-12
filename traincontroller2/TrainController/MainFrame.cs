@@ -11,6 +11,7 @@ namespace TrainController {
   public partial class MainFrame : Form {
     public MainFrame() {
       InitializeComponent();
+      pictureBox1.Init();
 
       MainFrame_OldConstructor("AAA");
 

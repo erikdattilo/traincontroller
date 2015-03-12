@@ -54,7 +54,7 @@ namespace TrainController {
     public void Draw() {
       grcolor color = Globals.color_red;
       int i;
-      wx.Image p = null;
+      System.Drawing.Image p = null;
       Signal t = this;
 
       i = 0;					/* RR */
@@ -112,11 +112,11 @@ namespace TrainController {
         Globals.draw_link(t.x, t.y, t.controls.x, t.controls.y, Globals.conf.linkcolor);
     }
 
-    private wx.Image FindIcon() {
+    private System.Drawing.Image FindIcon() {
       throw new NotImplementedException();
       //SignalInterpreterData interp = (SignalInterpreterData)_interpreterData;
       //SignalAspect	asp = interp._aspects;
-      //wx.Image[] p;
+      //System.Drawing.Image[] p;
       //int		ix;
       //String curState;
 
@@ -312,8 +312,8 @@ e_sigP_xpm[3] = w_sigP_xpm[3] = "G      c red";
     //}
 
     //public partial class Globals {
-    public static wx.Image[] e_sig2_pmap = new wx.Image[4];		/* RR, GR, GG, GO */
-    public static wx.Image[] e_sig2x_pmap = new wx.Image[4];
+    public static System.Drawing.Image[] e_sig2_pmap = new System.Drawing.Image[4];		/* RR, GR, GG, GO */
+    public static System.Drawing.Image[] e_sig2x_pmap = new System.Drawing.Image[4];
     public static String[] e_sig2_xpm = new String[] {
 	"13 7 4 1",
 	"       c #FFFFFFFFFFFF",
@@ -341,7 +341,7 @@ e_sigP_xpm[3] = w_sigP_xpm[3] = "G      c red";
 	".  .XXX..GGG.",
 	".  .........."};
 
-    public static wx.Image[] e_sigP_pmap = new wx.Image[4];		/* RR, GR, GG, GO */
+    public static System.Drawing.Image[] e_sigP_pmap = new System.Drawing.Image[4];		/* RR, GR, GG, GO */
     public static String[] e_sigP_xpm = new String[] {
 	"13 7 4 1",
 	"       c #FFFFFFFFFFFF",
@@ -355,8 +355,8 @@ e_sigP_xpm[3] = w_sigP_xpm[3] = "G      c red";
         "....X.X..GGG.",
         ". ..XXX..GGG.",
         ". ...... ... "};
-    public static wx.Image[] w_sig2_pmap = new wx.Image[4];		/* RR, GR, GG, GO */
-    public static wx.Image[] w_sig2x_pmap = new wx.Image[4];
+    public static System.Drawing.Image[] w_sig2_pmap = new System.Drawing.Image[4];		/* RR, GR, GG, GO */
+    public static System.Drawing.Image[] w_sig2x_pmap = new System.Drawing.Image[4];
     public static String[] w_sig2_xpm = new String[] {
 	"13 7 4 1",
 	"       c #FFFFFFFFFFFF",
@@ -370,7 +370,7 @@ e_sigP_xpm[3] = w_sigP_xpm[3] = "G      c red";
 	".GGG..XXX....",
 	".GGG..XXX.  .",
 	" ...  ...   ."};
-    public static wx.Image[] w_sigP_pmap = new wx.Image[4];		/* RR, GR, GG, GO */
+    public static System.Drawing.Image[] w_sigP_pmap = new System.Drawing.Image[4];		/* RR, GR, GG, GO */
     public static String[] w_sigP_xpm = new String[] {
 	"13 7 4 1",
 	"       c #FFFFFFFFFFFF",
@@ -384,8 +384,8 @@ e_sigP_xpm[3] = w_sigP_xpm[3] = "G      c red";
 	".GGG..X.X....",
 	".GGG..XXXXX .",
 	" ... ...... ."};
-    public static wx.Image[] s_sig2_pmap = new wx.Image[4];         /* R, G */
-    public static wx.Image[] s_sig2x_pmap = new wx.Image[4];         /* R, G */
+    public static System.Drawing.Image[] s_sig2_pmap = new System.Drawing.Image[4];         /* R, G */
+    public static System.Drawing.Image[] s_sig2x_pmap = new System.Drawing.Image[4];         /* R, G */
     public static String[] s_sig2_xpm = new String[] {
 "7 13 4 1",
 "       c #FFFFFFFFFFFF",
@@ -405,8 +405,8 @@ null, /*"X      c #0000FFFFFFFF",*/
 " .GGG. ",
 " .GGG. ",
 "  ...  "};
-    public static wx.Image[] n_sig2_pmap = new wx.Image[4];         /* R, G */
-    public static wx.Image[] n_sig2x_pmap = new wx.Image[4];
+    public static System.Drawing.Image[] n_sig2_pmap = new System.Drawing.Image[4];         /* R, G */
+    public static System.Drawing.Image[] n_sig2x_pmap = new System.Drawing.Image[4];
     public static String[] n_sig2_xpm = new String[] {
 "7 13 4 1",
 "       c #FFFFFFFFFFFF",
@@ -426,8 +426,8 @@ null, /*"X      c #0000FFFFFFFF",*/
 "   .   ",
 "   .   ",
 " ..... "};
-    public static wx.Image[] e_sig_pmap = new wx.Image[2];		/* R, G */
-    public static wx.Image[] e_sigx_pmap = new wx.Image[2];
+    public static System.Drawing.Image[] e_sig_pmap = new System.Drawing.Image[2];		/* R, G */
+    public static System.Drawing.Image[] e_sigx_pmap = new System.Drawing.Image[2];
     public static String[] e_sig_xpm = new String[] {
 "9 7 3 1",
 "       c #FFFFFFFFFFFF",
@@ -440,8 +440,8 @@ null, /*"X      c #0000FFFFFFFF",*/
 ".....GGG.",
 ".   .GGG.",
 ".    ... "};
-    public static wx.Image[] w_sig_pmap = new wx.Image[2];		/* R, G */
-    public static wx.Image[] w_sigx_pmap = new wx.Image[2];
+    public static System.Drawing.Image[] w_sig_pmap = new System.Drawing.Image[2];		/* R, G */
+    public static System.Drawing.Image[] w_sigx_pmap = new System.Drawing.Image[2];
     public static String[] w_sig_xpm = new String[] {
 "9 7 3 1",
 "       c #FFFFFFFFFFFF",
@@ -455,8 +455,8 @@ null, /*"X      c #0000FFFFFFFF",*/
 ".GGG.   .",
 " ...    ."
 };
-    public static wx.Image[] s_sig_pmap = new wx.Image[2];         /* R, G */
-    public static wx.Image[] s_sigx_pmap = new wx.Image[2];
+    public static System.Drawing.Image[] s_sig_pmap = new System.Drawing.Image[2];         /* R, G */
+    public static System.Drawing.Image[] s_sigx_pmap = new System.Drawing.Image[2];
     public static String[] s_sig_xpm = new String[] {
 "7 9 3 1",
 "       c #FFFFFFFFFFFF",
@@ -471,8 +471,8 @@ null, /*"X      c #0000FFFFFFFF",*/
 " .GGG. ",
 " .GGG. ",
 "  ...  "};
-    public static wx.Image[] n_sig_pmap = new wx.Image[2];         /* R, G */
-    public static wx.Image[] n_sigx_pmap = new wx.Image[2];
+    public static System.Drawing.Image[] n_sig_pmap = new System.Drawing.Image[2];         /* R, G */
+    public static System.Drawing.Image[] n_sigx_pmap = new System.Drawing.Image[2];
     public static String[] n_sig_xpm = new String[] {
 "7 9 3 1",
 "       c #FFFFFFFFFFFF",
