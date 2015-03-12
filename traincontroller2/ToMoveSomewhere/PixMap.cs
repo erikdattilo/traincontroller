@@ -42,9 +42,12 @@ namespace TrainController {
         //{"orange", Color.Orange},
         //{"white", Color.White},
         //{"black", Color.Black},
+
         // TODO Check this color...
-        {"none", Color.Black}
+        // {"none", Color.Black}
       };
+
+      char? transparentColorChar = null;
 
       Dictionary<char, Color> colorList = new Dictionary<char, Color>();
       for(int i=0; i < nColors && lineCounter < data.Length; i++, lineCounter++) {
@@ -62,7 +65,10 @@ namespace TrainController {
         String strColor = match.Groups[2].Value.ToLower();
 
         Color color;
-        if(strColor[0] == '#') {
+        if(strColor == "none") {
+          transparentColorChar = colorChar;
+          continue;
+        } else if(strColor[0] == '#') {
           switch(strColor.Length) {
             case 1 + 12:
               if(strColor != "#000000000000")
@@ -77,8 +83,8 @@ namespace TrainController {
               int rr, gg, bb;
               if(
                 !int.TryParse(strColor.Substring(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out rr) ||
-                !int.TryParse(strColor.Substring(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out gg) ||
-                !int.TryParse(strColor.Substring(1, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out bb)
+                !int.TryParse(strColor.Substring(3, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out gg) ||
+                !int.TryParse(strColor.Substring(5, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out bb)
               )
                 throw new NotImplementedException();
 
@@ -103,16 +109,24 @@ namespace TrainController {
       }
 
       Bitmap bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+      bmp.MakeTransparent();
       for(int y = 0; y < height && lineCounter < data.Length; y++, lineCounter++) {
         String row = data[lineCounter];
         if(row.Length > width)
           throw new NotImplementedException();
 
         for(int x=0; x<width; x++) {
-          if(!colorList.ContainsKey(row[x]))
-            throw new NotImplementedException();
+          if(transparentColorChar != null && transparentColorChar == row[x]) {
+            //Color tmpColor;
+            //tmpColor = bmp.GetPixel(x, y);
+            //tmpColor = Color.FromArgb(255, tmpColor.R, tmpColor.G, tmpColor.B);
+            //bmp.SetPixel(x, y, tmpColor);
+          } else {
+            if(!colorList.ContainsKey(row[x]))
+              throw new NotImplementedException();
 
-          bmp.SetPixel(x, y, colorList[row[x]]);
+            bmp.SetPixel(x, y, colorList[row[x]]);
+          }
         }
       }
 

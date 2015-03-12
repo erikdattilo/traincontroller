@@ -473,7 +473,7 @@ namespace TrainController {
       //clean_trains(stranded);
       //schedule = 0;
       //stranded = 0;
-      //invalidate_field();
+      invalidate_field();
       //enable_training = 0;
       //if(fl == 2) {
       //    load_puzzles(cmd);

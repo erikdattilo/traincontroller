@@ -250,13 +250,13 @@ namespace TrainController {
       Globals.setBackgroundColor(out bg);
       //	bg = g.dc.GetBackground();
       m_dc.SetBrush(new SolidBrush(bg));
-      wxRect rect = new wxRect(
+      Rectangle rect = new Rectangle(
             Globals.cliprect.left * m_hmult,
             Globals.cliprect.top * m_vmult,
             (Globals.cliprect.right - Globals.cliprect.left + 1) * m_hmult,
             (Globals.cliprect.bottom - Globals.cliprect.top + 1) * m_vmult
             );
-      m_dc.DrawRectangle(rect);
+      m_dc.FillRectangle(rect);
     }
 
     //	Draw the point grid in the canvas.

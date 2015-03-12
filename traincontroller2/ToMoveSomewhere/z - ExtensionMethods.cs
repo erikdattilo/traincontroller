@@ -89,6 +89,10 @@ namespace TrainController {
       gr.DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
+    public static void FillRectangle(this Graphics gr, Rectangle rect) {
+      gr.FillRectangle(z_CurrentBrush[gr], rect);
+    }
+
     public static void DrawRectangle(this Graphics gr, Rectangle rect) {
       throw new NotImplementedException();
     }
