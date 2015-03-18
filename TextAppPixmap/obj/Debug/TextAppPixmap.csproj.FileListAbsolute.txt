@@ -1,9 +1,0 @@
-C:\TrainDir.NET\TextAppPixmap\bin\Debug\wx-c-0-9-0-2.dll
-C:\TrainDir.NET\TextAppPixmap\bin\Debug\TextAppPixmap.exe
-C:\TrainDir.NET\TextAppPixmap\bin\Debug\TextAppPixmap.pdb
-C:\TrainDir.NET\TextAppPixmap\bin\Debug\wx.NET.dll
-C:\TrainDir.NET\TextAppPixmap\obj\Debug\ResolveAssemblyReference.cache
-C:\TrainDir.NET\TextAppPixmap\obj\Debug\TextAppPixmap.Properties.Resources.resources
-C:\TrainDir.NET\TextAppPixmap\obj\Debug\TextAppPixmap.csproj.GenerateResource.Cache
-C:\TrainDir.NET\TextAppPixmap\obj\Debug\TextAppPixmap.exe
-C:\TrainDir.NET\TextAppPixmap\obj\Debug\TextAppPixmap.pdb

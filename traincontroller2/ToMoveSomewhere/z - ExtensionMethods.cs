@@ -54,7 +54,7 @@ namespace TrainController {
     }
 
     public static void SetBackgroundMode(this Graphics gr, int mode) {
-      throw new NotImplementedException();
+      // throw new NotImplementedException();
     }
 
     public static void SetTextForeground(this Graphics gr, Color color) {
@@ -72,7 +72,7 @@ namespace TrainController {
     }
 
     public static void DrawText(this Graphics gr, string buff, Point pt) {
-      gr.DrawString(buff, z_CurrentFont[gr], z_CurrentBrush[gr], pt);
+      gr.DrawString(buff, z_CurrentFont[gr], new SolidBrush(z_TextForeground[gr]), pt);
     }
 
     public static void DrawPoint(this Graphics gr, int x, int y) {
@@ -100,6 +100,9 @@ namespace TrainController {
     public static void DrawImage(this Graphics gr, Bitmap bmp, int x, int y) {
       gr.DrawImage(bmp, x, y);
     }
+
+
+
   }
 
   public static class String1 {

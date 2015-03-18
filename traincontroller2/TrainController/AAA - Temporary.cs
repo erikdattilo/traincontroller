@@ -26,6 +26,7 @@ namespace TrainController {
   }
 
   partial class Globals {
+    public static String version = wxPorting.T("3.8v");
 
     // TODO Implement this function
     public static void do_alert(String msg) {
@@ -328,9 +329,9 @@ namespace TrainController {
 " ........... ",
 "             "};
 
-    public static TrainController traindir {
+    public static TrainControllerApp traindir {
       get {
-        return TrainController.GetInstance();
+        return TrainControllerApp.GetInstance();
       }
     }
 
@@ -457,8 +458,8 @@ namespace TrainController {
       // draw background of coord bars
       g.m_dc.SetPen(System.Drawing.Pens.LightGray);
       g.m_dc.SetBrush(System.Drawing.Brushes.LightGray);
-      g.m_dc.DrawRectangle(0, 0, Configuration.XMAX, Configuration.VCOORDBAR);
-      g.m_dc.DrawRectangle(0, 0, Configuration.HCOORDBAR, Configuration.YMAX);
+      g.m_dc.FillRectangle(System.Drawing.Brushes.LightGray, 0, 0, Configuration.XMAX, Configuration.VCOORDBAR);
+      g.m_dc.FillRectangle(System.Drawing.Brushes.LightGray, 0, 0, Configuration.HCOORDBAR, Configuration.YMAX);
 
       // draw digits
       g.m_dc.SetFont(font);
@@ -469,14 +470,14 @@ namespace TrainController {
       for(i = 0; i < Configuration.XNCELLS; ++i) {
         if(pCoord != null && i == pCoord.x)
           g.m_dc.SetTextForeground(Color.White);
-        buff = String.Format(wxPorting.T("%d"), i / 100);
+        buff = String.Format("{0:D}", i / 100);
         pt.X = i * Configuration.HGRID + Configuration.HCOORDBAR;
         pt.Y = 0;
         g.m_dc.DrawText(buff, pt);
-        buff = String.Format(wxPorting.T("%d"), (i / 10) % 10);
+        buff = String.Format("{0:D}", (i / 10) % 10);
         pt.Y = 8;
         g.m_dc.DrawText(buff, pt);
-        buff = String.Format(wxPorting.T("%d"), i % 10);
+        buff = String.Format("{0:D}", i % 10);
         pt.Y = 16;
         g.m_dc.DrawText(buff, pt);
         if(pCoord != null && i == pCoord.x)
@@ -485,7 +486,7 @@ namespace TrainController {
       for(i = 0; i < Configuration.YNCELLS; ++i) {
         if(pCoord != null && i == pCoord.y)
           g.m_dc.SetTextForeground(Color.White);
-        buff = String.Format(wxPorting.T("%3d"), i);
+        buff = String.Format("{0:D3}", i);
         pt.X = 0;
         pt.Y = i * Configuration.VGRID + Configuration.VCOORDBAR;
         g.m_dc.DrawText(buff, pt);
@@ -1205,6 +1206,7 @@ namespace TrainController {
       t.direction = (trkdir)tmp;
     }
 
+    static int DEBUG_Counter1 = 0;
 
     // TODO Uncomment this function
     public static void track_paint(Track t) {
@@ -1257,6 +1259,9 @@ namespace TrainController {
 
         case trktype.TRIGGER:
           trigger_draw(t);
+          break;
+
+        case trktype.NOTRACK:
           break;
 
         default:
@@ -1352,8 +1357,8 @@ namespace TrainController {
       updating_all = true;
       if(show_grid)
         grid_paint();
-      //if(bShowCoord)
-      //  coord_paint(null);
+      if(bShowCoord)
+        coord_paint(null);
 #if DEBUG
       reset_clip_rect();
 #endif
@@ -1870,6 +1875,8 @@ namespace TrainController {
   }
 
   public partial class Configuration {
+    public const int NSTATUSBOXES = 5;
+
     public const int HGRID = 9;
     public const int VGRID = 9;
 

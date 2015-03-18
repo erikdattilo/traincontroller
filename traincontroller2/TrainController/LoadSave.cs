@@ -95,7 +95,10 @@ namespace TrainController {
 
         ttype = buff[0];
 
-        string[] pieces = buff.Split(',');
+        string[] pieces =
+          // buff.Split(',');
+          SplitWithGrouping(buff, ',', '(', ')');
+
         if(pieces.Length < 4)
           continue;
 
@@ -176,7 +179,49 @@ namespace TrainController {
         t._lockedBy = null;
 
       }
+DEBUG_Func1(layout);
       return layout;
+    }
+
+    private static string[] SplitWithGrouping(string str, char separator, char opening, char closing) {
+      List<string> pieces = new List<string>();
+
+      char ch;
+      int length, deep;
+      char[] srcBuffer = str.ToCharArray();
+      char[] dstBuffer = new char[str.Length];
+
+      length = 0;
+      deep = 0;
+      for(int x = 0; x < srcBuffer.Length; x++, length++) {
+        ch = srcBuffer[x];
+        if(deep == 0 && ch == ',') {
+          pieces.Add(new string(dstBuffer, 0, length));
+          length = -1;
+        } else {
+          dstBuffer[length] = ch;
+
+          if(ch == '(')
+            deep++;
+          else if(ch == ')')
+            deep--;
+        }
+      }
+      if(length > 0)
+        pieces.Add(new string(dstBuffer, 0, length));
+
+      return pieces.ToArray();
+    }
+
+    private static void DEBUG_Func1(Track layout) {
+      Track t = layout;
+      while(t != null) {
+        if(t.TrackType == trktype.TRACK) {
+          if(t.x == 0 && t.y == 0) {
+          }
+        }
+        t = t.next;
+      }
     }
 
     private static void ReadSwitchBoard(string buff) {
@@ -275,34 +320,35 @@ namespace TrainController {
 
     private static Track ReadItinerary(string[] pieces, ref Itinerary itinList) {
       /* itinerary */
-      Track t = new Track();
+      NoTrack t = new NoTrack();
       string p2;
       int pos = 0;
 
-      // Handle (x,y,...) condition in pieces
-      int startPos;
-      for(startPos = 0; startPos < pieces.Length; ) {
-        if(pieces[startPos].Contains('(') == false) {
-          startPos++;
-        } else {
-          if(pieces[startPos].Contains(')')) {
-            startPos++;
-            continue;
-          }
-          for(pos = startPos; pos < pieces.Length && !pieces[pos].Contains(')'); pos++)
-            ;
-          if(pieces[pos].Contains(')') == false)
-            return t;
-          string[] pieces2 = new string[pieces.Length - (pos - startPos)];
-          Array.Copy(pieces, 0, pieces2, 0, startPos);
-          pieces2[startPos] = String.Join(",", pieces, startPos, pos - startPos + 1);
-          Array.Copy(pieces, pos + 1, pieces2, startPos + 1, pieces2.Length - (startPos + 1));
-          pieces = pieces2;
-          startPos = pos;
-        }
-      }
+      // Erik: I don't know if this code is really needed!
+      //// Handle (x,y,...) condition in pieces
+      //int startPos;
+      //for(startPos = 0; startPos < pieces.Length; ) {
+      //  if(pieces[startPos].Contains('(') == false) {
+      //    startPos++;
+      //  } else {
+      //    if(pieces[startPos].Contains(')')) {
+      //      startPos++;
+      //      continue;
+      //    }
+      //    for(pos = startPos; pos < pieces.Length && !pieces[pos].Contains(')'); pos++)
+      //      ;
+      //    if(pieces[pos].Contains(')') == false)
+      //      return t;
+      //    string[] pieces2 = new string[pieces.Length - (pos - startPos)];
+      //    Array.Copy(pieces, 0, pieces2, 0, startPos);
+      //    pieces2[startPos] = String.Join(",", pieces, startPos, pos - startPos + 1);
+      //    Array.Copy(pieces, pos + 1, pieces2, startPos + 1, pieces2.Length - (startPos + 1));
+      //    pieces = pieces2;
+      //    startPos = pos;
+      //  }
+      //}
       
-      pos = 0;
+      //pos = 0;
 
       Itinerary it = new Itinerary();
       it.name = String.Copy(pieces[pos++]);
@@ -310,8 +356,8 @@ namespace TrainController {
       it.endsig = String.Copy(pieces[pos++]);
       p2 = pieces[pos++];
       if(p2[0] == '@') {
-        if(p2.Contains('('))
-          throw new NotImplementedException();
+        //if(p2.Length > 1)
+        //  throw new NotImplementedException();
       //  for(p1 = p.incPointer(), l = 0; *p && (*p != ',' || l); p.incPointer()) {
       //    if(*p == '(') ++l;
       //    else if(*p == ')') --l;

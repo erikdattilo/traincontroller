@@ -1,9 +1,0 @@
-C:\TrainDir.NET\TestApp\bin\Debug\wx-c-0-9-0-2.dll
-C:\TrainDir.NET\TestApp\bin\Debug\TestApp.exe
-C:\TrainDir.NET\TestApp\bin\Debug\TestApp.pdb
-C:\TrainDir.NET\TestApp\bin\Debug\wx.NET.dll
-C:\TrainDir.NET\TestApp\obj\Debug\ResolveAssemblyReference.cache
-C:\TrainDir.NET\TestApp\obj\Debug\TestApp.Properties.Resources.resources
-C:\TrainDir.NET\TestApp\obj\Debug\TestApp.csproj.GenerateResource.Cache
-C:\TrainDir.NET\TestApp\obj\Debug\TestApp.exe
-C:\TrainDir.NET\TestApp\obj\Debug\TestApp.pdb

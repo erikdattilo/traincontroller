@@ -1264,68 +1264,67 @@ namespace TrainDirPorting {
          //}
  }
 
-    public static void pointer_at(Coord cell)
- {
-  //Track	*t;
-  //Signal	*sig;
-  //Train	*tr;
-  //int	x = cell.x;
-  //int	y = cell.y;
-  //String p;
- 
-  //tooltipString[0] = 0;
-  //if((tr = findTrain(x, y))) {
-  //    status_line = String.Format(wxPorting.T("%d,%d: %s %s"), x, y, tr.name, train_status0(tr, 1));
-  //    tr.SetTooltip();
-  //} else if((t = findTrack(x, y)) || (t = findSwitch(x, y))) {
-  //    status_line = String.Format(wxPorting.T("%d,%d: %s "), x, y, wxPorting.L("speed"));
-  //    p = status_line + Globals.wxStrlen(status_line);
-  //    for(x = 0; x < NTTYPES; ++x) {
-  //  wxSprintf(p, wxPorting.T("%d/"), t.speed[x]);
-  //  p += Globals.wxStrlen(p);
-  //    }
-  //    wxSprintf(--p, wxPorting.T(" Km/h, %s %d m"), wxPorting.L("length"), t.length);
-  //    if(t.isstation)
-  //  status_line += string.Format(
-  //       wxPorting.T("  %s: %s"), wxPorting.L("Station"), t.station);
-  //} else if((t = findText(x, y))) {
-  //    status_line = String.Format(wxPorting.T("%d,%d: %s %s"), x, y, wxPorting.L("entry/exit"), t.station);
-  //           add_linked_info_to_status(t);
-  //} else if((sig = findSignal(x, y))) {
-  //    if(sig.controls)
-  //  status_line = String.Format(wxPorting.T("%d,%d: %s %s %s %d, %d"), x, y,
-  //      wxPorting.L("Signal"), sig.station ? sig.station : wxPorting.T(""),
-  //      wxPorting.L("controls"), sig.controls.x, sig.controls.y);
-  //    else
-  //  status_line = String.Format(wxPorting.T("%d,%d: %s %s"), x, y,
-  //      wxPorting.L("Signal"), sig.station ? sig.station : wxPorting.T(""));
-  //    if(sig.stateProgram) {
-  //  status_line += string.Format(
-  //      wxPorting.T("  %s: \"%s\""), wxPorting.L("script"), sig.stateProgram);
-  //  status_line += string.Format(
-  //      wxPorting.T("  %s: \"%s\""), wxPorting.L("aspect"), sig._currentState ? sig._currentState : wxPorting.T("?"));
-  //    }
-  //} else if((t = findTrackType(x, y, TRIGGER))) {
-  //    status_line = String.Format(wxPorting.T("%d,%d: %s - %s  . (%d,%d)  Prob.: "),
-  //  x, y, wxPorting.L("Trigger"), t.station ? t.station : wxPorting.T(""), t.wlinkx, t.wlinky);
-  //    p = status_line + Globals.wxStrlen(status_line);
-  //    for(x = 0; x < NTTYPES; ++x) {
-  //  wxSprintf(p, wxPorting.T("%d/"), t.speed[x]);
-  //  p += Globals.wxStrlen(p);
-  //    }
-  //    p[-1] = 0;
-  //} else if((t = findTrackType(x, y, ITIN))) {
-  //    status_line = String.Format(wxPorting.T("%d,%d: %s - %s"), x, y,
-  //        wxPorting.L("Itinerary"), t.station ? t.station : wxPorting.T(""));
-  //} else if((t = findTrackType(x, y, IMAGE))) {
-  //    status_line = String.Format(wxPorting.T("%d,%d: %s %s"), x, y,
-  //        wxPorting.L("Image"), t.station ? t.station : wxPorting.T(""));
-  //           add_linked_info_to_status(t);
-  //} else {
-  //    status_line[0] = 0;
-  //}
-  //repaint_labels();
- }
+    public static void pointer_at(Coord cell) {
+      //Track	t;
+      //Signal sig;
+      //Train tr;
+      //int x = cell.x;
+      //int y = cell.y;
+      //String p = "";
+
+      //tooltipString[0] = 0;
+      //if((tr = findTrain(x, y))) {
+      //  status_line = String.Format(wxPorting.T("%d,%d: %s %s"), x, y, tr.name, train_status0(tr, 1));
+      //  tr.SetTooltip();
+      //} else if((t = findTrack(x, y)) != null || (t = findSwitch(x, y)) != null) {
+      //  status_line = String.Format(wxPorting.T("%d,%d: %s "), x, y, wxPorting.L("speed"));
+      //  p = status_line + Globals.wxStrlen(status_line);
+      //  for(x = 0; x < Config.NTTYPES; ++x) {
+      //    wxSprintf(p, wxPorting.T("%d/"), t.speed[x]);
+      //    p += Globals.wxStrlen(p);
+      //  }
+      //  wxSprintf(--p, wxPorting.T(" Km/h, %s %d m"), wxPorting.L("length"), t.length);
+      //  if(t.isstation)
+      //    status_line += string.Format(
+      //         wxPorting.T("  %s: %s"), wxPorting.L("Station"), t.station);
+      //} else if((t = findText(x, y)) != null) {
+      //  status_line = String.Format(wxPorting.T("%d,%d: %s %s"), x, y, wxPorting.L("entry/exit"), t.station);
+      //  add_linked_info_to_status(t);
+      //} else if((sig = findSignal(x, y)) != null) {
+      //  if(sig.controls)
+      //    status_line = String.Format(wxPorting.T("%d,%d: %s %s %s %d, %d"), x, y,
+      //        wxPorting.L("Signal"), sig.station ? sig.station : wxPorting.T(""),
+      //        wxPorting.L("controls"), sig.controls.x, sig.controls.y);
+      //  else
+      //    status_line = String.Format(wxPorting.T("%d,%d: %s %s"), x, y,
+      //        wxPorting.L("Signal"), sig.station ? sig.station : wxPorting.T(""));
+      //  if(String1.IsNullOrEmpty(sig.stateProgram) == false) {
+      //    status_line += string.Format(
+      //        wxPorting.T("  %s: \"%s\""), wxPorting.L("script"), sig.stateProgram);
+      //    status_line += string.Format(
+      //        wxPorting.T("  %s: \"%s\""), wxPorting.L("aspect"), sig._currentState ? sig._currentState : wxPorting.T("?"));
+      //  }
+      //} else if((t = findTrackType(x, y, TRIGGER))) {
+      //  status_line = String.Format(wxPorting.T("%d,%d: %s - %s  . (%d,%d)  Prob.: "),
+      //x, y, wxPorting.L("Trigger"), t.station ? t.station : wxPorting.T(""), t.wlinkx, t.wlinky);
+      //  p = status_line + Globals.wxStrlen(status_line);
+      //  for(x = 0; x < NTTYPES; ++x) {
+      //    wxSprintf(p, wxPorting.T("%d/"), t.speed[x]);
+      //    p += Globals.wxStrlen(p);
+      //  }
+      //  p[-1] = 0;
+      //} else if((t = findTrackType(x, y, ITIN))) {
+      //  status_line = String.Format(wxPorting.T("%d,%d: %s - %s"), x, y,
+      //      wxPorting.L("Itinerary"), t.station ? t.station : wxPorting.T(""));
+      //} else if((t = findTrackType(x, y, IMAGE))) {
+      //  status_line = String.Format(wxPorting.T("%d,%d: %s %s"), x, y,
+      //      wxPorting.L("Image"), t.station ? t.station : wxPorting.T(""));
+      //  add_linked_info_to_status(t);
+      //} else {
+      //  status_line[0] = 0;
+      //}
+      //repaint_labels();
+    }
 
     public static void update_schedule(Train t) {
       //int i;

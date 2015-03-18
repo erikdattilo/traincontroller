@@ -86,44 +86,51 @@ namespace TrainController {
     //      //return pos;
     //    }
 
-    //    public void OnMouseMove(object sender, Event evt1) {
-    //      throw new NotImplementedException();
-    ////      MouseEvent evt = (MouseEvent)evt1;
-    ////      Point pos = evt.Position;
-    ////      pos = GetEventPosition(pos);
-    ////      if(Globals.bShowCoord) {
-    ////        if(pos.X < Configuration.HCOORDBAR || pos.Y < Configuration.VCOORDBAR) {
-    ////          evt.Skip();
-    ////          return;
-    ////        }
-    ////        pos.X -= Configuration.HCOORDBAR;
-    ////        pos.Y -= Configuration.VCOORDBAR;
-    ////      }
+    protected override void OnMouseMove(MouseEventArgs e) {
+      // public void OnMouseMove(object sender, Event evt1) {
+      //throw new NotImplementedException();
+      //MouseEvent evt = (MouseEvent)evt1;
+      //Point pos = evt.Position;
+      //pos = GetEventPosition(pos);
 
-    ////      Coord coord = new Coord(pos.X / Configuration.HGRID, pos.Y / Configuration.HGRID);
+      Point pos = e.Location;
 
-    ////      string oldTooltip = "";
-    ////      oldTooltip = String.Copy(Globals.tooltipString);
+      if(Globals.bShowCoord) {
+        if(pos.X < Configuration.HCOORDBAR || pos.Y < Configuration.VCOORDBAR) {
+//          evt.Skip();
+          base.OnMouseMove(e);
+          return;
+        }
+        pos.X -= Configuration.HCOORDBAR;
+        pos.Y -= Configuration.VCOORDBAR;
+      }
 
-    ////      Globals.pointer_at(coord);
+      Coord coord = new Coord(pos.X / Configuration.HGRID, pos.Y / Configuration.HGRID);
 
-    ////      if(Globals.show_tooltip && (Globals.wxStrcmp(oldTooltip, Globals.tooltipString) != 0)) {
-    ////#if WIN32
-    ////        ToolTip newTip = new ToolTip(Globals.tooltipString);
-    ////        this.ToolTip = Globals.tooltipString; // Erik: Original code => this.ToolTip = newTip;
-    ////        m_tooltip = newTip;
-    ////#else
-    ////      canvasHelp.AddHelp(this, tooltipString);
-    ////      canvasHelp.ShowHelp(this);
-    ////      canvasHelp.RemoveHelp(this);
-    ////#endif
-    ////      }
-    ////      if(Globals.bShowCoord) {
-    ////        Globals.coord_paint(coord);
-    ////        Globals.draw_all_pixmap();
-    ////      }
-    ////      evt.Skip();
-    //    }
+//      string oldTooltip = "";
+//      oldTooltip = String.Copy(Globals.tooltipString);
+
+      Globals.pointer_at(coord);
+
+//      if(Globals.show_tooltip && (Globals.wxStrcmp(oldTooltip, Globals.tooltipString) != 0)) {
+//#if WIN32
+//        ToolTip newTip = new ToolTip(Globals.tooltipString);
+//        this.ToolTip = Globals.tooltipString; // Erik: Original code => this.ToolTip = newTip;
+//        m_tooltip = newTip;
+//#else
+//          canvasHelp.AddHelp(this, tooltipString);
+//          canvasHelp.ShowHelp(this);
+//          canvasHelp.RemoveHelp(this);
+//#endif
+//      }
+      if(Globals.bShowCoord) {
+        Globals.coord_paint(coord);
+        Globals.draw_all_pixmap();
+      }
+
+      // evt.Skip();
+      base.OnMouseMove(e);
+    }
 
     //    public void OnMouseLeft(object sender, Event evt1) {
     //      throw new NotImplementedException();

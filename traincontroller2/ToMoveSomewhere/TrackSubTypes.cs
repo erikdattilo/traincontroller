@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 
 namespace TrainController {
+  class NoTrack : Track {
+    public override trktype TrackType { get { return trktype.NOTRACK; } }
+  }
   class TrackTrigger : Track {
     public override trktype TrackType { get { return trktype.TRIGGER; } }
   }

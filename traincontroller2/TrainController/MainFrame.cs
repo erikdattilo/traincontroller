@@ -19,9 +19,10 @@ namespace TrainController {
 
       MainFrame_OldConstructor("AAA");
 
-      TrainController.GetInstance();
+      TrainControllerApp tc = TrainControllerApp.GetInstance();
+      tc.m_frame = this;
 
-      TrainController.GetInstance().OpenFile(@"C:\Documents and Settings\Erik_\Desktop\tdir38win\Scenari\Padova2014.zip");
+      TrainControllerApp.GetInstance().OpenFile(@"C:\Documents and Settings\Erik_\Desktop\tdir38win\Scenari\Padova2014.zip");
     }
 
     public void MainFrame_OldConstructor(String title)
@@ -910,20 +911,22 @@ namespace TrainController {
 //    //
 //    //
 
+
+    private void OnShowCoord_Click(object sender, EventArgs e) {
 //    public void OnShowCoord(object sender, Event evt) {
 //      throw new NotImplementedException();
-//      //MenuBar pBar = this.MenuBar;
-//      //MenuItem pItem;
+      //MenuBar pBar = this.MenuBar;
+      ToolStripMenuItem pItem = (ToolStripMenuItem)sender;
 
-//      //MenuStrip dummyMenu;
-//      //if((pItem = pBar.FindItem((int)MenuIDs.MENU_SHOW_COORD, ref dummyMenu)) != null) {
-//      //  Glboals.bShowCoord = pItem.Checked;
-//      //}
-//      ////	bShowCoord = !bShowCoord;
-//      //Globals.set_show_coord(Globals.bShowCoord);
-//      //Globals.invalidate_field();
-//      //Globals.repaint_all();
-//    }
+      //MenuStrip dummyMenu;
+      //if((pItem = pBar.FindItem((int)MenuIDs.MENU_SHOW_COORD, ref dummyMenu)) != null) {
+      Globals.bShowCoord = pItem.Checked;
+      //}
+      // bShowCoord = !bShowCoord;
+      Globals.set_show_coord(Globals.bShowCoord);
+      Globals.invalidate_field();
+      Globals.repaint_all();
+    }
 
 //    //
 //    //
@@ -1410,5 +1413,9 @@ namespace TrainController {
     //}
 
 
+
+    public void SetStatusText(string str, int i) {
+      statusStrip1.Text = str;
+    }
   }
 }

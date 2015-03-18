@@ -31,8 +31,8 @@ namespace TrainController {
     }
   }
 
-  public class TrainController : App {
-    private static TrainController mInstance = null;
+  public class TrainControllerApp : App {
+    private static TrainControllerApp mInstance = null;
 
     private Queue mCommands = Queue.Synchronized(new Queue());
     private bool mIgnoreTimer;
@@ -40,7 +40,7 @@ namespace TrainController {
     private int mTimeSliceCount;
 
 
-    private TrainController() {
+    private TrainControllerApp() {
       if(mInstance != null)
         throw new Exception("TrainController constructor can be called only once");
 
@@ -50,28 +50,102 @@ namespace TrainController {
       mTimeSliceCount = 0;
       mTimeSlice = 10;
       mIgnoreTimer = true;
+
+      OnInit();
     }
 
-    public static TrainController GetInstance() {
+    public static TrainControllerApp GetInstance() {
       if(mInstance == null)
-        mInstance = new TrainController();
+        mInstance = new TrainControllerApp();
 
       return mInstance;
     }
 
-    private wx.FileDialog mFileDialog;
+    private OpenFileDialog mFileDialog;
     // TODO Rename to mFrame
-    private MainFrame2 m_frame;
+    public MainFrame m_frame;
 
 
 
     public override bool OnInit() {
-      // TODO Place correct code in this function!
-      m_frame = new MainFrame2("ERIK");
-      m_frame.Show();
+      //      Globals.traindir = this;
 
-      OpenFile(@"C:\Documents and Settings\Erik_\Desktop\tdir38win\Scenari\Padova2014.zip");
+      //      Globals.srand(Globals.time(0));
 
+      //      wxPorting.wxInitAllImageHandlers();
+
+      //      if(String.IsNullOrEmpty(wxPorting.wxGetenv(wxPorting.T("TDHOME"))) == false)
+      //        wxPorting.wxSetWorkingDirectory(wxPorting.wxGetenv(wxPorting.T("TDHOME")));
+
+      //      m_project = null;
+      //      m_nOldSimulations = 0;
+
+      //      m_colorCanceled = new wx.Colour(64, 64, 64);
+      //      m_colorReady = wx.Colour.wxBLUE;
+      //      m_colorArrived = wx.Colour.wxGREEN;
+      //      m_colorDerailed = wx.Colour.wxRED;
+      //      m_colorWaiting = wx.Colour.wxLIGHT_GREY;
+      //      m_colorRunning = wx.Colour.wxBLACK;
+      //      m_colorStopped = new wx.Colour(0, 0, 128);// dark blue
+
+      //      //
+      //      //  Load the preferences before we create the main frame,
+      //      //  since we have to decide which locale to use before
+      //      //  creating the menus.
+      //      //
+
+      //      LoadPreferences();
+
+      //      Globals.fonts.AddFont(Globals.gFontSizeSmall, FontFamily.wxSWISS, wx.FontStyle.wxNORMAL, FontWeight.wxNORMAL, 0);
+      //      Globals.fonts.AddFont(Globals.gFontSizeBig, FontFamily.wxSWISS, wx.FontStyle.wxNORMAL, FontWeight.wxNORMAL, 0);
+
+        Globals.program_name = String.Format(wxPorting.T("Train Director {0}"), Globals.version);
+
+      //      if(Globals.argc > 1 && !Globals.wxStrcmp(Globals.argv[1], wxPorting.T("-server"))) {
+      //        Globals.server_mode();
+      //        return true;
+      //      }
+      //      m_frame = new MainFrame(Globals.program_name);
+      //      m_frame.SetSize(900, 600);
+      //      m_frame.m_app = this;
+
+      //      m_timeSliceCount = 0;
+      //      m_timeSlice = 10;
+      //      m_ignoreTimer = true;
+
+      //      Globals.init_tool_layout();
+
+      //      LoadState();
+
+      //#if __WXMAC__
+      //#else
+      //      if(string.IsNullOrEmpty(Globals.entry_sound._sValue.empty())) {
+      //        Globals.pEntrySound = new wxSound();
+      //        Globals.pEntrySound.Create(Globals.entry_sound._sValue);
+      //      }
+      //      if(string.IsNullOrEmpty(Globals.alert_sound._sValue.empty())) {
+      //        Globals.pAlertSound = new wxSound();
+      //        Globals.pAlertSound.Create(Globals.alert_sound._sValue);
+      //      }
+      //#endif
+
+      //      m_frame.Finalize1();
+      //      m_frame.Icon = new Icon(wxPorting.T("aaaTD_ICON"));
+      //      m_frame.Show(true);
+
+      //      Globals.ShowWelcomePage();
+
+      //      Globals.start_server_thread();
+
+      //      if(Globals.user_name._sValue.Length > 0) {
+      //        Globals.bstreet_login();
+      //      }
+
+      //      if(Globals.argc > 1) {
+      //        String filename = new string(Globals.argv[1]);
+      //        OpenFile(filename, false);
+      //      }
+      //      wxPorting.wxHandleFatalExceptions(false);
       return true;
     }
 
@@ -87,19 +161,18 @@ namespace TrainController {
          types = I18N.T("Traindir Scenario (*.zip)|*.zip|Traindir Layout (*.trk)|*.trk|Saved Simulations (*.sav)|*.sav|All Files (*.*)|*.*");
         }
 
-        mFileDialog = new wx.FileDialog(
-          m_frame,
-          I18N.L("Open a file"), I18N.T(""), I18N.T(""),
-          types,
-          WindowStyles.FD_OPEN | WindowStyles.FD_FILE_MUST_EXIST | WindowStyles.FD_CHANGE_DIR
-        );
-      }
+        mFileDialog = new OpenFileDialog {
+          Title = I18N.L("Open a file"),
+          Filter = types,
+          // WindowStyles.FD_OPEN | WindowStyles.FD_FILE_MUST_EXIST | WindowStyles.FD_CHANGE_DIR,
+          InitialDirectory = Globals.current_project,
 
-      mFileDialog.Path = (Globals.current_project);
-      if(mFileDialog.ShowModal() != ShowModalResult.OK)
+        };
+      }
+      if(mFileDialog.ShowDialog() != DialogResult.OK)
         return;
 
-      String path = mFileDialog.Path;
+      String path = mFileDialog.FileName;
       OpenFile(path);
     }
 

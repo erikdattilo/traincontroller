@@ -60,7 +60,7 @@ namespace TrainDirPorting {
     public object handle;
 
     public TrLabel(String str) {
-      throw new NotImplementedException();
+      text = str;
     }
   }
    
