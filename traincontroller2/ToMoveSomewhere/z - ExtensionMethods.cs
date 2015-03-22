@@ -101,6 +101,18 @@ namespace TrainController {
       gr.DrawImage(bmp, x, y);
     }
 
+    public static bool StartsWith(this String str, String value, out string buff) {
+      buff = "";
+      if(
+        str == null ||
+        value == null ||
+        str.StartsWith(value) == false
+      )
+        return false;
+
+      buff = str.Substring(value.Length);
+      return true;
+    }
 
 
   }

@@ -39,11 +39,16 @@ namespace TrainController {
       return Path.GetFullPath(mFileName);
     }
 
-    internal void SetExt(string ext) {
+    public void SetExt(string ext) {
       mExt = ext;
+
+      int i = mFileName.LastIndexOf('.');
+      if(i >= 0) {
+        mFileName = mFileName.Substring(0, i) + '.' + mExt;
+      }
     }
 
-    internal void SetEmptyExt() {
+    public void SetEmptyExt() {
       mExt = "";
     }
   }

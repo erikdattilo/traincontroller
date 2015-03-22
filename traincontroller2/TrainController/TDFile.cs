@@ -70,7 +70,7 @@ namespace TrainController {
         mName.SetEmptyExt();
     }
 
-    public void GetDirName(string dest, int size) {
+    public void GetDirName(out string dest) {
       throw new NotImplementedException();
       //wxFileName nm = new wxFileName(this.name);
       //nm.Normalize(wxPATH_NORM_LONG | wxPATH_NORM_DOTS | wxPATH_NORM_TILDE | wxPATH_NORM_ABSOLUTE);

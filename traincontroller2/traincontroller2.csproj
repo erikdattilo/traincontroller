@@ -224,6 +224,10 @@
     <Compile Include="CustomControls\ToolStripNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ToMoveSomewhere\HtmlPage.cs" />
+    <Compile Include="ToMoveSomewhere\HtmlView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ToMoveSomewhere\MyCanvas.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -235,7 +239,10 @@
     <Compile Include="ToMoveSomewhere\Train.cs" />
     <Compile Include="ToMoveSomewhere\TrainStop.cs" />
     <Compile Include="ToMoveSomewhere\z - ExtensionMethods.cs" />
+    <Compile Include="TrainController\CSV.cs" />
+    <Compile Include="TrainController\CSVFile.cs" />
     <Compile Include="TrainController\Globals.cs" />
+    <Compile Include="TrainController\GTFS.cs" />
     <Compile Include="TrainController\MainFrame.cs">
       <SubType>Form</SubType>
     </Compile>

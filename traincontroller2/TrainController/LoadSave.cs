@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace TrainController {
   partial class Globals {
@@ -48,7 +49,7 @@ namespace TrainController {
 
       trkFile.SetExt(wxPorting.T(".trk"));
       if(!trkFile.Load()) {
-        buff = String.Format(wxPorting.T("File '%s' not found."), trkFile.mName.GetFullPath());
+        buff = String.Format(wxPorting.T("File '{0}' not found."), trkFile.mName.GetFullPath());
         Globals.traindir.Error(buff);
         return null;
       }
@@ -254,7 +255,7 @@ DEBUG_Func1(layout);
           //x = 0;
           //int ch = 0;
           //do {
-          //  while(*p == wxPorting.T(' ') || *p == wxPorting.T('t'))
+          //  while(*p == wxPorting.T(' ') || *p == wxPorting.T('\t'))
           //    p.incPointer();
           //  String n = p;
           //  while(*p && *p != wxPorting.T(','))
@@ -611,5 +612,810 @@ DEBUG_Func1(layout);
       }
       return null;
     }
+
+    public static Path paths;
+
+    public static bool performance_hide_canceled = false;
+
+    public static List<pxmap> pixmaps;
+    public static List<pxmap> carpixmaps;
+
+    public static GTFS gtfs;
+
+
+    public static string dirPath;
+
+    private static int curtype = 0;
+    public static bool save_prefs = true;
+    public static string[] powerType = new string[Config.NTTYPES];
+    public static double[] gauge = new double[Config.NTTYPES];
+    public static bool powerSpecified;
+
+    private static String linebuff1;
+    private static int maxline1;
+    public static int layout_modified1;
+
+    private static Train sched;
+
+    public static bool load_trains_from_gtfs() {
+      gtfs = new GTFS();
+      return gtfs.Load(dirPath);
+    }
+
+    public static Train parse_newformat(TDFile schFile) {
+      Train t;
+      TrainStop stp;
+      string buff;
+      int x;
+      int i;
+      TimeSpan l;
+      String p;
+      String fileinc;
+      String nw, ne;
+      object pmw, pme;
+      Match match;
+
+      t = null;
+      while(schFile.ReadLine(out buff)) {
+        if(String1.IsNullOrWhiteSpaces(buff) || buff[0] == '#')
+          continue;
+
+        if(buff[0] == '.') {
+          t = null;
+          continue;
+        }
+        char[] charBuff = buff.ToCharArray();
+        for(x = 0; x < charBuff.Length; ++x)
+          if(charBuff[x] == '\t')
+            charBuff[x] = ' ';
+        while(x != 0 && (charBuff[x - 1] == ' ' || charBuff[x - 1] == '\t')) --x;
+        buff = new string(charBuff, 0, x);
+        
+        if(buff.StartsWith(wxPorting.T("Include: "))) {
+          throw new NotImplementedException();
+      //    for(p = buff + 9; p[0] == ' '; p.incPointer()) ;
+      //    if(!*p)
+      //      continue;
+
+      //    TDFile incFile = new TDFile(p);
+
+      //    if(incFile.Load())
+      //      parse_newformat(incFile);
+      //    else {
+      //      fileinc = String.Format(wxPorting.T("%s/%s"), dirPath, locase(p));
+      //      TDFile incFile1 = new TDFile(fileinc);
+
+      //      if(!incFile1.Load())
+      //        continue;
+      //      parse_newformat(incFile1);
+      //    }
+
+      //    t = 0;
+          continue;
+        }
+        if(buff.StartsWith(wxPorting.T("Routes:"))) {
+          throw new NotImplementedException();
+      //    for(p = buff + 7; p[0] == ' '; p.incPointer()) ;
+      //    if(!*p)
+      //      continue;
+      //    gtfs.SetOurRoutes(p);
+          continue;
+        }
+        if(buff.StartsWith(wxPorting.T("GTFS:"))) {
+          throw new NotImplementedException();
+      //    for(p = buff + 5; p[0] == ' '; p.incPointer()) ;
+      //    if(!*p)
+      //      continue;
+      //    sched = read_gtfs(sched, p);
+          continue;
+        }
+        if(buff.StartsWith(wxPorting.T("Cancel:"))) {
+          throw new NotImplementedException();
+      //    for(p = buff + 7; p[0] == ' '; p.incPointer()) ;
+      //    if(!*p)
+      //      continue;
+      //    sched = cancelTrain(p, sched);
+      //    t = 0;
+          continue;
+        }
+        if(buff.StartsWith(wxPorting.T("Today: "))) {
+          throw new NotImplementedException();
+      //    for(p = buff + 7; p[0] == ' '; p.incPointer()) ;
+      //    for(l = 0; p[0] >= '0' && p[0] <= '9'; p.incPointer())
+      //      l |= 1 << (*p - '1');
+      //    run_day = l;
+          continue;
+        }
+        if(buff.StartsWith(wxPorting.T("Start: "))) {
+          p = buff.Substring(7);
+          current_time = start_time = parse_time(p);
+          continue;
+        }
+        if(buff.StartsWith(wxPorting.T("Train: "))) {
+          t = find_train(sched, buff.Substring(7));
+          if(t != null)
+            continue;
+          t = new Train();
+          t.name = buff.Substring(7);
+          t.next = sched;
+          t.type = curtype;
+          t.epix = t.wpix = -1;
+          t.ecarpix = t.wcarpix = -1;
+          sched = t;
+          continue;
+        }
+        if(t == null) {
+          if(buff.StartsWith(wxPorting.T("Type: "))) {
+            throw new NotImplementedException();
+      //      if((l = wxStrtol(buff + 6, &p, 0) - 1) >= NTTYPES || l < 0)
+      //        continue;
+      //      curtype = l;
+      //      if(!p)
+      //        continue;
+            //      while(p[0] == ' ' || p[0] == '\t') p.incPointer();
+      //      if(!*p)
+      //        continue;
+      //      if(p[0] == '+') {
+      //        startDelay[curtype] = wxStrtol(p.incPointer(), &p, 10);
+      //      }
+      //      if(p[0] == '>') {
+      //        accelRate[curtype] = wxAtof(p.incPointer());
+            //        while(*p && *p != ' ' && *p != '\t')
+      //          p.incPointer();
+      //      }
+            //      while(p[0] == ' ' || p[0] == '\t') p.incPointer();
+      //      if(!*p)
+      //        continue;
+      //      nw = p;
+            //      while(*p && *p != ' ' && *p != '\t') p.incPointer();
+      //      if(!*p)
+      //        continue;
+      //      *p.incPointer() = 0;
+            //      while(p[0] == ' ' || p[0] == '\t') p.incPointer();
+      //      ne = p;
+            //      while(*p && *p != ' ' && *p != '\t') p.incPointer();
+      //      l = *p;
+      //      *p.incPointer() = 0;
+      //      if(!(pmw = get_pixmap_file(locase(nw))))
+      //        continue;
+      //      if(!(pme = get_pixmap_file(locase(ne))))
+      //        continue;
+      //      w_train_pmap[curtype] = pmw;
+      //      e_train_pmap[curtype] = pme;
+      //      if(!l)
+      //        continue;
+            //      while(p[0] == ' ' || p[0] == '\t') p.incPointer();
+      //      ne = p;
+            //      while(*p && *p != ' ' && *p != '\t') p.incPointer();
+      //      l = *p;
+      //      *p.incPointer() = 0;
+      //      if(!(pmw = get_pixmap_file(locase(ne))))
+      //        continue;
+      //      w_car_pmap[curtype] = pmw;
+      //      e_car_pmap[curtype] = pmw;
+      //      if(!l)
+      //        continue;
+            //      while(p[0] == ' ' || p[0] == '\t') p.incPointer();
+      //      if(!*p)
+      //        continue;
+      //      if(!(pme = get_pixmap_file(locase(p))))
+      //        continue;
+      //      e_car_pmap[curtype] = pme;
+      //      continue;
+          }
+          if(buff.StartsWith(wxPorting.T("Power:"))) {
+            throw new NotImplementedException();
+      //      if((l = wxStrtol(buff + 6, &p, 0) - 1) >= NTTYPES || l < 0)
+      //        continue;
+      //      powerType[l] = power_parse(p);
+      //      continue;
+          }
+          if(buff.StartsWith(wxPorting.T("Gauge:"))) {
+            throw new NotImplementedException();
+      //      if((l = wxStrtol(buff + 6, &p, 0) - 1) >= NTTYPES || l < 0)
+      //        continue;
+      //      gauge[l] = wxAtof(p);
+      //      continue;
+          }
+          continue;
+        }
+        p = buff;
+        while(p.Length > 0 && (p[0] == ' ' || p[0] == '\t'))
+          p = p.Substring(1);
+        if(p.StartsWith("Wait: ")) {
+          match = Regex.Match(p, "^Wait:[ \t]*([^ \t]+)[ \t]*$");
+          if(match.Success == false)
+            throw new NotImplementedException();
+          //while(p[0] == ' ' || p[0] == '\t') p.incPointer();
+          //for(nw = p; *nw && *nw != ' '; ++nw) ;
+          //if(*nw)
+          //  *nw++ = 0;
+          //else
+          //  nw = 0;
+          t.waitfor = match.Groups[1].Value;
+          t.waittime = /*nw ? int.Parse(nw) : */ 60;
+          continue;
+        }
+        if(p.StartsWith("StartDelay: ")) {
+          throw new NotImplementedException();
+      //    t.myStartDelay = wxAtoi(p + 12);
+          continue;
+        }
+        if(p.StartsWith("AccelRate: ")) {
+          throw new NotImplementedException();
+      //    t.accelRate = wxAtof(p + 11);
+          continue;
+        }
+        if(buff.StartsWith(wxPorting.T("Power:"))) {
+          throw new NotImplementedException();
+      //    t.power = power_parse(buff + 6);
+          continue;
+        }
+        if(buff.StartsWith(wxPorting.T("Gauge:"))) {
+          throw new NotImplementedException();
+      //    t.gauge = wxAtof(buff + 6);
+          continue;
+        }
+        if(p.StartsWith("When: ")) {
+          p = p.Substring(6).Trim();
+          for(x = 0; p.Length > 0 && p[0] >= '0' && p[0] <= '9'; p = p.Substring(1))
+            t.days |= (RunDays)(1 << (p[0] - '1'));
+          continue;
+        }
+        if(p.StartsWith("Speed:")) {
+          t.maxspeed = int.Parse(p.Substring(6).Trim());
+          continue;
+        }
+        if(p.StartsWith("Type: ")) {
+          match = Regex.Match(p, "^Type: ([0-9]+) ([^ ]+\\.xpm) ([^ ]+\\.xpm)$");
+
+          if(match.Success == false)
+            throw new NotImplementedException();
+
+          x = int.Parse(match.Groups[1].Value);
+
+          if(x - 1 < Config.NTTYPES)
+            t.type = x - 1;
+
+          nw = match.Groups[2].Value.ToLower();
+          if((t.wpix = get_pixmap_index(nw)) < 0)
+            continue;
+          
+          p = match.Groups[3].Value.ToLower();
+          t.epix = get_pixmap_index(p);
+            continue;
+        }
+        if(p.StartsWith("Stock: ")) {
+          t.stock = p.Substring(7).Trim();
+          continue;
+        }
+        if(p.StartsWith("Length: ")) {
+          throw new NotImplementedException();
+      //    t.length = wxStrtol(p + 8, &p, 0);
+      //    t.entryLength = t.length;
+      //    t.tail = (Train*)calloc(sizeof(Train), 1);
+      //    t.ecarpix = t.wcarpix = -1;
+          //    while(p[0] == ' ' || p[0] == '\t') p.incPointer();
+      //    if(!*p)
+      //      continue;
+      //    ne = p;
+          //    while(*p && *p != ' ' && *p != '\t') p.incPointer();
+      //    l = *p;
+      //    *p.incPointer() = 0;
+      //    t.ecarpix = t.wcarpix = get_carpixmap_index(locase(ne));
+      //    if(!l)
+      //      continue;
+          //    while(p[0] == ' ' || p[0] == '\t') p.incPointer();
+      //    if(!*p)
+      //      continue;
+      //    t.wcarpix = get_carpixmap_index(locase(p));
+          continue;
+        }
+        if(p.StartsWith("Enter: ")) {
+          match = Regex.Match(p, "^Enter:[ \t]*([0-9]+:[0-9]+:[0-9]+)[, \t][ \t]*([^ \t].*)$");
+          if(match.Success == false) {
+            match = Regex.Match(p, "^Enter:[ \t]*([0-9]+:[0-9]+),[ \t]*([^ \t].*)$");
+            if(match.Success == false)
+              throw new NotImplementedException();
+          }
+
+          t.timein = parse_time(match.Groups[1].Value);
+          if(p[0] == Globals.DELAY_CHAR) {
+            throw new NotImplementedException();
+            //t.entryDelay = (TDDelay*)calloc(sizeof(TDDelay), 1);
+            //p = parse_delay(p.incPointer(), t.entryDelay);
+          }
+          t.entrance = String.Copy(convert_station(match.Groups[2].Value));
+          continue;
+        }
+        if(p.StartsWith("Notes:")) {
+          t.notes.Add(p.Substring(6).Trim());
+          continue;
+        }
+        if(p.StartsWith(wxPorting.T("Script:"))) {
+          String scr = "";
+          while(schFile.ReadLine(out buff)) {
+            if(buff.Length > 0 && buff[0] == '#')
+              continue;
+            if(String.Equals(buff, wxPorting.T("EndScript"))) {
+              break;
+            }
+            buff += wxPorting.T("\n");
+            scr += buff;
+          }
+          t.stateProgram = scr;
+          continue;
+        }
+        // TODO Check if following line is correct. I had the need to initialize l
+        l = TimeSpan.Zero;
+
+        stp = new TrainStop();
+        stp.minstop = 30;
+
+        p = p.Trim();
+        String singleParam = "([0-9]+:[0-9]+:[0-9]+[^, ]*|:|\\+|-)";
+        String spaces = "[ \t]*";
+        String separator = String.Concat(spaces, "[, ]?", spaces);
+        String everything = "(..*)";
+        String pattern = String.Concat("^", spaces, singleParam, separator, singleParam, separator, everything, "$");
+        match = Regex.Match(p, pattern);
+
+        if(match.Success == false)
+          throw new NotImplementedException();
+
+        p = match.Groups[1].Value;
+
+        if(p[0] == '-') {		/* doesn't stop */
+          stp.minstop = 0;
+        } else if(p[0] == '+') {	// arrival: delta from previous departure
+          throw new NotImplementedException();
+        //  p.incPointer();
+        //  l = wxStrtoul(p, &p, 10);
+        //  if(!t.stops)
+        //    l += t.timein;
+        //  else
+        //    l += t.laststop.departure;
+        } else
+          l = parse_time(p);	/* arrival */
+        // TODO Handle following code
+        //if(p[0] == '+') {
+        //  p.incPointer();
+        //  stp.minstop = wxStrtoul(p, &p, 10);
+        //}
+
+        p = match.Groups[2].Value;
+        if(p[0] == '-') {
+          // Globals.free(stp);
+          if(String1.IsNullOrWhiteSpaces(t.exit) == false)		/* already processed exit point! */
+            continue;
+          t.timeout = l;
+          p = match.Groups[3].Value;
+          t.exit = String.Copy(convert_station(p));
+          continue;
+        }
+        if(p[0] == '+') {
+          throw new NotImplementedException();
+          //stp.departure = wxStrtoul(p + 1, &p, 10);
+          //if(stp.departure < stp.minstop)
+          //  stp.departure = stp.minstop;
+          //if(!stp.minstop) {	// doesn't stop
+          //  if(!t.stops)
+          //    l = t.timein;
+          //  else
+          //    l = t.laststop.departure;
+          //}
+          //stp.departure += l;
+        } else {
+          if((i = p.IndexOf('!')) < 0)
+            i = p.Length;
+          stp.departure = parse_time(p.Substring(0, i));
+        }
+        //if(!stp.minstop)
+        //  stp.arrival = stp.departure;
+        //else {
+        //  stp.arrival = l;
+        //  if(stp.departure == stp.arrival)  //
+        //    stp.departure = stp.arrival + stp.minstop;
+        //  else if(stp.minstop > stp.departure - stp.arrival)	// +Rask Ingemann Lambertsen
+        //    stp.minstop = stp.departure - stp.arrival;	// +Rask Ingemann Lambertsen
+        //}
+        if((i = p.IndexOf(DELAY_CHAR)) >= 0) {
+          stp.depDelay = new TDDelay();
+          parse_delay(p.Substring(i + 1), stp.depDelay);
+        }
+        p = match.Groups[3].Value;
+        stp.station = new Station(convert_station(p));
+        if(t.stops == null)
+          t.stops = new List<TrainStop>();
+        t.stops.Add(stp);
+        //else {
+        //  t.laststop.next = stp;
+        //t.laststop = stp;
+      }
+      
+      return sched;
+    }
+
+    public static Train load_trains(String name) {
+      Train t;
+      TrainStop stp;
+      string buff;
+      int l;
+      String p, p1;
+      bool newformat;
+
+      sched = null;
+      newformat = false;
+      start_time = TimeSpan.Zero;
+      curtype = 0;
+      Array.Clear(startDelay, 0, startDelay.Length);
+      for(int i = 0; i < Config.NTTYPES; ++i) { // 3.9
+        powerType[i] = null;
+        gauge[i] = 0;
+      }
+
+      ////if(gtfs != null)
+      ////  Globals.delete(gtfs);
+      gtfs = new GTFS();
+
+
+      TDFile schFile = new TDFile(name);
+      schFile.SetExt(wxPorting.T(".sch"));
+      // schFile.GetDirName(out dirPath);
+      if(!schFile.Load()) {
+        if(!load_trains_from_gtfs())
+          return null;
+      } else while(schFile.ReadLine(out buff)) {
+        if(String1.IsNullOrWhiteSpaces(buff))
+          continue;
+
+        if(newformat || (buff == wxPorting.T("#!trdir"))) {
+          newformat = true;
+          t = parse_newformat(schFile);
+          if(t == null)
+            continue;
+          sched = t;
+          continue;
+        }
+        
+        throw new NotImplementedException();
+
+        //if(buff[0] == '#')
+        //  throw new NotImplementedException(); // continue;
+
+        //t = new Train();
+        //t.next = sched;
+        //sched = t;
+        //int i;
+        //i = buff.IndexOf(',');// for(p = buff; *p && *p != ','; p.incPointer()) ;
+        //if(i < 0)
+        //  continue; // if(!*p)
+        //t.name = buff.Substring(0, i); // *p.incPointer() = 0; t.name = String.Copy(buff);
+        //t.status = trainstat.train_READY;
+        //t.direction = t.sdirection = (trkdir)wxStrtol(p, out p, 10);
+        //if(p != null && p[0] == ',') p = p.Substring(1);
+        //t.timein = parse_time(&p);
+        //if(p != null && p[0] == ',') p = p.Substring(1);
+        //p1 = p;
+        //while(p.Length > 0 && p[0] != ',') p = p.Substring(1);
+        //if(p.Length == 0)
+        //  continue;
+        //*p.incPointer() = 0;
+        //t.entrance = String.Copy(p1);
+        //t.timeout = parse_time(&p);
+        //if(p[0] == ',') p = p.Substring(1);
+        //p1 = p;
+        //if(p != null && p[0] == ',') p = p.Substring(1);
+        //if(p.Length == 0)
+        //  continue;
+        //*p.incPointer() = 0;
+        //t.exit = String.Copy(p1);
+        //t.maxspeed = wxStrtol(p, out p, 10);
+        //if(p[0] == ',') p = p.Substring(1);
+        //while(p.Length > 0) {
+        //  for(p1 = p; *p && *p != ','; p.incPointer()) ;
+        //  if(p.Length == 0)
+        //    continue;
+        //  *p.incPointer() = 0;
+        //  stp = new TrainStop();
+        //  if(t.stops == null)
+        //    t.stops = new List<TrainStop> { stp };
+        //  else
+        //    t.laststop.next = stp;
+        //  t.laststop = stp;
+        //  stp.station = String.Copy(p1);
+        //  stp.arrival = parse_time(&p);
+        //  if(p[0] == ',') p = p.Substring(1);
+        //  stp.departure = parse_time(&p);
+        //  if(p[0] == ',') p = p.Substring(1);
+        //  stp.minstop = wxStrtol(p, &p, 10);
+        //  if(p[0] == ',') p = p.Substring(1);
+        //}
+      }
+
+      /* check correctness of schedule */
+
+      l = 0;
+      for(t = sched; t != null; t = t.next) {
+        if(String1.IsNullOrWhiteSpaces(t.exit)) {
+          t.exit = wxPorting.T("?");
+          ++l;
+        }
+        if(String1.IsNullOrWhiteSpaces(t.exit)) {
+          t.entrance = wxPorting.T("?");
+          ++l;
+        }
+      }
+      if(l != 0)
+        Globals.traindir.Error(wxPorting.L("Some train has unknown entry/exit point!"));
+
+      // 3.9: propagate motive power
+
+      for(t = sched; t != null; t = t.next) {
+        if(String1.IsNullOrWhiteSpaces(t.power) == false)
+          continue;
+        t.power = powerType[t.type]; // either null or real power spec.
+      }
+
+      load_paths(name);
+      resolve_paths(sched);
+
+      sched = sort_schedule(sched);
+
+      for(t = sched; t != null; t = t.next)
+        if(String1.IsNullOrWhiteSpaces(t.stateProgram) == false)
+          t.ParseProgram();
+
+      return sched;
+
+      throw new NotImplementedException();
+    }
+
+    public static int wxStrtol(string buffer, out string nextPiece, int baseNumber) {
+      if(baseNumber != 10)
+        throw new NotImplementedException();
+      if(String1.IsNullOrWhiteSpaces(buffer))
+        throw new ArgumentException();
+
+      int result = 0;
+      int nextToken;
+      for(nextToken = 0; nextToken < buffer.Length; nextToken++) {
+        int val = buffer[nextToken] - '0';
+        if(val < 0 || val > 9) {
+          nextPiece = buffer.Substring(nextToken);
+          return result;
+        }
+
+        result *= 10;
+        result += val;
+      }
+
+      nextPiece = "";
+      return result;
+    }
+
+    public static Train find_train(Train sched, string name) {
+      Train t;
+
+      for(t = sched; t != null; t = t.next)
+        if(String.Equals(t.name, name))
+          return t;
+
+      return null;
+    }
+
+    public static Train sort_schedule(Train sched) {
+      Train[] qb;
+      Train t;
+      int ntrains;
+      int l;
+
+      for(t = sched, ntrains = 0; t != null; t = t.next)
+        ++ntrains;
+      if(ntrains == 0)
+        return sched;
+      qb = new Train[ntrains];
+      for(t = sched, l = 0; l < ntrains; ++l, t = t.next)
+        qb[l] = t;
+      Array.Sort(qb, trcmp); // qsort(qb, ntrains, sizeof(Train*), trcmp);
+      for(l = 0; l < ntrains - 1; ++l)
+        qb[l].next = qb[l + 1];
+      qb[ntrains - 1].next = null;
+      t = qb[0];
+      return t;
+    }
+
+    public static String convert_station(String p) {
+      return (p);
+    }
+
+    public static String parse_delay(String p, TDDelay del) {
+      int secs, prob = 0;
+      foreach(var piece in p.Split(',')) {
+        String[] parts = piece.Split('/');
+        secs = int.Parse(parts[0]);
+        if(parts.Length > 0)
+          prob = int.Parse(parts[1]);
+        del.delays.Add(new TDDelay.Delay(secs, prob));
+      }
+      return p;
+    }
+
+    private static void resolve_path(Train t) {
+
+      Path pt, pth;
+      TrainStop ts, tt;
+      TimeSpan t0 = TimeSpan.Zero;
+      bool f1;
+
+      if(findStationNamed(t.entrance) != null) {
+        f1 = true;
+        goto xit;
+      }
+      f1 = false;
+      for(ts = t.stops.FirstOrDefault(); ts != null; ts = ts.next) {
+        if((pt = find_path(t.entrance, ts.station.FullName)) != null) {
+          t.entrance = String.Copy(pt.enter);
+          t.timein = ts.arrival - pt.times[t.type];
+          f1 = true;
+          goto xit;
+        }
+      }
+      for(tt = t.stops.FirstOrDefault(); tt != null; tt = tt.next) {
+        for(ts = tt.next; ts != null; ts = ts.next) {
+          if((pt = find_path(tt.station.FullName, ts.station.FullName)) != null) {
+            t.entrance = String.Copy(pt.enter);
+            t.timein = ts.arrival - pt.times[t.type];
+            f1 = true;
+            goto xit;
+          }
+        }
+      }
+
+    xit:
+      if(f1 && t.timein == null)         // first stop is close to midnight but path time is longer
+        t.timein.Add(new TimeSpan(1, 0, 0, 0)); // += 24 * 60 * 60;  // so move time in to the end of this day
+      if(findStationNamed(t.exit) != null) {
+        if(f1)			// both entrance and exit in layout
+          return;
+        pth = null;
+        for(tt = t.stops.FirstOrDefault(); tt != null; tt = tt.next)
+          if((pt = find_path(tt.station.FullName, t.exit)) != null)
+            pth = pt;
+        if(pth == null)
+          pth = find_path(t.entrance, t.exit);
+        if(pth == null)
+          return;
+        t.entrance = String.Copy(pth.enter);
+        t.timein = t.timeout - pth.times[t.type];
+        if(t.timein == null)
+          t.timein.Add(new TimeSpan(1, 0, 0, 0)); // 24 * 60 * 60;
+        return;
+      }
+      pth = null;
+      for(tt = t.stops.FirstOrDefault(); tt != null; tt = tt.next) {
+        for(ts = tt.next; ts != null; ts = ts.next) {
+          if((pt = find_path(tt.station.FullName, ts.station.FullName)) != null) {
+            t0 = tt.departure;
+            pth = pt;
+          }
+        }
+      }
+      for(ts = t.stops.FirstOrDefault(); ts != null; ts = ts.next)
+        if((pt = find_path(ts.station.FullName, t.exit)) != null) {
+          t0 = ts.departure;
+          pth = pt;
+        }
+      if(pth != null) {
+        t.exit = String.Copy(pth.enter);
+        t.timeout = t0 + pth.times[t.type];
+        return;
+      }
+      if(!f1)
+        return;
+      for(ts = t.stops.FirstOrDefault(); ts != null; ts = ts.next)
+        if((pt = find_path(t.entrance, ts.station.FullName)) != null) {
+          t.exit = String.Copy(pt.enter);
+          t.timeout = t.timein + pt.times[t.type];
+          return;
+        }
+      if((pt = find_path(t.entrance, t.exit)) != null) {
+        t.exit = String.Copy(pt.enter);
+        t.timeout = t.timein + pt.times[t.type];
+      }
+    }
+
+    public static void resolve_paths(Train schedule) {
+      Train t;
+
+      if(paths == null)
+        return;
+      for(t = schedule; t != null; t = t.next)
+        resolve_path(t);
+    }
+
+    public static void load_paths(String name) {
+      Path pt;
+      string buff;
+      int l;
+      String p, p1;
+      int errors;
+
+      TDFile pthFile = new TDFile(name);
+
+      pthFile.SetExt(wxPorting.T(".pth"));
+      if(!pthFile.Load())
+        return;
+      pt = null;
+      errors = 0;
+      while(pthFile.ReadLine(out buff)) {
+        p = skipblk(buff);
+        if(p.Length == 0 || p[0] == '#')
+          continue;
+        if(p.StartsWith(wxPorting.T("Path:"))) {
+          if(pt != null) {			/* end previous entry */
+            if(
+              String1.IsNullOrWhiteSpaces(pt.from) ||
+              String1.IsNullOrWhiteSpaces(pt.to) ||
+              String1.IsNullOrWhiteSpaces(pt.enter)
+            ) {
+              ++errors;
+              paths = pt.next;	/* ignore last entry */
+            }
+          }
+          p = p.Substring(5).Trim();
+          pt = new Path {
+            next = paths
+          };
+          paths = pt;
+          continue;
+        }
+        if(p.StartsWith(wxPorting.T("From:")))
+          pt.from = p.Substring(5).Trim();
+        if(p.StartsWith(wxPorting.T("To:")))
+          pt.to= p.Substring(3).Trim();
+        if(p.StartsWith(wxPorting.T("Times:"))) {
+          p = p.Substring(6).Trim();
+          p1 = p.Trim();
+          if(p1.Length == 0)			/* no entry point! */
+            continue;
+          for(l = 0; l < Config.NTTYPES; ++l) {
+            throw new NotImplementedException();
+            //pt.times[l] = wxStrtol(p, &p, 10) * 60;
+            //if(p[0] == '/' || p[0] == ',') p.incPointer();
+          }
+          p = skipblk(p1);
+          pt.enter = String.Copy(p);
+        }
+      }
+    }
+
+    public static String skipblk(String p) {
+      return p.Trim();
+    }
+
+    private static Path find_path(String from, String to) {
+      throw new NotImplementedException();
+      //Path pt;
+
+      //for(pt = paths; pt; pt = pt.next) {
+      //  if(!pt.from || !pt.to || !pt.enter)
+      //    continue;
+      //  if(sameStation(from, pt.from) && sameStation(to, pt.to))
+      //    return pt;
+      //}
+      //return 0;
+    }
+
+    public static int trcmp(object a, object b) {
+      Train ap = (Train)a;
+      Train bp = (Train)b;
+      if(ap.timein < bp.timein)
+        return -1;
+      if(ap.timein > bp.timein)
+        return 1;
+      return 0;
+    }
+
   }
 }

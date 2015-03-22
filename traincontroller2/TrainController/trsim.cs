@@ -3,17 +3,98 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TrainController.SimCommands;
+using System.Text.RegularExpressions;
 
 namespace TrainController {
   public enum LoadScenarioType {
     Load = 0,
     Open = 1
   }
+
+  public class Path {
+    public Path next;
+    public string from;
+    public string to;
+    public string enter;
+    public TimeSpan[] times = new TimeSpan[Config.NTTYPES];
+
+    public static string GetDirectoryName(string mFileName) {
+      return System.IO.Path.GetDirectoryName(mFileName);
+    }
+
+    internal static string GetExtension(string mFileName) {
+      return System.IO.Path.GetExtension(mFileName);
+    }
+
+    internal static string GetFileNameWithoutExtension(string mFileName) {
+      return System.IO.Path.GetFileNameWithoutExtension(mFileName);
+    }
+
+    internal static string GetFullPath(string mFileName) {
+      throw new NotImplementedException();
+    }
+  }
+
   partial class Globals {
+
+
+
+    public static int time_mult;
+    public static bool	is_windows;
+    public static int[]	time_mults = new int[] { 1, 2, 3, 5, 7, 10, 15, 20, 30, 60, 120, 240, 300, -1 };
+    public static int	cur_time_mult = 5;	/* start with T x 10 */
+    public static TimeSpan start_time;
+    public static bool	show_speeds = true;
+    public static bool	signal_traditional = true;
+    public static bool	show_blocks = true;
+    public static bool	show_icons = true;
+// #ifdef WIN32
+    public static bool	show_tooltip = true;
+//#else
+//    public static bool	show_tooltip = false;
+//#endif
+    public static bool	beep_on_alert = true;
+    public static bool	beep_on_enter = false;
+    public static int	show_seconds;
+    public static bool	hard_counters = false;
+    public static int	platform_schedule;
+    public static bool	show_canceled = true;
+    public static bool	show_arrived = true;
+    public static bool	showing_graph = false;	/* windows only */
+    public static bool	use_real_time = false;
+    public static bool	layout_modified = false;	/* user edited the layout */
+    public static bool	enable_training = false;	/* enable signal training menu */
+    public static bool	random_delays = true;	/* enable delayed entrances and departures */
+    public static bool	play_synchronously = true;	/* stop simulation while playing sounds */
+    public static bool	swap_head_tail = false;	/* swap head and tail icons when reversing train */
+
+
+    public static bool editing;
+    public static bool editing_itinerary;
+    public static bool running;
+    public static int run_points;
+    public static int total_delay;
+    public static int total_late;
+    public static TimeSpan current_time;
+    public static RunDays run_day;
+    public static int total_track_number;	/* to prevent endless loops in findPath() */
+
+
     public static Track signal_list,
      track_list,
      text_list,
      switch_list;
+
+    public static bool all_trains_everyday(Train t) {
+      while(t != null) {
+        if(t.days != RunDays.None)
+          return false;
+
+        t = t.next;
+      }
+      return true;
+    }
+
 
     public static void do_command(SimCommand cmd, bool sendToClients) {
       // String p;
@@ -469,34 +550,34 @@ namespace TrainController {
       //    if(ask_to_save_layout() < 0)	// cancel selected
       //  return;
       //}
-      //clean_trains(schedule);
-      //clean_trains(stranded);
-      //schedule = 0;
-      //stranded = 0;
+      clean_trains(schedule);
+      clean_trains(stranded);
+      schedule = null;
+      stranded = null;
       invalidate_field();
-      //enable_training = 0;
-      //if(fl == 2) {
-      //    load_puzzles(cmd);
-      //    trainsim_init();		/* clear counters, timer */
-      //    load_scripts(layout);	// run OnInit scripts
-      //    enable_training = 1;
-      //} else {
-      if((layout = load_field(cmd)) == null) {
-        //  status_line = String.Format( wxPorting.T("%s '%s.trk'"), wxPorting.L("cannot load"), cmd);
-        //  Globals.traindir.Error(status_line);
-        //  return;
+      enable_training = false;
+      if(false) { // if(fl == 2) {
+        //    load_puzzles(cmd);
+        //    trainsim_init();		/* clear counters, timer */
+        //    load_scripts(layout);	// run OnInit scripts
+        //    enable_training = 1;
+      } else {
+        if((layout = load_field(cmd)) == null) {
+          labelList.status_line = String.Format(wxPorting.T("{0} '{1}.trk'"), wxPorting.L("cannot load"), cmd);
+          Globals.traindir.Error(labelList.status_line);
+          return;
+        }
+        if((schedule = load_trains(cmd)) == null)
+          Globals.traindir.Error(wxPorting.L("No schedule for this territory!"));
+        if(fl == LoadScenarioType.Open && !all_trains_everyday(schedule) && select_day_dialog != null)
+          select_day_dialog();
+        //    if(fl)
+        //  check_delayed_entries(schedule);
+        //    /* fill_schedule(schedule, 0); */
+        //    trainsim_init();		/* clear counters, timer */
+        //    load_scripts(layout);	// run OnInit scripts
+        //           bstreet_playing();
       }
-      //    if(!(schedule = load_trains(cmd)))
-      //  Globals.traindir.Error(wxPorting.L("No schedule for this territory!"));
-      //    if(fl && !all_trains_everyday(schedule) && select_day_dialog)
-      //  select_day_dialog();
-      //    if(fl)
-      //  check_delayed_entries(schedule);
-      //    /* fill_schedule(schedule, 0); */
-      //    trainsim_init();		/* clear counters, timer */
-      //    load_scripts(layout);	// run OnInit scripts
-      //           bstreet_playing();
-      //}
 
       //TDFile	infoFile = new TDFile(cmd);
 
@@ -561,5 +642,55 @@ namespace TrainController {
         }
       text_list = l;
     }
+
+
+    public static TimeSpan parse_time(String pp) {
+      int v1 = 0, v2 = 0, v3 = 0;
+
+      pp = pp.Trim();
+
+      Match match = Regex.Match(pp, "^([0-9]{1,2}):([0-9]{1,2})(:[0-9]{1,2})?$");
+      if(!match.Success)
+        throw new ArgumentException();
+
+      string seconds = "00";
+      if(match.Groups[3].Success != false)
+        seconds = match.Groups[3].Value.Substring(1);
+
+      if(
+        int.TryParse(match.Groups[1].Value, out v1) &&
+        int.TryParse(match.Groups[2].Value, out v2) &&
+        int.TryParse(seconds, out v3)
+      )
+        return new TimeSpan(v1, v2, v3);
+
+      throw new ArgumentException();
+    }
+
+    public static Track findStationNamed(String name) {
+      throw new NotImplementedException();
+      // return TrainController.Station.FindStationNamed(name);
+    }
+
   }
+
+  public class TDDelay {
+    public class Delay {
+      public int prob { get; set;}
+      public int seconds { get; set;}
+
+      public Delay(int seconds_, int prob_) {
+        seconds = seconds_;
+        prob = prob_;
+      }
+    };
+    private List<Delay> delays_ = new List<Delay>();
+    public List<Delay> delays { get { return delays_; } }
+    // public short nDelays;	/* how many entries are in prob[] and seconds[] */
+    // public short nSeconds;	/* # of seconds selected for this delay (from seconds[] */
+    // public short[] prob = new short[Config.MAX_DELAY];/* probability[i] from 0=never to 100=always */
+    // public short[] seconds = new short[Config.MAX_DELAY];/* nseconds per each probability */
+    /* TODO: add a script to evaluate the probability and/or nseconds */
+  }
+
 }

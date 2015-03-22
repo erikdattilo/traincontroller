@@ -9,27 +9,29 @@ using System.Timers;
 using System.Drawing;
 
 namespace TrainController {
-  public class _conf {
-    public int gridxbase, gridybase;
-    public int gridxsize, gridysize;
-
-    public grcolor gridcolor;
-    public grcolor txtbgcolor;	/* for dialogues */
-    public grcolor fgcolor;
-    public grcolor linkcolor;	/* links signals and entry/exit */
-    public grcolor linkcolor2;	/* links tracks */
-  }
-
-  public class pxmap {
-    public string name;
-    public System.Drawing.Image pixels;
-  }
-
   partial class Globals {
     public static String version = wxPorting.T("3.8v");
 
-    // TODO Implement this function
+    public static short[] startDelay = new short[Config.NTTYPES];
+    public static double[] accelRate = new double[Config.NTTYPES];
+    
+    public const char DELAY_CHAR = '!';
+
+    public static void clean_trains(Train sched) {
+      Train t;
+
+      clean_pixmap_cache();
+      while(sched != null) {
+        t = sched.next;
+        // delete sched;
+        sched = t;
+      }
+    }
+
+
     public static void do_alert(String msg) {
+      throw new NotImplementedException();
+
       //alert_msg = String.Copy(msg);
       //repaint_labels();
       //Globals.traindir.AddAlert(msg);
@@ -337,19 +339,14 @@ namespace TrainController {
 
     // TODO Handle this vars
     public static _conf conf;
-    public static bool show_speeds = false;
-    public static bool show_blocks = false;
     public static bool show_links = true; 
-    public static bool signal_traditional = false;
     public static bool updating_all = false;
-    public static bool editing;
     public static bool show_grid = false;
     public static Train schedule;
     public static Train stranded;
     public static byte[] update_map = new byte[Configuration.XNCELLS * Configuration.YNCELLS];
     public static byte UPDATE_MAP(int x, int y) { return update_map[(y) * Configuration.XNCELLS + (x)]; }
     public static void UPDATE_MAP(int x, int y, byte value) { update_map[(y) * Configuration.XNCELLS + (x)] = value; }
-    public static List<pxmap> pixmaps = new List<pxmap>();
 
     public static void draw_link(int x0, int y0, int x1, int y1, int color) {
       field_grid.DrawLineCenterCell(x0, y0, x1, y1, color);
@@ -396,8 +393,8 @@ namespace TrainController {
       return img;
     }
 
-    public static int get_pixmap_index(String mapname) {
-      int i;
+    public static short get_pixmap_index(String mapname) {
+      short i;
 
       if(String1.IsNullOrWhiteSpaces(mapname))
         return -1;
@@ -411,7 +408,28 @@ namespace TrainController {
         return -1;          /* failed! file does not exist */
       pmap.name = String.Copy(mapname);
       pixmaps.Add(pmap);
-      return pixmaps.Count() - 1;
+      return (short)(pixmaps.Count() - 1);
+    }
+
+
+    public static void clean_pixmap_cache() {
+      //int i;
+
+      //foreach(var px in pixmaps) {
+      //  if(String1.IsNullOrWhiteSpaces(px.name)) {
+      //    // Globals.free(pixmaps[i].name);
+      //    // delete_pixmap(pixmaps[i].pixels);
+      //  }
+      //}
+
+      //for(i = 0; i < ncarpixmaps; ++i)
+      //  if(carpixmaps[i].name) {
+      //    // Globals.free(carpixmaps[i].name);
+      //    // delete_pixmap(carpixmaps[i].pixels);
+      //  }
+
+      pixmaps = new List<pxmap>();
+      carpixmaps = new List<pxmap>();
     }
 
     public static System.Drawing.Image get_pixmap(String[] pxpm) {
@@ -1450,8 +1468,6 @@ namespace TrainController {
       new grcolor[(int)fieldcolor.MAXFIELDCOL];
     public static TextList track_info;
     public static Itinerary itineraries;
-    public static bool powerSpecified;
-    public static int layout_modified1;
     public static Script scriptList;
     public static TrainDirPorting.Array<Track> onIconUpdateListeners;
     public static FileOption searchPath = new FileOption(
@@ -1659,11 +1675,10 @@ namespace TrainController {
     }
 
     public static void ShowWelcomePage() {
-      throw new NotImplementedException();
-      //HtmlPage page = new HtmlPage(wxPorting.T(""));
+      HtmlPage page = new HtmlPage(wxPorting.T(""));
 
-      //Globals.traindir.BuildWelcomePage(page);
-      //Globals.traindir.m_frame.ShowHtml(wxPorting.L("Welcome"), page.content);
+      Globals.traindir.BuildWelcomePage(page);
+      Globals.traindir.m_frame.ShowHtml(wxPorting.L("Welcome"), page.content);
     }
 
     private static T[] realloc<T>(T[] arr, int newSize) {
@@ -1776,19 +1791,21 @@ namespace TrainController {
       }
     }
 
+    public static string buff;
+
     // TODO Implement this function
     public static void init_pmaps() {
-      //byte r, g, b;
-      //byte fgr, fgg, fgb;
-      //int i;
-      //string bufffg;
-      //string buffcol;
+      byte r, g, b;
+      byte fgr, fgg, fgb;
+      int i;
+      string bufffg;
+      string buffcol;
 
-      //getcolor_rgb(fieldcolors[COL_TRACK], out fgr, out fgg, out fgb);
-      //sprintf(bufffg, ".      c #%02x00%02x00%02x00", fgr, fgg, fgb);
-      //getcolor_rgb(fieldcolors[COL_BACKGROUND], out r, out g, out b);
-      //sprintf(buff, "       c #%02x00%02x00%02x00", r, g, b);
-      //sprintf(buff, "       c lightgray", r, g, b);
+      getcolor_rgb(fieldcolors[(int)fieldcolor.COL_TRACK], out fgr, out fgg, out fgb);
+      bufffg = String.Format(".      c #{0:X2}00{1:X2}00{2:X2}00", fgr, fgg, fgb);
+      getcolor_rgb(fieldcolors[(int)fieldcolor.COL_BACKGROUND], out r, out g, out b);
+      buff = String.Format("       c #{0:X2}00{1:X2}00{2:X2}x00", r, g, b);
+      buff = String.Format("       c lightgray", r, g, b);
 
       //e_train_xpm[1] = w_train_xpm[1] = car_xpm[1] = buff;
       //e_train_xpm[2] = w_train_xpm[2] = car_xpm[2] = bufffg;
@@ -1804,11 +1821,11 @@ namespace TrainController {
 
       Signal.InitPixmaps();
 
-      //sprintf(buff, "       c #%02x00%02x00%02x00", r, g, b);
-      //sprintf(bufffg, ".      c #%02x00%02x00%02x00", fgr, fgg, fgb);
-      //speed_xpm[1] = buff;
-      //speed_xpm[2] = bufffg;
-      //speed_pmap = get_pixmap(speed_xpm);
+      buff = String.Format("       c #{0:X2}00{1:X2}00{2:X2}00", r, g, b);
+      bufffg = String.Format(".      c #{0:X2}00{1:X2}00{2:X2}00", fgr, fgg, fgb);
+      speed_xpm[1] = buff;
+      speed_xpm[2] = bufffg;
+      speed_pmap = get_pixmap(speed_xpm);
 
       //for(r = 0; r < 4; ++r) {
       //  e_train_pmap_default[r] = e_train_pmap[r];
@@ -1875,6 +1892,8 @@ namespace TrainController {
   }
 
   public partial class Configuration {
+    public const int MAX_OLD_SIMULATIONS = 16; 
+    
     public const int NSTATUSBOXES = 5;
 
     public const int HGRID = 9;
@@ -2074,6 +2093,34 @@ namespace TrainController {
     FIRST_HTML = 1300,
     LAST_HTML = 1399
   };
+
+  public class _conf {
+    public int gridxbase, gridybase;
+    public int gridxsize, gridysize;
+
+    public grcolor gridcolor;
+    public grcolor txtbgcolor;	/* for dialogues */
+    public grcolor fgcolor;
+    public grcolor linkcolor;	/* links signals and entry/exit */
+    public grcolor linkcolor2;	/* links tracks */
+  }
+
+  public class pxmap {
+    public string name;
+    public System.Drawing.Image pixels;
+  }
+
+  [Flags]
+  public enum RunDays {
+    None = 0x0,
+    Monday = 0x1,
+    Tuesday = 0x2,
+    Wednesday = 0x4,
+    Thursday = 0x8,
+    Friday = 0x10,
+    Saturday = 0x20,
+    Sunday = 0x40
+  }
 
 
 }

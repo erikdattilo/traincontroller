@@ -5,32 +5,119 @@ using System.Text;
 
 namespace TrainController {
 
+  public class TrainInterpreterData : InterpreterData {
+    public Statement _onInit;	// list of actions (statements)
+    public Statement _onEntry;
+    public Statement _onExit;
+    public Statement _onStop;
+    public Statement _onWaiting;
+    public Statement _onStart;
+    public Statement _onReverse;
+    public Statement _onAssign;
+    public Statement _onShunt;
+    public Statement _onArrived;
+
+    bool Evaluate(ExprNode n, ExprValue result) {
+      throw new NotImplementedException();
+
+      //ExprValue left = new ExprValue(NodeOp.None);
+      //ExprValue right = new ExprValue(NodeOp.None);
+      //String prop;
+
+      //if(!n)
+      //  return false;
+      //switch(n._op) {
+
+      //  case Dot:
+
+      //    result._op = Addr;
+      //    if(!(n._left)) {
+      //      result._train = this._train;		// .<property> .   this.train
+      //      result._op = TrainRef;
+      //      if(!result._train) {
+      //        wxStrcat(expr_buff, wxPorting.T("no current train for '.'"));
+      //        return false;
+      //      }
+      //      if(result._train.position)
+      //        TraceCoord(result._train.position.x, result._train.position.y);
+      //    } else {
+      //      if(!Evaluate(n._left, result))
+      //        return false;
+      //    }
+      //    result._txt = (n._right && n._right._op == String) ? n._right._txt : n._txt;
+      //    if(_forAddr)
+      //      return true;
+
+      //    prop = result._txt;
+      //    if(!prop)
+      //      return false;
+
+      //    switch(result._op) {
+
+      //      case TrainRef:
+
+      //        if(!result._train)
+      //          return false;
+      //        return result._train.GetPropertyValue(prop, result);
+
+      //      case SwitchRef:
+
+      //        if(!wxStrcmp(prop, wxPorting.T("thrown")) && result._track) {
+      //          result._op = Number;
+      //          result._val = result._track.switched;
+      //          return true;
+      //        }
+
+      //      case Addr:
+      //      case TrackRef:
+      //      default:
+
+      //        if(!result._track)
+      //          return false;
+      //        return result._track.GetPropertyValue(prop, result);
+
+      //      case SignalRef:
+
+      //        if(!result._signal)
+      //          return false;
+      //        return result._signal.GetPropertyValue(prop, result);
+
+      //    }
+
+      //  default:
+
+      //    return InterpreterData.Evaluate(n, result);
+      //}
+      //return false;
+    }
+
+  }
+
   public class Train {
-    //public Train next = null;
-    //public string name = null;		/* train name or number */
-    //public trainstat status = trainstat.train_READY;	/* status: running, waiting etc. */
-    //public trkdir sdirection = trkdir.W_E;	/* starting direction: W_E or E_W */
-    //public trkdir direction = trkdir.W_E;	/* current direction: W_E or E_W */
-    //public int timein = 0;		/* time it shows up on territory */
+    public Train next = null;
+    public string name = "";		/* train name or number */
+    public trainstat status = trainstat.train_READY;	/* status: running, waiting etc. */
+    public trkdir sdirection = trkdir.W_E;	/* starting direction: W_E or E_W */
+    public trkdir direction = trkdir.W_E;	/* current direction: W_E or E_W */
+    public TimeSpan timein = TimeSpan.Zero;		/* time it shows up on territory */
     //public int tailentry { get { return timein; } set { timein = value; } } /* overload timein/out in t.tail structure */
     //public int tailexit { get { return timeout; } set { timeout = value; } }
-    //public int timeout = 0;		/* time it should be out of territory */
-    //public string entrance = null;
-    //public string exit = null;
+    public TimeSpan timeout = TimeSpan.Zero;		/* time it should be out of territory */
+    public string entrance = null;
+    public string exit = null;
     //public string exited = null;		/* if wrongdest, where we exited */
     //public int timeexited = 0;		/* when we exited */
-    //public string[] notes = new string[Config.MAXNOTES];
+    public List<string> notes = new List<string>();
     ///// TODO 	memset(notes, 0, sizeof(notes));
-    //public char nnotes = (char)0x00;
     //public bool wrongdest = false;		/* train arrived at wrong destination */
-    //public int type = 0;		/* train type */
+    public int type = 0;		/* train type */
     //public int _gotDelay = 0;		/* we computed a delay upon entry in the territory */
     //public int _lastUpdate;    /* when we last updated this train's status */
     //public int _inDelay = 0;		/* the computed delay, in minutes */
     //public short newsched = 0;		/* must update schedule window for this train */
     //public double curspeed = 0;		// 3.8r: support different acceleration rates /* current speed */
     //public double accelRate = 0;    // 3.8r
-    //public short maxspeed = 0;		/* absolute maximum speed */
+    public int maxspeed = 0;		/* absolute maximum speed */
     //public short curmaxspeed = 0;	/* current (absolute or track) maximum speed */
 
     //public int speedlimit = 0;		/* last speed limit seen */
@@ -42,7 +129,7 @@ namespace TrainController {
 
     //public double trackpos = 0;		/* how much of lengthy tracks we travelled */
     public List<TrainStop> stops = new List<TrainStop>();		/* list of scheduled stops */
-    //public TrainStop laststop = null;		/* last in list of scheduled stops */
+    // public TrainStop laststop = null;		/* last in list of scheduled stops */
     //public short length = 0;		/* current train length in meters */
     //public short entryLength = 0;	/* train length at entry into territory */
     //public Vector path = new Vector();		/* track elements to be travelled by train head */
@@ -56,29 +143,29 @@ namespace TrainController {
     //public Track position = null;		/* where the train is in the territory */
     //public int timedep = 0;		/* expected time of departure from station */
     //public Vector fleet = null;		/* list of signals waiting for tail to pass */
-    //public string waitfor = null;		/* must wait for this train to exit territory*/
-    //public int waittime = 0;	    /* how many minutes after waitee has arrived we depart */
-    //public string stock = null;		/* next train which uses this train's stock */
-    //public short epix = 0; public short wpix = 0;	/* indexes to east and west pixmaps */
-    //public short ecarpix = 0; public short wcarpix = 0;/* indexes of east abd west car pixmaps (if length != 0) */
+    public string waitfor = null;		/* must wait for this train to exit territory*/
+    public int waittime = 0;	    /* how many minutes after waitee has arrived we depart */
+    public string stock = null;		/* next train which uses this train's stock */
+    public short epix = 0; public short wpix = 0;	/* indexes to east and west pixmaps */
+    public short ecarpix = 0; public short wcarpix = 0;/* indexes of east abd west car pixmaps (if length != 0) */
     //public Track outof = null;		/* ignore this station when checking shunting */
     //public Track stopping = null;		/* we are stopping/stopped at this station */
     //public trainstat oldstatus = trainstat.train_READY;
     //public bool arrived = false;		/* if true we are just shunting */
     //public bool shunting = false;
-    //public RunDays days = RunDays.None;		/* which day this train is running */
+    public RunDays days = RunDays.None;		/* which day this train is running */
     //public TFLG flags = 0;		/* performance flags (TFLG_*) */
     //public bool needfindstop = false;	/* terrible hack! */
     //public bool isExternal = false; /* train does not run in this scenario */
     //public Train merging = null;		/* will merge with this train */
-    //public TDDelay entryDelay = null;
-    //public char power = (char)0x00;  // 3.9
+    public TDDelay entryDelay = null;
+    public String power = null;  // 3.9
     //public double gauge;    // 3.9: track gauge
 
     //// start to use C++ methods to make the code cleaner
 
-    //Char stateProgram;
-    //object _interpreterData;
+    public string stateProgram;
+    object _interpreterData;
 
 
     //public Train() {
@@ -219,66 +306,63 @@ namespace TrainController {
     //}
 
 
-    //public void ParseProgram() {
-    //  //String p;
+    public void ParseProgram() {
+      String p;
 
-    //  //if(!this.stateProgram || !*this.stateProgram)
-    //  //  return;
-    //  //if(_interpreterData)	    // previous script
-    //  //  Globals.delete((TrainInterpreterData)_interpreterData);
-    //  //_interpreterData = new TrainInterpreterData();
+      if(String1.IsNullOrWhiteSpaces(this.stateProgram))
+        return;
+      _interpreterData = new TrainInterpreterData();
 
-    //  //TrainInterpreterData interp = (TrainInterpreterData)_interpreterData;
-    //  //p = this.stateProgram;
-    //  //while(*p) {
-    //  //  String p1 = p;
-    //  //  while(*p1 == ' ' || *p1 == '\t' || *p1 == '\r' || *p1 == '\n')
-    //  //    ++p1;
-    //  //  p = p1;
-    //  //  if(match(&p, wxPorting.T("OnInit:"))) {
-    //  //    p1 = p;
-    //  //    interp._onInit = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnEntry:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onEntry = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnExit:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onExit = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnStop:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onStop = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnWaiting:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onWaiting = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnStart:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onStart = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnAssign:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onAssign = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnArrived:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onArrived = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnReverse:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onReverse = ParseStatements(&p);
-    //  //  } else if(match(&p, wxPorting.T("OnShunt:"))) {
-    //  //    p = next_token(p);
-    //  //    p1 = p;
-    //  //    interp._onShunt = ParseStatements(&p);
-    //  //  }
-    //  //  if(p1 == p)	    // error! couldn't parse token
-    //  //    break;
-    //  //}
-    //}
+      TrainInterpreterData interp = (TrainInterpreterData)_interpreterData;
+      p = this.stateProgram;
+      while(String1.IsNullOrWhiteSpaces(p) == false) {
+        String p1 = p;
+        while(p.Length > 0 && (p[0] == ' ' || p[0] == '\t' || p[0] == '\r' || p[0] == '\n'))
+          p = p.Substring(1);
+        if(Globals.match(ref p, wxPorting.T("OnInit:"))) {
+          p1 = p;
+          interp._onInit = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnEntry:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onEntry = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnExit:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onExit = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnStop:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onStop = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnWaiting:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onWaiting = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnStart:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onStart = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnAssign:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onAssign = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnArrived:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onArrived = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnReverse:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onReverse = Globals.ParseStatements(ref p);
+        } else if(Globals.match(ref p, wxPorting.T("OnShunt:"))) {
+          p = Globals.next_token(p);
+          p1 = p;
+          interp._onShunt = Globals.ParseStatements(ref p);
+        }
+        if(p1 == p)	    // error! couldn't parse token
+          break;
+      }
+    }
 
     /////
     /////	TRAIN  STATE

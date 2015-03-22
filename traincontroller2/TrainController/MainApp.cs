@@ -35,9 +35,26 @@ namespace TrainController {
     private static TrainControllerApp mInstance = null;
 
     private Queue mCommands = Queue.Synchronized(new Queue());
+
+    public MainFrame m_frame;
+
+    //public TDProject m_project;
+
+    public int m_nOldSimulations;
+    public String[] m_oldSimulations = new string[Configuration.MAX_OLD_SIMULATIONS];
+
     private bool mIgnoreTimer;
     private int mTimeSlice;
     private int mTimeSliceCount;
+
+    //// colors for the time table view
+    //public Colour m_colorCanceled;
+    //public Colour m_colorReady;
+    //public Colour m_colorArrived;
+    //public Colour m_colorDerailed;
+    //public Colour m_colorWaiting;
+    //public Colour m_colorRunning;
+    //public Colour m_colorStopped;
 
 
     private TrainControllerApp() {
@@ -51,6 +68,10 @@ namespace TrainController {
       mTimeSlice = 10;
       mIgnoreTimer = true;
 
+#if DEBUG
+      m_oldSimulations[m_nOldSimulations++] = @"..\..\Padova2014.zip";
+#endif
+
       OnInit();
     }
 
@@ -62,13 +83,13 @@ namespace TrainController {
     }
 
     private OpenFileDialog mFileDialog;
-    // TODO Rename to mFrame
-    public MainFrame m_frame;
 
 
 
     public override bool OnInit() {
-      //      Globals.traindir = this;
+      // Globals.traindir = this;
+
+      m_frame = MainFrame.Instance;
 
       //      Globals.srand(Globals.time(0));
 
@@ -133,7 +154,7 @@ namespace TrainController {
       //      m_frame.Icon = new Icon(wxPorting.T("aaaTD_ICON"));
       //      m_frame.Show(true);
 
-      //      Globals.ShowWelcomePage();
+      Globals.ShowWelcomePage();
 
       //      Globals.start_server_thread();
 
@@ -208,6 +229,10 @@ namespace TrainController {
     public void OpenFile(String path, bool restore)	// RECURSIVE
     {
       string buff;
+
+      // Erik's patch
+      path = path.Replace('/', '\\');
+      path = path.Replace("%20", " ");
 
       Globals.gLogger.InstallLog();
       Globals.gnErrors = 0;
@@ -288,7 +313,55 @@ namespace TrainController {
     // TODO Look for all NotImplementedException and implement them
 
     public void Error(string buff) {
-      throw new NotImplementedException();
+      MessageBox.Show(buff);
+      // throw new NotImplementedException();
+    }
+
+
+    public void BuildWelcomePage(HtmlPage page) {
+#if WIN32
+#else
+ 	page.Add(wxPorting.T("<font size=-1>\n"));
+#endif
+      page.Add(wxPorting.T("<table bgcolor=#60C060 width=100% cellspacing=3><tr><td>\n"));
+      page.Add(wxPorting.T("<font size=+2 color=#FFFFFF>Welcome to "));
+      page.Add(Globals.program_name);
+      page.Add(wxPorting.T("</font>\n"));
+      page.Add(wxPorting.T("</td></tr></table>\n"));
+      page.Add(wxPorting.T("<table width=\"100%\"><tr><td align=left valign=top>"));
+      page.Add(wxPorting.T("Copyright 2000 - 2014 Giampiero Caprino<br>Backer Street Software, Sunnyvale, CA, USA"));
+      page.Add(wxPorting.T("</td><td align=right valign=top>"));
+      page.AddLine(wxPorting.T("Train Director is free software, released under the GNU General Public License 2"));
+      page.AddLine(wxPorting.T("Built using the wxWidgets portable framework"));
+      page.Add(wxPorting.T("</td></tr></table>\n"));
+      page.Add(wxPorting.T("<hr><br><br>\n"));
+
+      //	page.Add(wxPorting.T("<table><tr><td valign=top align=left>\n"));
+      page.AddCenter();
+      page.AddLine(wxPorting.L("You recently played the following simulations:<br><br>"));
+      int i;
+      string buff;
+
+      for(i = 0; i < m_nOldSimulations; ++i) {
+        buff = String.Format(
+      wxPorting.T("<a href=\"open:{0}\">{1}</a><br>"),
+      m_oldSimulations[i], m_oldSimulations[i]);
+        page.AddLine(buff);
+      }
+      //	page.Add(wxPorting.T("</table>\n"));
+      buff = String.Format(
+          wxPorting.T("<br><br><a href=\"open:\">{0}...</a><br>"),
+          wxPorting.L("Open another simulation"));
+      page.AddLine(buff);
+      buff = String.Format(
+          wxPorting.T("<a href=\"edit:\">{0}</a><br>"), wxPorting.L("Create a new simulation"));
+      page.AddLine(buff);
+      page.EndCenter();
+#if WIN32
+#else
+ 	page.Add(wxPorting.T("</font>\n"));
+#endif
+
     }
   }
 }

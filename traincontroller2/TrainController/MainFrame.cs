@@ -9,7 +9,16 @@ using System.Windows.Forms;
 
 namespace TrainController {
   public partial class MainFrame : Form {
+    private static MainFrame mInstance = null;
+
+    public static MainFrame Instance { get { return mInstance; } }
+
     public MainFrame() {
+      if(mInstance == null)
+        mInstance = this;
+      else
+        throw new Exception("MainFrame constructor can be called only once");
+
       InitializeComponent();
 
       this.WindowState = FormWindowState.Maximized;
@@ -22,7 +31,7 @@ namespace TrainController {
       TrainControllerApp tc = TrainControllerApp.GetInstance();
       tc.m_frame = this;
 
-      TrainControllerApp.GetInstance().OpenFile(@"C:\Documents and Settings\Erik_\Desktop\tdir38win\Scenari\Padova2014.zip");
+      TrainControllerApp.GetInstance().OpenFile(@"..\..\Padova2014.zip");
     }
 
     public void MainFrame_OldConstructor(String title)
@@ -1340,18 +1349,27 @@ namespace TrainController {
     }
 
     public void ShowHtml(String name, String page) {
-      throw new NotImplementedException();
-      //int pg = m_top.FindPage(name);
-      //HtmlView htmlView;
+      int pg = m_top.TabPages.ContainsKey(name) ? m_top.TabPages.IndexOfKey(name) : -1;
+      HtmlView htmlView = null;
 
-      //if(pg < 0) {
-      //  htmlView = new HtmlView(m_top);
-      //  m_top.AddPage(htmlView, name, true, -1);
-      //} else
-      //  htmlView = (HtmlView)m_top.GetPage(pg);
-      //htmlView.SetPage(page);
-      //pg = m_top.FindPage(name);
-      //m_top.Selection = (pg);
+      if(pg < 0) {
+        throw new NotImplementedException();
+        //htmlView = new HtmlView(m_top);
+        //m_top.AddPage(htmlView, name, true, -1);
+      } else {
+        // htmlView = (HtmlView)m_top.TabPages[pg];
+        foreach(var ctrl in m_top.TabPages[pg].Controls) {
+          if(ctrl is HtmlView) {
+            htmlView = (HtmlView)ctrl;
+            break;
+          }
+        }
+        if(htmlView == null)
+          throw new NotImplementedException();
+      }
+      htmlView.SetPage(page);
+      pg = m_top.TabPages.ContainsKey(name) ? m_top.TabPages.IndexOfKey(name) : -1;
+      m_top.SelectedIndex = pg;
     }
 
     public void ShowGraph() {

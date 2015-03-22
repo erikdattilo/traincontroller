@@ -36,7 +36,7 @@ namespace TrainController {
       this.m_splitter = new System.Windows.Forms.SplitContainer();
       this.m_top = new System.Windows.Forms.TabControl();
       this.tabLayout = new System.Windows.Forms.TabPage();
-      this.pictureBox1 = new TrainController.MyCanvas();
+      this.pictureBox1 = new MyCanvas();
       this.tabWelcome = new System.Windows.Forms.TabPage();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
       this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -51,6 +51,7 @@ namespace TrainController {
       this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.coordBarsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.webBrowserWelcome = new HtmlView();
       this.toolStrip1.SuspendLayout();
       this.m_splitter.Panel1.SuspendLayout();
       this.m_splitter.Panel2.SuspendLayout();
@@ -58,6 +59,7 @@ namespace TrainController {
       this.m_top.SuspendLayout();
       this.tabLayout.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+      this.tabWelcome.SuspendLayout();
       this.splitContainer2.Panel1.SuspendLayout();
       this.splitContainer2.Panel2.SuspendLayout();
       this.splitContainer2.SuspendLayout();
@@ -108,6 +110,11 @@ namespace TrainController {
       this.m_speedArrows.Name = "m_speedArrows";
       this.m_speedArrows.Size = new System.Drawing.Size(23, 22);
       this.m_speedArrows.Text = "toolStripButton1";
+      this.m_speedArrows.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
       // 
       // m_running
       // 
@@ -166,7 +173,7 @@ namespace TrainController {
       this.tabLayout.AutoScroll = true;
       this.tabLayout.Controls.Add(this.pictureBox1);
       this.tabLayout.Location = new System.Drawing.Point(4, 22);
-      this.tabLayout.Name = "tabLayout";
+      this.tabLayout.Name = "Layout";
       this.tabLayout.Padding = new System.Windows.Forms.Padding(3);
       this.tabLayout.Size = new System.Drawing.Size(446, 45);
       this.tabLayout.TabIndex = 0;
@@ -184,8 +191,9 @@ namespace TrainController {
       // 
       // tabWelcome
       // 
+      this.tabWelcome.Controls.Add(this.webBrowserWelcome);
       this.tabWelcome.Location = new System.Drawing.Point(4, 22);
-      this.tabWelcome.Name = "tabWelcome";
+      this.tabWelcome.Name = "Welcome";
       this.tabWelcome.Padding = new System.Windows.Forms.Padding(3);
       this.tabWelcome.Size = new System.Drawing.Size(446, 45);
       this.tabWelcome.TabIndex = 1;
@@ -224,7 +232,7 @@ namespace TrainController {
       // tabSchedule
       // 
       this.tabSchedule.Location = new System.Drawing.Point(4, 22);
-      this.tabSchedule.Name = "tabSchedule";
+      this.tabSchedule.Name = "Schedule";
       this.tabSchedule.Padding = new System.Windows.Forms.Padding(3);
       this.tabSchedule.Size = new System.Drawing.Size(139, 88);
       this.tabSchedule.TabIndex = 0;
@@ -247,7 +255,7 @@ namespace TrainController {
       // tabAlerts
       // 
       this.tabAlerts.Location = new System.Drawing.Point(4, 22);
-      this.tabAlerts.Name = "tabAlerts";
+      this.tabAlerts.Name = "Alerts";
       this.tabAlerts.Padding = new System.Windows.Forms.Padding(3);
       this.tabAlerts.Size = new System.Drawing.Size(290, 88);
       this.tabAlerts.TabIndex = 0;
@@ -257,7 +265,7 @@ namespace TrainController {
       // tabTrainInfo
       // 
       this.tabTrainInfo.Location = new System.Drawing.Point(4, 22);
-      this.tabTrainInfo.Name = "tabTrainInfo";
+      this.tabTrainInfo.Name = "TrainInfo";
       this.tabTrainInfo.Padding = new System.Windows.Forms.Padding(3);
       this.tabTrainInfo.Size = new System.Drawing.Size(290, 88);
       this.tabTrainInfo.TabIndex = 1;
@@ -318,6 +326,15 @@ namespace TrainController {
       this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
       this.helpToolStripMenuItem.Text = "Help";
       // 
+      // webBrowserWelcome
+      // 
+      this.webBrowserWelcome.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.webBrowserWelcome.Location = new System.Drawing.Point(3, 3);
+      this.webBrowserWelcome.MinimumSize = new System.Drawing.Size(20, 20);
+      this.webBrowserWelcome.Name = "webBrowserWelcome";
+      this.webBrowserWelcome.Size = new System.Drawing.Size(440, 39);
+      this.webBrowserWelcome.TabIndex = 0;
+      // 
       // MainFrame
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -338,6 +355,7 @@ namespace TrainController {
       this.m_top.ResumeLayout(false);
       this.tabLayout.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+      this.tabWelcome.ResumeLayout(false);
       this.splitContainer2.Panel1.ResumeLayout(false);
       this.splitContainer2.Panel2.ResumeLayout(false);
       this.splitContainer2.ResumeLayout(false);
@@ -378,6 +396,7 @@ namespace TrainController {
     private System.Windows.Forms.ToolStripButton m_running;
     public System.Windows.Forms.ToolStripLabel m_statusText;
     public System.Windows.Forms.ToolStripLabel m_alertText;
+    private HtmlView webBrowserWelcome;
     //private System.Windows.Forms.MenuStrip menuStrip1;
     //private System.Windows.Forms.ToolStripMenuItem dsaToolStripMenuItem1;
     //private System.Windows.Forms.ToolStripMenuItem qweToolStripMenuItem2;

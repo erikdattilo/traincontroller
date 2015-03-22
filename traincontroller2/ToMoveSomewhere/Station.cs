@@ -63,7 +63,6 @@ namespace TrainController {
 
       string stationName = station.StationName;
 
-
       // for(t = Globals.layout; t != null; t = t.next) {
       foreach(Track t in Globals.LayoutList) {
         if(t.station == null)

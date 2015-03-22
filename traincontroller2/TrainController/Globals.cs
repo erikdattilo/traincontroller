@@ -75,10 +75,6 @@ namespace TrainController {
 
     public static String program_name = "TODO - Write something here...";
 
-    public static int time_mult;
-    public static int[] time_mults = new int[] { 1, 2, 3, 5, 7, 10, 15, 20, 30, 60, 120, 240, 300, -1 };
-    public static int cur_time_mult = 5;	/* start with T x 10 */
-
     public static string tooltipString;	// 3.4c: tooltip shown on mouse move
 
     public static TrLabel labelList = new TrLabel();
